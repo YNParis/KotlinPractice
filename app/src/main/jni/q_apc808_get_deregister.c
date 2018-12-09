@@ -1,6 +1,6 @@
 #include "q_appc808.h"
 
-int q_apc808_get_deregister(char *i_app_id,char *i_app_user_id,char *i_imei,uint32_t o_buf_len,unsigned char *o_buf)
+int q_apc808_get_deregister(uint32_t o_buf_len,unsigned char *o_buf)
 {
   uint32_t          len=0;
   unsigned char     msg_id[2];
@@ -22,9 +22,8 @@ int q_apc808_get_deregister(char *i_app_id,char *i_app_user_id,char *i_imei,uint
 
   p = o_buf;
 
-  len = q_apc808_get_head(msg_id,i_imei,i_app_id,i_app_user_id,0,o_buf);
+  len = q_apc808_get_head(msg_id,0,o_buf);
 
-  len += MSG_HEAD_len; 
   len = q_apc808_get_crc(len,o_buf);
 
   return(len);

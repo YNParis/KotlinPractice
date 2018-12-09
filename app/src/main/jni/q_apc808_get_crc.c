@@ -2,8 +2,8 @@
 
 int q_apc808_get_crc(uint32_t i_len,unsigned char *i_buf)
 {
-  int i=0,len=0;
-  unsigned char key;
+  int             i=0,len=0;
+  unsigned char   key;
   unsigned char   v_buf[2048];
   unsigned char   *p=NULL,*q=NULL;
 
@@ -11,21 +11,21 @@ int q_apc808_get_crc(uint32_t i_len,unsigned char *i_buf)
 
   p = i_buf + 1;
 
-  v_buf[0] = 0X7E;
+  v_buf[0] = 0X8E;
   q = v_buf+1; 
   len = 1;
 
   key = i_buf[0];
 
-  if ( key == 0X7E )
+  if ( key == 0X8E )
   {
-    *q = 0X7D; q++;
+    *q = 0X8D; q++;
     *q = 0X02; q++;
     len+=2;
   }
-  else if ( key == 0X7D )
+  else if ( key == 0X8D )
   {
-    *q = 0X7D; q++;
+    *q = 0X8D; q++;
     *q = 0X01; q++;
     len+=2;
   }
@@ -39,15 +39,15 @@ int q_apc808_get_crc(uint32_t i_len,unsigned char *i_buf)
   {
     key = key ^ *p;
 
-    if ( *p == 0X7E )
+    if ( *p == 0X8E )
     {
-      *q = 0X7D; q++;
+      *q = 0X8D; q++;
       *q = 0X02;
       len++;
     }
-    else if ( *p == 0X7D )
+    else if ( *p == 0X8D )
     {
-      *q = 0X7D; q++;
+      *q = 0X8D; q++;
       *q = 0X01;
       len++;
     }
@@ -60,7 +60,7 @@ int q_apc808_get_crc(uint32_t i_len,unsigned char *i_buf)
 
   *q = key; q++;
 
-  *q = 0X7E;
+  *q = 0X8E;
 
   len += 2;
 

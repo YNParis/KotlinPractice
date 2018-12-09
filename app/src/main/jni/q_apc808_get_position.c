@@ -1,7 +1,6 @@
 #include "q_appc808.h"
 
-int q_apc808_get_position(char *i_app_id,char *i_app_user_id,char *i_imei,
-    double i_lon,double i_lat,uint32_t i_altitude,uint32_t i_speed,
+int q_apc808_get_position(double i_lon,double i_lat,uint32_t i_altitude,uint32_t i_speed,
     uint32_t i_direction,char *i_gps_time,uint32_t o_buf_len,unsigned char *o_buf)
 {
   uint32_t          len=0;
@@ -38,15 +37,15 @@ int q_apc808_get_position(char *i_app_id,char *i_app_user_id,char *i_imei,
 
   /* altitude  */
   q_apc808_set_uint16(i_altitude,p);
-  p += 2; len += 4;
+  p += 2; len += 2;
 
   /* speed  */
   q_apc808_set_uint16(i_speed,p);
-  p += 2; len += 4;
+  p += 2; len += 2;
 
   /* direction  */
   q_apc808_set_uint16(i_direction,p);
-  p += 2; len += 4;
+  p += 2; len += 2;
 
   /* gps_time yy */
   memset(tmp,0,8);
@@ -96,9 +95,8 @@ int q_apc808_get_position(char *i_app_id,char *i_app_user_id,char *i_imei,
 
   p = o_buf;
 
-  len = q_apc808_get_head(msg_id,i_imei,i_app_id,i_app_user_id,len,o_buf);
+  len += q_apc808_get_head(msg_id,len,o_buf);
 
-  len += MSG_HEAD_len; 
   len = q_apc808_get_crc(len,o_buf);
 
   return(len);

@@ -1,6 +1,6 @@
 #include "q_appc808.h"
 
-int q_apc808_get_register(char *i_app_id,char *i_app_user_id,char *i_imei,uint32_t o_buf_len,unsigned char *o_buf)
+int q_apc808_get_register(uint32_t o_buf_len,unsigned char *o_buf)
 {
   uint32_t          len=0;
   unsigned char     msg_id[2];
@@ -16,14 +16,13 @@ int q_apc808_get_register(char *i_app_id,char *i_app_user_id,char *i_imei,uint32
   /* skip msg_head */
   p += MSG_HEAD_len;
 
-  memcpy(p,i_app_id,2);
+  q_apc808_set_uint16(apc808Cfg->app_id,p); 
   p += 2;
 
-  len = strlen(i_app_user_id);
-  memcpy(p,i_app_user_id,len);
-  p += len;
+  memcpy(p,apc808Cfg->app_user_id,20);
+  p += 20;
 
-  memcpy(p,i_imei,IMEI_LEN);
+  memcpy(p,apc808Cfg->imei,IMEI_LEN);
   p += IMEI_LEN;
 
   memset(msg_id,0,2);
@@ -32,9 +31,9 @@ int q_apc808_get_register(char *i_app_id,char *i_app_user_id,char *i_imei,uint32
 
   p = o_buf;
 
-  len = q_apc808_get_head(msg_id,i_imei,i_app_id,i_app_user_id,37,o_buf);
+  len = q_apc808_get_head(msg_id,37,o_buf);
 
-  len += MSG_HEAD_len; 
+  len += 37; 
   len = q_apc808_get_crc(len,o_buf);
 
   return(len);

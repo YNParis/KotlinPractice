@@ -14,8 +14,8 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
-            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86'
-
+            moduleName "hellondk"
+//            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86'
 
         }
     }
@@ -27,7 +27,7 @@ android {
     }
     sourceSets {
         main {
-            jniLibs.srcDirs = ['src/main/libs', 'src/main/jniLibs/']
+            jniLibs.srcDirs = ['src/main/jniLibs']
         }
     }
 

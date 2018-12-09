@@ -1,8 +1,9 @@
-fun String.countA(str:String):Int{
-var array=arrayOf(str.getByte())
-var i=0
-array.forEach(
-a,A->i++
-)
-	return i
+fun String.countA(): Int {
+    var array = this.toCharArray()
+    var i = 0
+    array.forEach { item ->
+        if (item == 'a' || item == 'A')
+            i++
+    }
+    return i
 }
