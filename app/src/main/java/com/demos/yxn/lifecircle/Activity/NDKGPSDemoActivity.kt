@@ -27,6 +27,16 @@ import java.net.UnknownHostException
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * 利用c语言文件，将定位数据转成固定格式传送
+ * 步骤：
+ * 1.网络连接：socket连接网络，ip、端口固定；
+ * 2.初始化请求头：连接网络调用cinit()方法，初始化请求头及请求尾；
+ * 3.登录：调用clogin()方法，传入userid等信息，获取格式化好的16进制bytearray，通过socket传输该数组；
+ * 4.解析返回数据：调用cparse(strReceived: ByteArray)通用解析方法，解析服务器返回的数据，解析结果三种情况;
+ * 5.发送GPS信息：调用cgetposition()方法，将得到的位置信息转换成固定格式的16进制bytearray，通过socket传输该数组；
+ * 6.继续解析返回结果，与步骤4相同。
+ */
 class NDKGPSDemoActivity : AppCompatActivity(), SensorEventListener {
 
 
@@ -53,8 +63,13 @@ class NDKGPSDemoActivity : AppCompatActivity(), SensorEventListener {
     var lastspeed = 0.3
     var lasttime = "20181205094530"
 
-    val ip = "114.255.212.72"
-    val port = 8348
+    //外网端口和外网ip
+
+    private val UNICOM_IP = "114.255.212.48"
+    private val TELECOM_IP = "106.39.36.167"
+    private val MOBILE_IP = "114.255.212.72"
+    private val PORT = 8348
+    var ip = ""
     var imei = ""
     var date = Date()
 
@@ -78,6 +93,7 @@ class NDKGPSDemoActivity : AppCompatActivity(), SensorEventListener {
         orientationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION)
         telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         imei = telephonyManager.deviceId
+        checkOperator(telephonyManager.subscriberId)
 
         //如果手机的SDK版本使用新的权限模型,检查是否获得了位置权限,如果没有就申请位置权限,如果有权限就刷新位置
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -96,6 +112,21 @@ class NDKGPSDemoActivity : AppCompatActivity(), SensorEventListener {
     }
 
     /**
+     * 获取根据运营商选择ip
+     */
+    fun checkOperator(subscriberId: String) {
+        if (subscriberId?.startsWith("46001")) {
+            //联通网络
+            ip = UNICOM_IP
+        } else if (subscriberId?.startsWith("46003")) {
+            //电信网络
+            ip = TELECOM_IP
+        } else {
+            ip = MOBILE_IP
+        }
+    }
+
+    /**
      * 在activity中显示定位信息
      */
     private fun showInfo() {
@@ -107,7 +138,7 @@ class NDKGPSDemoActivity : AppCompatActivity(), SensorEventListener {
      * 初始化请求格式，无返回
      */
     fun cinit() {
-        HelloNdk.cInit("yangna", imei, 60, port, ip)
+        HelloNdk.cInit("yangna", imei, 60, PORT, ip)
     }
 
     /**
@@ -287,8 +318,8 @@ class NDKGPSDemoActivity : AppCompatActivity(), SensorEventListener {
     fun connect() {
         Thread {
             try {
-                socket = Socket(ip, port)
-                socket.setSoTimeout(10000)
+                socket = Socket(ip, PORT)
+                socket.setSoTimeout(10 * 1000)
                 if (socket.isConnected) {
                     handler.sendEmptyMessage(CON_SUCCESS)
                 }
@@ -317,7 +348,7 @@ class NDKGPSDemoActivity : AppCompatActivity(), SensorEventListener {
                     sendPositionInfo(cgetposition())
                 }
                 LOGIN_FAILED -> toast("登录时网络连接失败")
-                LOGIN_STRAIGHT -> toast("将得到的数据直接返回服务端")
+                LOGIN_STRAIGHT -> toast("需要将得到的数据直接返回服务端")
                 SEND_GPS_SUCCESS -> toast("发送成功")
 
                 else -> true
