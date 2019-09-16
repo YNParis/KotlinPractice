@@ -21,7 +21,7 @@ class Main3Activity : AppCompatActivity() {
       true
     })
 
-    println(multiple2("12", "12"))
+    println(multiple2("456", "123"))
   }
 
 }

@@ -8,21 +8,21 @@ package com.demos.yxn.lifecircle.kotlin
  * 给定一个整型，输出该整形2进制表达式中1的位数
  */
 fun getCount(n: Int): Int {
-  var num = n
-  var array = arrayOf(0, 0, 0, 0, 0, 0, 0, 0)
-  for (i in 7..0) {
-    array[i] = num % 2
-    num = num / 2
-    if (num < 2 && i > 0) {
-      array[i - 1] = num
-      break
+    var num = n
+    var array = arrayOf(0, 0, 0, 0, 0, 0, 0, 0)
+    for (i in 7..0) {
+        array[i] = num % 2
+        num = num / 2
+        if (num < 2 && i > 0) {
+            array[i - 1] = num
+            break
+        }
     }
-  }
-  var sum = 0
-  for (j in array) {
-    sum += array[j]
-  }
-  return sum
+    var sum = 0
+    for (j in array) {
+        sum += array[j]
+    }
+    return sum
 }
 
 /**
@@ -30,18 +30,18 @@ fun getCount(n: Int): Int {
 不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。
  */
 fun removeDuplicates(nums: IntArray): Int {
-  if (nums.isEmpty()) {
-    return 0
-  }
-  var a = 0
-  nums[a] = nums[0]
-  for (i in 0..(nums.size - 1)) {
-    if (nums[i] != nums[a]) {
-      a++
-      nums[a] = nums[i]
+    if (nums.isEmpty()) {
+        return 0
     }
-  }
-  return a + 1
+    var a = 0
+    nums[a] = nums[0]
+    for (i in 0..(nums.size - 1)) {
+        if (nums[i] != nums[a]) {
+            a++
+            nums[a] = nums[i]
+        }
+    }
+    return a + 1
 }
 
 /**
@@ -51,54 +51,54 @@ fun removeDuplicates(nums: IntArray): Int {
  */
 fun maxProfit(prices: IntArray): Int {
 //TODO 未完成
-  return 0
+    return 0
 }
 
 /**
  * 找两个数组中的重复元素
  */
 fun intersect(
-  nums1: IntArray,
-  nums2: IntArray
+        nums1: IntArray,
+        nums2: IntArray
 ): IntArray {
-  if (nums1.isEmpty() or nums2.isEmpty()) {
+    if (nums1.isEmpty() or nums2.isEmpty()) {
+        return IntArray(0)
+    }
+    nums1.sort()
+    nums2.sort()
+
+
+    if (nums1.size < nums2.size) {
+        getSameMember(nums1, nums2)
+    } else {
+        getSameMember(nums2, nums1)
+    }
+
     return IntArray(0)
-  }
-  nums1.sort()
-  nums2.sort()
-
-
-  if (nums1.size < nums2.size) {
-    getSameMember(nums1, nums2)
-  } else {
-    getSameMember(nums2, nums1)
-  }
-
-  return IntArray(0)
 }
 
 fun getSameMember(
-  shortArr: IntArray,
-  longArr: IntArray
+        shortArr: IntArray,
+        longArr: IntArray
 ): IntArray {
-  var si = 0
-  var li = 0
-  var a = 0
-  val ll = shortArr.lastIndexOf(longArr.last())
-  val sl = longArr.lastIndexOf(shortArr.last())
-  if (ll == -1 && sl == -1) {
-    return IntArray(0)
-  }
-  //TODO 未完成
-  for (i in 0 until shortArr.size) {
-    if (shortArr[i] == longArr[li]) {
-      shortArr[a] = shortArr[i]
-      a++
-    } else if (shortArr[i] > longArr[li]) {
-
+    var si = 0
+    var li = 0
+    var a = 0
+    val ll = shortArr.lastIndexOf(longArr.last())
+    val sl = longArr.lastIndexOf(shortArr.last())
+    if (ll == -1 && sl == -1) {
+        return IntArray(0)
     }
-  }
-  return IntArray(0)
+    //TODO 未完成
+    for (i in 0 until shortArr.size) {
+        if (shortArr[i] == longArr[li]) {
+            shortArr[a] = shortArr[i]
+            a++
+        } else if (shortArr[i] > longArr[li]) {
+
+        }
+    }
+    return IntArray(0)
 }
 
 /**
@@ -117,28 +117,28 @@ fun getSameMember(
 解释: 输入数组表示数字 9。
  */
 fun plusOne(digits: IntArray): IntArray {
-  digits.reverse()
-  for (i in 0 until digits.size) {
-    digits[i] = (digits[i] + 1) % 10
-    if (digits[i] != 0) {
-      break
-    } else if (i == digits.lastIndex) {
-      return digits.plus(1).reversedArray()
+    digits.reverse()
+    for (i in 0 until digits.size) {
+        digits[i] = (digits[i] + 1) % 10
+        if (digits[i] != 0) {
+            break
+        } else if (i == digits.lastIndex) {
+            return digits.plus(1).reversedArray()
+        }
     }
-  }
-  digits.reverse()
-  return digits
+    digits.reverse()
+    return digits
 }
 
 /**
  *
  */
 fun addDigits(num: Int): Int {
-  var sum = 0
-  do {
+    var sum = 0
+    do {
 
-  } while (num > 9)
-  return sum
+    } while (num > 9)
+    return sum
 }
 
 /**
@@ -156,57 +156,92 @@ num1 和 num2 均不以零开头，除非是数字 0 本身。
 下面这种方法会溢出
  */
 fun multiple(
-  num1: String,
-  num2: String
+        num1: String,
+        num2: String
 ): String {
-  if (num1.isEmpty() || num2.isEmpty() || num1.length >= 110 || num2.length >= 110)
-    return "illegal args"
-  var a1: Long = 0
-  var a2: Long = 0
-  for (i in 0 until num1.length) {
-    a1 += Math.round(
-        (num1.elementAt(i).toLong() - 48) * (Math.pow(10.0, (num1.length - i).toDouble() - 1))
-    )
+    if (num1.isEmpty() || num2.isEmpty() || num1.length >= 110 || num2.length >= 110)
+        return "illegal args"
+    var a1: Long = 0
+    var a2: Long = 0
+    for (i in 0 until num1.length) {
+        a1 += Math.round(
+                (num1.elementAt(i).toLong() - 48) * (Math.pow(10.0, (num1.length - i).toDouble() - 1))
+        )
 
-  }
-  for (i in 0 until num2.length) {
-    a2 += Math.round(
-        (num2.elementAt(i).toLong() - 48) * (Math.pow(10.0, (num2.length - i).toDouble() - 1))
-    )
-  }
-  println(a1)
-  println(a2)
+    }
+    for (i in 0 until num2.length) {
+        a2 += Math.round(
+                (num2.elementAt(i).toLong() - 48) * (Math.pow(10.0, (num2.length - i).toDouble() - 1))
+        )
+    }
+    println(a1)
+    println(a2)
 
-  return (a1 * a2).toString()
+    return (a1 * a2).toString()
 }
 
 /**
+ * num1 和 num2 的长度小于110。
+num1 和 num2 只包含数字 0-9。
+num1 和 num2 均不以零开头，除非是数字 0 本身。
+不能使用任何标准库的大数类型（比如 BigInteger）或直接将输入转换为整数来处理
+
  * 以下采用列式计算，处理进位，将对应的结果存到数组中
  */
 fun multiple2(
-  num1: String,
-  num2: String
+        num1: String,
+        num2: String
 ): String {
-  val sum = Array((num1.length + num2.length)) { 0 }
-  val a1 = Array((num1.length)) { 0 }
-  val a2 = Array((num2.length)) { 0 }
-  for (i in 0 until num1.length) {
-    a1[i] = num1.elementAt(i).toInt() - 48
-  }
-  for (i in 0 until num2.length) {
-    a2[i] = num2.elementAt(i).toInt() - 48
-  }
-  a1.reverse()
-  a2.reverse()
-  for (i in 0 until a2.size) {
-    for (j in 0 until a1.size) {
-      sum[i + j] += (a1[j] + a2[i]) % 10
-      sum[i + j + 1] += (a1[j] + a2[i]) / 10
+    if (num1.length == 1 && num1.first() == '0' || num2.length == 1 && num2.first() == '0') {
+        return "0"
+    } else if (num1.length == 1 && num1.first() == '1') {
+        return num2
+    } else if (num2.length == 1 && num2.first() == '1') {
+        return num1
     }
-  }
-  val stringBuffer = StringBuilder()
-  sum.reverse()
-  for (i in sum)
-    stringBuffer.append(i)
-  return stringBuffer.toString()
+    val sum = Array((num1.length + num2.length)) { 0 }
+    /*val a1 = Array((num1.length)) { 0 }
+    val a2 = Array((num2.length)) { 0 }
+    for (i in 0 until num1.length) {
+        a1[i] = num1.elementAt(i).toInt() - 48
+    }
+    for (i in 0 until num2.length) {
+        a2[i] = num2.elementAt(i).toInt() - 48
+    }
+    a1.reverse()
+    a2.reverse()
+    for (i in 0 until a1.size) {
+        for (j in 0 until a2.size) {
+            sum[i + j + 1] = (a1[i] * a2[j] + sum[i + j]) / 10 + sum[i + j + 1]
+            sum[i + j] = (a1[i] * a2[j] + sum[i + j]) % 10
+        }
+    }*/
+    val nums1 = num1.reversed()
+    val nums2 = num2.reversed()
+    for (i in 0 until nums1.length) {
+        for (j in 0 until nums2.length) {
+            sum[i + j + 1] = ((nums1.elementAt(i).toInt() - 48) * (nums2.elementAt(j).toInt() - 48) + sum[i + j]) / 10 + sum[i + j + 1]
+            sum[i + j] = ((nums1.elementAt(i).toInt() - 48) * (nums2.elementAt(j).toInt() - 48) + sum[i + j]) % 10
+        }
+    }
+    val stringBuffer = StringBuilder()
+    sum.reverse()
+    val t = if (sum.first() == 0) 1 else 0
+    for (i in t until sum.size)
+        stringBuffer.append(sum[i])
+    return stringBuffer.toString()
+}
+
+/**
+ * 给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。
+
+注意：答案中不可以包含重复的三元组。
+思路，先排序
+ */
+fun threeSum(nums: IntArray): List<List<Int>> {
+    if (nums.size < 3) return emptyList()
+    nums.sort()
+    if (nums.contains(0))
+        nums.indexOf(0)
+
 }
