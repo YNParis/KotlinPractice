@@ -20,7 +20,7 @@ fun getCount(n: Int): Int {
   }
   var sum = 0
   for (j in array) {
-    sum = sum + array[j]
+    sum += array[j]
   }
   return sum
 }
@@ -62,7 +62,7 @@ fun intersect(
   nums2: IntArray
 ): IntArray {
   if (nums1.isEmpty() or nums2.isEmpty()) {
-    return kotlin.IntArray(0)
+    return IntArray(0)
   }
   nums1.sort()
   nums2.sort()
@@ -74,7 +74,7 @@ fun intersect(
     getSameMember(nums2, nums1)
   }
 
-  return kotlin.IntArray(0)
+  return IntArray(0)
 }
 
 fun getSameMember(
@@ -87,10 +87,10 @@ fun getSameMember(
   val ll = shortArr.lastIndexOf(longArr.last())
   val sl = longArr.lastIndexOf(shortArr.last())
   if (ll == -1 && sl == -1) {
-    return kotlin.IntArray(0)
+    return IntArray(0)
   }
   //TODO 未完成
-  for (i in 0..(shortArr.size - 1)) {
+  for (i in 0 until shortArr.size) {
     if (shortArr[i] == longArr[li]) {
       shortArr[a] = shortArr[i]
       a++
@@ -98,7 +98,7 @@ fun getSameMember(
 
     }
   }
-  return kotlin.IntArray(0)
+  return IntArray(0)
 }
 
 /**
@@ -118,7 +118,7 @@ fun getSameMember(
  */
 fun plusOne(digits: IntArray): IntArray {
   digits.reverse()
-  for (i in 0..(digits.size - 1)) {
+  for (i in 0 until digits.size) {
     digits[i] = (digits[i] + 1) % 10
     if (digits[i] != 0) {
       break
@@ -128,4 +128,85 @@ fun plusOne(digits: IntArray): IntArray {
   }
   digits.reverse()
   return digits
+}
+
+/**
+ *
+ */
+fun addDigits(num: Int): Int {
+  var sum = 0
+  do {
+
+  } while (num > 9)
+  return sum
+}
+
+/**
+ * 给定两个以字符串形式表示的非负整数 num1 和 num2，返回 num1 和 num2 的乘积，它们的乘积也表示为字符串形式。
+ * 说明：
+
+num1 和 num2 的长度小于110。
+num1 和 num2 只包含数字 0-9。
+num1 和 num2 均不以零开头，除非是数字 0 本身。
+不能使用任何标准库的大数类型（比如 BigInteger）或直接将输入转换为整数来处理
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/multiply-strings
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+下面这种方法会溢出
+ */
+fun multiple(
+  num1: String,
+  num2: String
+): String {
+  if (num1.isEmpty() || num2.isEmpty() || num1.length >= 110 || num2.length >= 110)
+    return "illegal args"
+  var a1: Long = 0
+  var a2: Long = 0
+  for (i in 0 until num1.length) {
+    a1 += Math.round(
+        (num1.elementAt(i).toLong() - 48) * (Math.pow(10.0, (num1.length - i).toDouble() - 1))
+    )
+
+  }
+  for (i in 0 until num2.length) {
+    a2 += Math.round(
+        (num2.elementAt(i).toLong() - 48) * (Math.pow(10.0, (num2.length - i).toDouble() - 1))
+    )
+  }
+  println(a1)
+  println(a2)
+
+  return (a1 * a2).toString()
+}
+
+/**
+ * 以下采用列式计算，处理进位，将对应的结果存到数组中
+ */
+fun multiple2(
+  num1: String,
+  num2: String
+): String {
+  val sum = Array((num1.length + num2.length)) { 0 }
+  val a1 = Array((num1.length)) { 0 }
+  val a2 = Array((num2.length)) { 0 }
+  for (i in 0 until num1.length) {
+    a1[i] = num1.elementAt(i).toInt() - 48
+  }
+  for (i in 0 until num2.length) {
+    a2[i] = num2.elementAt(i).toInt() - 48
+  }
+  a1.reverse()
+  a2.reverse()
+  for (i in 0 until a2.size) {
+    for (j in 0 until a1.size) {
+      sum[i + j] += (a1[j] + a2[i]) % 10
+      sum[i + j + 1] += (a1[j] + a2[i]) / 10
+    }
+  }
+  val stringBuffer = StringBuilder()
+  sum.reverse()
+  for (i in sum)
+    stringBuffer.append(i)
+  return stringBuffer.toString()
 }

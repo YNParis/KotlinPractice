@@ -1,8 +1,8 @@
-#include "../../../../../../../Software/AndroidStudio/sdk/ndk-bundle/sysroot/usr/include/stdint.h"
-#include "../../../../../../../Software/AndroidStudio/sdk/ndk-bundle/sysroot/usr/include/stdlib.h"
-#include "../../../../../../../Software/AndroidStudio/sdk/ndk-bundle/sysroot/usr/include/string.h"
-#include "../../../../../../../Software/AndroidStudio/sdk/ndk-bundle/sysroot/usr/include/memory.h"
-#include "../../../../../../../Software/AndroidStudio/sdk/ndk-bundle/sysroot/usr/include/stdio.h"
+#include "stdint.h"
+#include "stdlib.h"
+#include "string.h"
+#include "memory.h"
+#include "stdio.h"
 
 int g_msg_no;
 
