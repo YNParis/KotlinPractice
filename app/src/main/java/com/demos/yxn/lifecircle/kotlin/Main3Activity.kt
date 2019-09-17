@@ -21,7 +21,7 @@ class Main3Activity : AppCompatActivity() {
       true
     })
 
-    println(multiple2("456", "123"))
+    println(threeSum(intArrayOf(-2, 0, 1, 1, 2)).toString())
   }
 
 }
