@@ -228,38 +228,65 @@ fun multiple2(
  * 给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。
 
 注意：答案中不可以包含重复的三元组。
-思路，先排序
+思路，先排序，遍历第一个数，在剩下的数组元素中用双指针，找剩下的两个数
+初始执行时间2588ms
+
+最终优化执行时间780ms
+1.与上一个相同，则进行下次循环，加上这个能快600ms
+2.相等时做下面的操作快1000ms
+3.用MutableList比用ArrayList快70ms
  */
 fun threeSum(nums: IntArray): MutableList<List<Int>> {
-
-  val listOfList = mutableListOf<List<Int>>()
+  val listOfList = ArrayList<List<Int>>()
   nums.sort()
-  if (nums.size < 3) return listOfList
-  if (nums.first() * nums.last() > 0)
-    return listOfList
-  if (nums.first() * nums.last() == 0 && nums.first() - nums.last() != 0) return listOfList
-  for ((index, e) in nums.withIndex()) {
-    if (index + 3 >= nums.size) break
-    val target = -e
+  for (index in 0 until nums.size - 2) {
+    if (nums[index] > 0) break
+    //1.与上一个相同，则进行下次循环，加上这个能快600ms
+    if (index > 0 && nums[index] == nums[index - 1]) continue
     var i = index + 1
     var j = nums.size - 1
     while (i < j) {
-      val sum = nums.elementAt(i) + nums.elementAt(j)
+      val sum = nums[index] + nums[i] + nums[j]
       when {
-        sum == target -> {
-          val list = mutableListOf<Int>()
-          list.add(e)
-          list.add(nums.elementAt(i))
-          list.add(nums.elementAt(j))
-          if (!listOfList.contains(list))
-            listOfList.add(list)
-          i++
-          j--
+        sum < 0 -> while (i < j && nums[i] == nums[++i]);//直到下一个不相等的nums[i]，因为相等的话，和这次的结果时一样的
+        sum > 0 -> while (i < j && nums[j] == nums[--j]);//直到下一个不相等的nums[j]
+        else -> {
+          //2.这一步这样写能快1000ms
+          listOfList.add(listOf(nums[index], nums[i], nums[j]))
+          while (i < j && nums[i] == nums[++i]);
+          while (i < j && nums[j] == nums[--j]);
         }
-        sum > target -> j--
-        else -> i++
       }
     }
   }
   return listOfList
 }
+
+/**
+ * 执行时间736ms的范例
+ */
+fun bestThreeSum(nums: IntArray): MutableList<List<Int>> {
+  nums.sort()
+  val res = ArrayList<List<Int>>()
+  for (k in 0 until nums.size - 2) {
+    if (nums[k] > 0) break
+    if (k > 0 && nums[k] == nums[k - 1]) continue
+    var start = k + 1
+    var stop = nums.size - 1
+    while (start < stop) {
+      val sum = nums[k] + nums[start] + nums[stop]
+      //use while can make 20 ms faster than if
+      when {
+        sum < 0 -> while (start < stop && nums[start] == nums[++start]);
+        sum > 0 -> while (start < stop && nums[stop] == nums[--stop]);
+        else -> {
+          res.add(listOf(nums[k], nums[start], nums[stop]))
+          while (start < stop && nums[start] == nums[++start]);
+          while (start < stop && nums[stop] == nums[--stop]);
+        }
+      }
+    }
+  }
+  return res
+}
+
