@@ -298,28 +298,11 @@ fun numMovesStones(
 ): IntArray {
   val l: Int
   val r: Int
-  var x = a
-  var y = b
-  var z = c
-  if (x > y) {
-    val tem = x
-    x = y
-    y = tem
-  }
-  if (y > z) {
-    val tem = y
-    y = z
-    z = tem
-    if (x > y) {
-      val tem = x
-      x = y
-      y = tem
-    }
-  }
-
+  val x = minOf(a, b, c)
+  val z = maxOf(a, b, c)
+  val y = a + b + c - x - z
   l = y - x - 1
   r = z - y - 1
-
   if (l == 0 && r == 0) {
     return intArrayOf(0, 0)
   } else if (l < 2 || r < 2) {
