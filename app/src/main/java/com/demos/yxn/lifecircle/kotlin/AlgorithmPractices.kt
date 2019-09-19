@@ -290,3 +290,41 @@ fun bestThreeSum(nums: IntArray): MutableList<List<Int>> {
   return res
 }
 
+/**1033移动石子直到连续  236ms*/
+fun numMovesStones(
+  a: Int,
+  b: Int,
+  c: Int
+): IntArray {
+  val l: Int
+  val r: Int
+  var x = a
+  var y = b
+  var z = c
+  if (x > y) {
+    val tem = x
+    x = y
+    y = tem
+  }
+  if (y > z) {
+    val tem = y
+    y = z
+    z = tem
+    if (x > y) {
+      val tem = x
+      x = y
+      y = tem
+    }
+  }
+
+  l = y - x - 1
+  r = z - y - 1
+
+  if (l == 0 && r == 0) {
+    return intArrayOf(0, 0)
+  } else if (l < 2 || r < 2) {
+    return intArrayOf(1, l + r)
+  }
+  return intArrayOf(2, l + r)
+}
+
