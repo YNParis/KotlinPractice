@@ -35,7 +35,7 @@ fun removeDuplicates(nums: IntArray): Int {
   }
   var a = 0
   nums[a] = nums[0]
-  for (i in 0..(nums.size - 1)) {
+  for (i in 0 until nums.size) {
     if (nums[i] != nums[a]) {
       a++
       nums[a] = nums[i]
@@ -311,3 +311,88 @@ fun numMovesStones(
   return intArrayOf(2, l + r)
 }
 
+/**
+ * 给你个整数数组 arr，其中每个元素都 不相同。
+
+请你找到所有具有最小绝对差的元素对，并且按升序的顺序返回。
+ */
+fun minimumAbsDifference(arr: IntArray): List<List<Int>> {
+  arr.sort()
+  val list = ArrayList<List<Int>>()
+  var min = 0
+  for (i in 1 until arr.size) {
+    val d = Math.abs(arr[i] - arr[i - 1])
+    if (min == 0 || min == d) {
+      list.add(listOf(arr[i - 1], arr[i]))
+      min = d
+    } else if (min < d) {
+      continue
+    } else if (min > d) {
+      list.clear()
+      list.add(listOf(arr[i - 1], arr[i]))
+      min = d
+    }
+  }
+  return list
+}
+
+/**
+ * 请你帮忙设计一个程序，用来找出第 n 个丑数。
+
+丑数是可以被 a 或 b 或 c 整除的 正整数。
+ */
+fun nthUglyNumber(
+  n: Int,
+  a: Int,
+  b: Int,
+  c: Int
+): Int {
+  return 0
+}
+
+/**
+ * 香槟塔，返回第i行第j列杯中香槟的比例
+ * 错误原因：不是这一层满了，再流到下一层，每一个杯子得到香槟的速度是不一样的，越到中间，速度越快
+ */
+fun champagneTower(
+  poured: Int,
+  query_row: Int,
+  query_glass: Int
+): Double {
+  if (query_glass > query_row) return 0.0
+  val i = query_row + 1
+  val j = query_glass + 1
+  if (poured == 0) {
+    return 0.0
+  }
+  if (i == 1) {
+    return 1.0
+  }
+  val a = poured - i * (i - 1) / 2.0
+  if (a <= 0.0) return 0.0
+  else if (a >= i) return 1.0
+  return when (j) {
+    1, i -> a / (i - 1.0) / 2.0
+    else -> a / (i - 1.0)
+  }
+}
+
+/**
+ * 香槟塔，返回第i行第j列杯中香槟的比例
+ * 思路：
+ */
+fun champagneTower2(
+  poured: Int,
+  query_row: Int,
+  query_glass: Int
+): Double {
+
+  var r = 0.0
+  if (poured == 0) return r
+  val array2d = Array(query_row + 1) { Array(query_row + 1) { 0.0 } }
+  for (i in 0..query_row) {
+
+  }
+
+  return r
+}

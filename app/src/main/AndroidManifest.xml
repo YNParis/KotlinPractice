@@ -12,6 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ipc.IPCActivity">
+
+        </activity>
+
+        <service
+            android:name=".ipc.RemoteService"
+            android:process=":remote">
+        </service>
+
+        <activity android:name=".webview.WebViewActivity">
+
+        </activity>
         <activity
             android:name=".Activity.MainActivity"
             android:configChanges="orientation|screenSize">
@@ -33,9 +45,12 @@
         <activity
             android:name=".RecyclereViewDemo.RcviewActivity"
             android:launchMode="singleTask"/>
-        <activity android:name=".Activity.NdkDemoActivity"/>
+        <activity android:name=".Activity.NdkDemoActivity">
+        </activity>
         <activity android:name=".Activity.ToolbarActivity"/>
         <activity android:name=".kotlin.Main3Activity">
+        </activity>
+        <activity android:name=".ijkdemo.PlayerTest">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

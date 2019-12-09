@@ -2,7 +2,8 @@ package com.demos.yxn.lifecircle.Activity
 
 import android.os.Bundle
 import android.util.Log
-import kotlinx.android.synthetic.main.activity_simple.*
+import com.demos.yxn.lifecircle.R.string
+import kotlinx.android.synthetic.main.activity_simple.textView
 
 /**
  * Created by YXN on 2018/6/20.
@@ -10,12 +11,10 @@ import kotlinx.android.synthetic.main.activity_simple.*
 
 class CActivity : BaseActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        TAG = "C"
-        textView.text = "CCC singleTop"
-        Log.e(TAG, TAG + " onCreate")
-    }
-
-
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    TAG = "C"
+    textView.text = getString(string.c_name)
+    Log.e(TAG, "$TAG onCreate")
+  }
 }

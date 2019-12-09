@@ -20,8 +20,14 @@ class Main3Activity : AppCompatActivity() {
       println("翻炒${time}分钟")
       true
     })
-
     println(threeSum(intArrayOf(-2, 0, 1, 1, 2)).toString())
+    println("香槟塔结果：${champagneTower(4, 0, 0)}")
+    println("香槟塔结果：${champagneTower(1, 1, 1)}")
+    println("香槟塔结果：${champagneTower(2, 1, 1)}")
+    println("香槟塔结果：${champagneTower(0, 1, 1)}")
+    println("香槟塔结果：${champagneTower(9999, 70, 70)}")
+    println("香槟塔结果：${champagneTower(1000000000, 99, 99)}")
+    println("香槟塔结果：${champagneTower(10000, 20, 15)}")
   }
 
 }
