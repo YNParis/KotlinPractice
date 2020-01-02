@@ -31,19 +31,19 @@ android {
         }
     }
 
-    packagingOptions {
-        doNotStrip '*/mips/*.so'
-        doNotStrip '*/mips64/*.so'
-    }
+  packagingOptions {
+    doNotStrip '*/mips/*.so'
+    doNotStrip '*/mips64/*.so'
+  }
 
-    externalNativeBuild {
-        ndkBuild {
-            path "src/main/jni/Android.mk"
-        }
+  externalNativeBuild {
+    ndkBuild {
+      path "src/main/jni/Android.mk"
     }
+  }
 }
 configurations.all {
-    resolutionStrategy.force 'com.android.support:support-annotations:26.1.0'
+  resolutionStrategy.force 'com.android.support:support-annotations:26.1.0'
 }
 
 dependencies {
