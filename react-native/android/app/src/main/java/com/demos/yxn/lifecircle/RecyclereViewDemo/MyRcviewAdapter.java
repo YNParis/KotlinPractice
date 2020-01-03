@@ -1,4 +1,4 @@
-package com.demos.yxn.lifecircle.RecyclereViewDemo;
+package com.demos.kotlin.RecyclereViewDemo;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.demos.yxn.lifecircle.R;
+import com.demos.kotlin.R;
 
 import java.util.ArrayList;
 import java.util.List;

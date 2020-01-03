@@ -1,4 +1,4 @@
-package com.demos.yxn.lifecircle.db;
+package com.demos.kotlin.db;
 
 import android.content.ContentValues;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.demos.yxn.lifecircle.Activity;
+package com.demos.kotlin.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 

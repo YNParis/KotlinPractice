@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".views.TouchableBallActivity"
     >
-    <com.demos.yxn.lifecircle.views.DrawView
+    <com.demos.kotlin.views.DrawView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

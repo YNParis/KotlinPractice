@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.demos.yxn.lifecircle.liftcycle.FirstActivity"
+    tools:context="com.demos.kotlin.lifecycle.FirstActivity"
     >
-    <com.demos.yxn.lifecircle.views.MyRelativeLayout
+    <com.demos.kotlin.views.MyRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
 
-        <com.demos.yxn.lifecircle.views.MyTextView
+        <com.demos.kotlin.views.MyTextView
             android:id="@+id/button_touch"
             android:layout_width="200dp"
             android:layout_height="100dp"
@@ -23,6 +23,6 @@
             android:text="touch"
             android:textAlignment="center"
             />
-    </com.demos.yxn.lifecircle.views.MyRelativeLayout>
+    </com.demos.kotlin.views.MyRelativeLayout>
 
 </LinearLayout>

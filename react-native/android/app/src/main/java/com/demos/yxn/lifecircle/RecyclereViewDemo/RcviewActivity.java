@@ -1,4 +1,4 @@
-package com.demos.yxn.lifecircle.RecyclereViewDemo;
+package com.demos.kotlin.RecyclereViewDemo;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
-import com.demos.yxn.lifecircle.R;
+import com.demos.kotlin.R;
 
 import java.util.ArrayList;
 import java.util.List;

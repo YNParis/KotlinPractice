@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.demos.yxn.lifecircle">
+    package="com.demos.kotlin">
 
     <application
-        android:name=".liftcycle.MyApp"
+        android:name="com.demos.kotlin.lifecycle.MyApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -12,52 +12,42 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".views.TouchableBallActivity">
+        <activity android:name="com.demos.kotlin.views.TouchableBallActivity">
         </activity>
         <!-- 开启页面 -->
-        <activity android:name=".MainActivity">
+        <activity android:name="com.demos.kotlin.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ipc.IPCActivity">
-        </activity>
 
-        <service
-            android:name=".ipc.RemoteService"
-            android:process=":remote">
-        </service>
-
-        <activity android:name=".webview.WebViewActivity">
+        <activity android:name="com.demos.kotlin.webview.WebViewActivity">
         </activity>
         <activity
-            android:name=".liftcycle.FirstActivity"
+            android:name="com.demos.kotlin.lifecycle.FirstActivity"
             android:configChanges="orientation|screenSize">
         </activity>
         <activity
-            android:name=".liftcycle.BActivity"
+            android:name="com.demos.kotlin.lifecycle.BActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleInstance"/>
         <activity
-            android:name=".liftcycle.AActivity"
+            android:name="com.demos.kotlin.lifecycle.AActivity"
             android:launchMode="singleTask"/>
         <activity
-            android:name=".liftcycle.CActivity"
+            android:name="com.demos.kotlin.lifecycle.CActivity"
             android:launchMode="singleTop"
             android:theme="@style/Theme.AppCompat.Dialog"/>
         <activity
-            android:name=".liftcycle.DActivity"
+            android:name="com.demos.kotlin.lifecycle.DActivity"
             android:launchMode="standard"/>
-        <activity
-            android:name=".RecyclereViewDemo.RcviewActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".ndk.NdkDemoActivity">
+        <activity android:name="com.demos.kotlin.ndk.NdkDemoActivity">
         </activity>
-        <activity android:name=".kotlinsyntax.KotlinSyntaxActivity">
+        <activity android:name="com.demos.kotlin.kotlinsyntax.KotlinSyntaxActivity">
         </activity>
-        <activity android:name=".ijk.PlayerTest"/>
+        <activity android:name="com.demos.kotlin.ijk.PlayerTest"/>
     </application>
 
 </manifest>

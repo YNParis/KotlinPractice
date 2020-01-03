@@ -1,4 +1,4 @@
-package com.demos.yxn.lifecircle.RecyclereViewDemo;
+package com.demos.kotlin.RecyclereViewDemo;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
