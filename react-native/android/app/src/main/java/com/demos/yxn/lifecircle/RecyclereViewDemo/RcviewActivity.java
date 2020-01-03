@@ -5,9 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-
 import com.demos.kotlin.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
