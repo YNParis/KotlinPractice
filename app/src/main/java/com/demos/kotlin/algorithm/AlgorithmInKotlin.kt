@@ -1,4 +1,4 @@
-package com.demos.kotlin.kotlinsyntax
+package com.demos.kotlin.algorithm
 
 /**
  * Created by YXN on 2018/10/30.
@@ -69,9 +69,9 @@ fun intersect(
 
 
   if (nums1.size < nums2.size) {
-    getSameMember(nums1, nums2)
+      getSameMember(nums1, nums2)
   } else {
-    getSameMember(nums2, nums1)
+      getSameMember(nums2, nums1)
   }
 
   return IntArray(0)

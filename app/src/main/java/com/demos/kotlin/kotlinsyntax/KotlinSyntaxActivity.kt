@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import com.demos.kotlin.R
+import com.demos.kotlin.algorithm.champagneTower
+import com.demos.kotlin.algorithm.threeSum
 
 class KotlinSyntaxActivity : AppCompatActivity() {
 
