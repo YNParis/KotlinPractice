@@ -2,6 +2,7 @@ package com.demos.kotlin.lifecycle
 
 import android.app.Application
 import android.content.res.Configuration
+import android.graphics.Typeface
 import android.util.Log
 
 /**
@@ -11,10 +12,21 @@ import android.util.Log
 class MyApp : Application() {
 
   val TAG = "App"
+
+  object App
   override fun onCreate() {
     super.onCreate()
     Log.e(TAG, "$TAG--onCreate 程序开始")
+//    加载矢量图标库
   }
+
+  companion object{
+    fun getTypeFace(): Typeface {
+      val assets=
+      return Typeface.createFromAsset(assets, "fonts/iconfont.ttf")
+    }
+  }
+
 
   override fun onLowMemory() {
     super.onLowMemory()
