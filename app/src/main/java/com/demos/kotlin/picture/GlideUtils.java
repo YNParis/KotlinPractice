@@ -1,6 +1,7 @@
 package com.demos.kotlin.picture;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -25,18 +26,18 @@ public class GlideUtils {
     public static void setDefaultPic(Context context, String url, ImageView imageView,
         int errorRes) {
         if (errorRes == 0) {
-            errorRes = R.drawable.ic_error;
+            errorRes = R.drawable.ic_default;
         }
-        if (url == null || ("").equals(url)) {
+        if (TextUtils.isEmpty(url)) {
             imageView.setImageResource(errorRes);
-        } else {
-            Glide.with(context)
-                .load(url)
-                .apply(RequestOptions.errorOf(errorRes))
-                .apply(RequestOptions.skipMemoryCacheOf(true))
-                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
-                .into(imageView);
+            return;
         }
+        Glide.with(context)
+            .load(url)
+            .apply(RequestOptions.errorOf(errorRes))
+            .apply(RequestOptions.skipMemoryCacheOf(true))
+            .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+            .into(imageView);
     }
 
     /**
@@ -50,17 +51,17 @@ public class GlideUtils {
         int errorRes) {
         //若传了默认失败图像，则用默认的，不然用R.drawable.ic_error
         if (errorRes == 0) {
-            errorRes = R.drawable.ic_error;
+            errorRes = R.drawable.ic_default;
         }
-        if (url == null || ("").equals(url)) {
+        if (TextUtils.isEmpty(url)) {
             imageView.setImageResource(errorRes);
-        } else {
-            Glide.with(context)
-                .load(url)
-                .apply(RequestOptions.circleCropTransform())
-                .apply(RequestOptions.errorOf(errorRes))
-                .into(imageView);
+            return;
         }
+        Glide.with(context)
+            .load(url)
+            .apply(RequestOptions.circleCropTransform())
+            .apply(RequestOptions.errorOf(errorRes))
+            .into(imageView);
     }
 
     /**
@@ -72,19 +73,18 @@ public class GlideUtils {
 
     public static void setCenterCropImage(Context context, String url, ImageView imageView,
         int errorRes) {
-        if (url == null || ("").equals(url)) {
-            if (errorRes == 0) {
-                imageView.setImageResource(R.drawable.ic_error);
-            } else {
-                imageView.setImageResource(errorRes);
-            }
-        } else {
-            Glide.with(context)
-                .load(url)
-                .apply(RequestOptions.centerCropTransform())
-                .apply(RequestOptions.errorOf(R.drawable.ic_error))
-                .into(imageView);
+        if (errorRes == 0) {
+            errorRes = R.drawable.ic_default;
         }
+        if (TextUtils.isEmpty(url)) {
+            imageView.setImageResource(errorRes);
+            return;
+        }
+        Glide.with(context)
+            .load(url)
+            .apply(RequestOptions.centerCropTransform())
+            .apply(RequestOptions.errorOf(errorRes))
+            .into(imageView);
     }
 
     /**
@@ -96,19 +96,18 @@ public class GlideUtils {
 
     public static void setFitCenterImage(Context context, String url, ImageView imageView,
         int errorRes) {
-        if (url == null || ("").equals(url)) {
-            if (errorRes == 0) {
-                imageView.setImageResource(R.drawable.ic_error);
-            } else {
-                imageView.setImageResource(errorRes);
-            }
-        } else {
-            Glide.with(context)
-                .load(url)
-                .apply(RequestOptions.fitCenterTransform())
-                .apply(RequestOptions.errorOf(R.drawable.ic_error))
-                .into(imageView);
+        if (errorRes == 0) {
+            errorRes = R.drawable.ic_default;
         }
+        if (TextUtils.isEmpty(url)) {
+            imageView.setImageResource(errorRes);
+            return;
+        }
+        Glide.with(context)
+            .load(url)
+            .apply(RequestOptions.fitCenterTransform())
+            .apply(RequestOptions.errorOf(errorRes))
+            .into(imageView);
     }
 
     /**
@@ -121,20 +120,19 @@ public class GlideUtils {
 
     public static void setCornerImage(Context context, String url, ImageView imageView,
         int errorRes, int corner) {
-        if (url == null || ("").equals(url)) {
-            if (errorRes == 0) {
-                imageView.setImageResource(R.drawable.ic_error);
-            } else {
-                imageView.setImageResource(errorRes);
-            }
-        } else {
-            Glide.with(context)
-                .load(url)
-                .apply(RequestOptions.fitCenterTransform())
-                .apply(RequestOptions.bitmapTransform(new RoundedCorners(corner)))
-                .apply(RequestOptions.errorOf(R.drawable.ic_error))
-                .into(imageView);
+        if (errorRes == 0) {
+            errorRes = R.drawable.ic_default;
         }
+        if (TextUtils.isEmpty(url)) {
+            imageView.setImageResource(errorRes);
+            return;
+        }
+        Glide.with(context)
+            .load(url)
+            .apply(RequestOptions.fitCenterTransform())
+            .apply(RequestOptions.bitmapTransform(new RoundedCorners(corner)))
+            .apply(RequestOptions.errorOf(errorRes))
+            .into(imageView);
     }
 }
 
