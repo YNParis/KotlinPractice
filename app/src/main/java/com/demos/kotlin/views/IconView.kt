@@ -9,7 +9,6 @@ package com.demos.kotlin.views
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.TextView
-import com.demos.kotlin.lifecycle.MyApp
 
 class IconView : TextView {
   constructor(context: Context?) : super(context)
@@ -26,6 +25,6 @@ class IconView : TextView {
 
   fun init() {
     //TODO 设置文字typeFace，引用ttf图标文件
-    typeface=MyApp.get
+//    typeface=MyApp.get
   }
 }

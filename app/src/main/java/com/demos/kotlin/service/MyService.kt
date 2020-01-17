@@ -12,63 +12,71 @@ import android.util.Log
  */
 class MyService : Service() {
 
-    val TAG = "MyService"
+  val TAG = "MyService"
 
-    override fun onBind(intent: Intent?): IBinder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  override fun onBind(intent: Intent?): IBinder {
+    TODO(
+        "not implemented"
+    ) //To change body of created functions use File | Settings | File Templates.
 //返回一个Binder对象
-    }
+  }
 
-    override fun onCreate() {
-        super.onCreate()
-        Log.e(TAG, TAG + " onCreate()")
-        val msg=Message()
-    }
+  override fun onCreate() {
+    super.onCreate()
+    Log.e(TAG, "$TAG onCreate()")
+    val msg = Message()
+  }
 
-    override fun onConfigurationChanged(newConfig: Configuration?) {
-        super.onConfigurationChanged(newConfig)
-        Log.e(TAG, TAG + " onConfigurationChanged()")
-    }
+  override fun onConfigurationChanged(newConfig: Configuration?) {
+    super.onConfigurationChanged(newConfig)
+    Log.e(TAG, "$TAG onConfigurationChanged()")
+  }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.e(TAG, TAG + " onDestroy")
-    }
+  override fun onDestroy() {
+    super.onDestroy()
+    Log.e(TAG, "$TAG onDestroy")
+  }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        Log.e(TAG, TAG + " onLowMemory")
-    }
+  override fun onLowMemory() {
+    super.onLowMemory()
+    Log.e(TAG, "$TAG onLowMemory")
+  }
 
-    override fun onRebind(intent: Intent?) {
-        super.onRebind(intent)
-        Log.e(TAG, TAG + " onRebind")
-    }
+  override fun onRebind(intent: Intent?) {
+    super.onRebind(intent)
+    Log.e(TAG, "$TAG onRebind")
+  }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        return super.onStartCommand(intent, flags, startId)
-        Log.e(TAG, TAG + " onStartCommand")
-    }
+  override fun onStartCommand(
+    intent: Intent?,
+    flags: Int,
+    startId: Int
+  ): Int {
+    return super.onStartCommand(intent, flags, startId)
+    Log.e(TAG, "$TAG onStartCommand")
+  }
 
-    override fun onTaskRemoved(rootIntent: Intent?) {
-        super.onTaskRemoved(rootIntent)
-        Log.e(TAG, TAG + " onTaskRemoved")
-    }
+  override fun onTaskRemoved(rootIntent: Intent?) {
+    super.onTaskRemoved(rootIntent)
+    Log.e(TAG, "$TAG onTaskRemoved")
+  }
 
-    override fun onTrimMemory(level: Int) {
-        super.onTrimMemory(level)
-        Log.e(TAG, TAG + " onTrimMemory")
-    }
+  override fun onTrimMemory(level: Int) {
+    super.onTrimMemory(level)
+    Log.e(TAG, "$TAG onTrimMemory")
+  }
 
-    override fun onUnbind(intent: Intent?): Boolean {
-        return super.onUnbind(intent)
-        Log.e(TAG, TAG + " onUnbind")
-    }
+  override fun onUnbind(intent: Intent?): Boolean {
+    return super.onUnbind(intent)
+    Log.e(TAG, "$TAG onUnbind")
+  }
 
-    override fun onStart(intent: Intent?, startId: Int) {
-        super.onStart(intent, startId)
-        Log.e(TAG, TAG + " onStart")
-    }
-
+  override fun onStart(
+    intent: Intent?,
+    startId: Int
+  ) {
+    super.onStart(intent, startId)
+    Log.e(TAG, "$TAG onStart")
+  }
 
 }

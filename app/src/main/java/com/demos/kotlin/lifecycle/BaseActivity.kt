@@ -17,11 +17,12 @@ import org.jetbrains.anko.startActivity
  */
 open class BaseActivity : AppCompatActivity(), View.OnClickListener {
 
-  var TAG = ""
+  lateinit var TAG: String
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_simple)
+    TAG = javaClass.name
     to_a.setOnClickListener(this)
     to_b.setOnClickListener(this)
     to_c.setOnClickListener(this)

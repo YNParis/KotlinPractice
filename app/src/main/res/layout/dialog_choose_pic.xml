@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBackground"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:id="@+id/choose_from_album"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:text="@string/album"
+        />
+
+    <TextView
+        android:id="@+id/take_photo"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="3dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:text="@string/photo"
+        />
+
+    <TextView
+        android:id="@+id/cancel_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:text="@string/cancel"
+        />
+
+</LinearLayout>

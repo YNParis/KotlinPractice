@@ -2,7 +2,6 @@ package com.demos.kotlin.lifecycle
 
 import android.app.Application
 import android.content.res.Configuration
-import android.graphics.Typeface
 import android.util.Log
 
 /**
@@ -20,12 +19,6 @@ class MyApp : Application() {
 //    加载矢量图标库
   }
 
-  companion object{
-    fun getTypeFace(): Typeface {
-      val assets=
-      return Typeface.createFromAsset(assets, "fonts/iconfont.ttf")
-    }
-  }
 
 
   override fun onLowMemory() {
