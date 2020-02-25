@@ -2,11 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.demos.kotlin">
-    
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/> <!-- 使用摄像头权限 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".lifecycle.MyApp"
@@ -17,52 +12,36 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".picture.PictureActivity">
-        </activity>
-        <activity android:name=".views.TouchableBallActivity">
-        </activity> <!-- 开启页面 -->
+        <activity android:name=".views.DrawerActivity"></activity>
+        <activity android:name=".views.TouchableBallActivity"></activity> <!-- 开启页面 -->
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".webview.WebViewActivity">
-        </activity>
+        <activity android:name=".webview.WebViewActivity"></activity>
         <activity
             android:name=".lifecycle.FirstActivity"
-            android:configChanges="orientation|screenSize">
-        </activity>
+            android:configChanges="orientation|screenSize"></activity>
         <activity
             android:name=".lifecycle.BActivity"
             android:configChanges="orientation|screenSize"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleInstance" />
         <activity
             android:name=".lifecycle.AActivity"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask" />
         <activity
             android:name=".lifecycle.CActivity"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.AppCompat.Dialog"/>
+            android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".lifecycle.DActivity"
-            android:launchMode="standard"/>
-        <activity android:name=".ndk.NdkDemoActivity">
-        </activity>
-        <activity android:name=".kotlinsyntax.KotlinSyntaxActivity">
-        </activity>
-        <activity android:name=".ijk.PlayerTest"/>
-
-        <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.demos.kotlin.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
-        </provider>
+            android:launchMode="standard" />
+        <activity android:name=".ndk.NdkDemoActivity"></activity>
+        <activity android:name=".kotlinsyntax.KotlinSyntaxActivity"></activity>
+        <activity android:name=".ijk.PlayerTest" />
     </application>
 
 </manifest>
