@@ -1,4 +1,4 @@
-package com.demos.kotlin.picture;
+package com.demos.kotlin;
 
 import android.Manifest;
 import android.app.Activity;
@@ -11,30 +11,36 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-import com.demos.kotlin.R;
-import com.demos.kotlin.lifecycle.BaseActivity;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
+import com.demos.kotlin.picture.CompressHelper;
+import com.demos.kotlin.picture.FileProvider7;
+import com.demos.kotlin.picture.GetFileUtil;
+import com.demos.kotlin.picture.GlideUtils;
+
+import org.jetbrains.annotations.Nullable;
+
 import java.io.File;
+
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * 拍照或着从相册选取，然后裁剪，上传，显示到屏幕的过程
  * 必须的文件：
  * provider
  */
-public class PictureActivity extends BaseActivity implements View.OnClickListener {
+public class PictureActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Dialog dialog;
     private static final int CODE_GALLERY_REQUEST = 0xa0;
@@ -45,19 +51,16 @@ public class PictureActivity extends BaseActivity implements View.OnClickListene
     private File finalFile;
     private File originalFile;
     private ImageView imageView;
-    private Button button;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_picture);
-        Log.e(getTAG(), getTAG());
         imageView = findViewById(R.id.img_pic_result);
         findViewById(R.id.btn_get_pic).setOnClickListener(this);
     }
 
     @Override public void onClick(@Nullable View v) {
-        super.onClick(v);
         switch (v.getId()) {
             case R.id.btn_get_pic:
                 chooseIcon();

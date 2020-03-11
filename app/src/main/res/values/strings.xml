@@ -5,4 +5,8 @@
     <string name="c_name">CCC singleTop</string>
     <string name="open">开</string>
     <string name="close">关</string>
+    <string name="album">album</string>
+    <string name="photo">take picture</string>
+    <string name="cancel">Cancel</string>
+    <string name="choose">add picture</string>
 </resources>

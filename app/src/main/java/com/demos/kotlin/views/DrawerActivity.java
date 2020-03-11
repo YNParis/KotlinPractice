@@ -3,11 +3,12 @@ package com.demos.kotlin.views;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
+
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.demos.kotlin.R;
 
@@ -41,19 +42,19 @@ public class DrawerActivity extends AppCompatActivity {
 
     //设置开关监听
     private void initEvent() {
-        drawerbar = new ActionBarDrawerToggle(this, drawerLayout, R.mipmap.ic_launcher, R.string.open, R.string.close) {
-            //菜单打开
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-            }
-
-            // 菜单关闭
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-            }
-        };
+//        drawerbar = new ActionBarDrawerToggle(this, null,drawerLayout,R.mipmap.ic_launcher, R.string.open, R.string.close) {
+//            //菜单打开
+//            @Override
+//            public void onDrawerOpened(View drawerView) {
+//                super.onDrawerOpened(drawerView);
+//            }
+//
+//            // 菜单关闭
+//            @Override
+//            public void onDrawerClosed(View drawerView) {
+//                super.onDrawerClosed(drawerView);
+//            }
+//        };
 
         drawerLayout.addDrawerListener(drawerbar);
     }

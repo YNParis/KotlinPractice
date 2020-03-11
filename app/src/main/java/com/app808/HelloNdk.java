@@ -1,7 +1,8 @@
 package com.app808;
 
 /**
- * Created by YXN on 2018/9/7.
+ * Created by
+ * YXN on 2018/9/7.
  */
 
 public class HelloNdk {

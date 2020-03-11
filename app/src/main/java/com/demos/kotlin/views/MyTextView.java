@@ -1,15 +1,17 @@
 package com.demos.kotlin.views;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
+
 /**
  * TODO: document your custom view class.
  */
-public class MyTextView extends android.support.v7.widget.AppCompatTextView {
+public class MyTextView extends AppCompatTextView {
 
     private final String TAG = "MyTextView";
 

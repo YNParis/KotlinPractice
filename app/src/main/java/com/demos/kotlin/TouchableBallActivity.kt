@@ -1,7 +1,7 @@
-package com.demos.kotlin.views
+package com.demos.kotlin
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.demos.kotlin.R
 
 class TouchableBallActivity : AppCompatActivity() {

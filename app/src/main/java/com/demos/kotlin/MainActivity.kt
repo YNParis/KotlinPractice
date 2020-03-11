@@ -1,17 +1,15 @@
 package com.demos.kotlin
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.demos.kotlin.adaper.MySimpleAdapter
 import com.demos.kotlin.adaper.MySimpleAdapter.MyOnItemOnClickListener
 import com.demos.kotlin.ijk.PlayerTest
 import com.demos.kotlin.kotlinsyntax.KotlinSyntaxActivity
 import com.demos.kotlin.lifecycle.FirstActivity
-import com.demos.kotlin.ndk.NdkDemoActivity
-import com.demos.kotlin.views.TouchableBallActivity
-import com.demos.kotlin.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_open.*
 import org.jetbrains.anko.startActivity
 
@@ -19,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     //功能菜单
     private var list = listOf(
-            "CustomView-TouchableBall", "ijk", "NDK", "LifeCycle", "database", "webview", "KotlinSyntax"
+            "CustomView-TouchableBall", "ijk", "NDK", "LifeCycle", "database", "webview", "KotlinSyntax", "waterMark", "TakePictureUseSystemCamera", "CustomCamera"
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,14 +30,15 @@ class MainActivity : AppCompatActivity() {
             }
         })
         val layoutManager = LinearLayoutManager(this)
-        layoutManager.orientation = LinearLayoutManager.VERTICAL
+        layoutManager.orientation = RecyclerView.VERTICAL
 
         // layoutManager
         list_functions.layoutManager = layoutManager
 
         // itemDecoration
         val itemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
-        itemDecoration.setDrawable(resources.getDrawable(R.drawable.list_divider_bg))
+        itemDecoration.setDrawable(getDrawable(R.drawable.list_divider_bg))
+
         list_functions.addItemDecoration(itemDecoration)
         list_functions.adapter = adapter
     }
@@ -58,6 +57,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity<WebViewActivity>()
             6 ->
                 startActivity<KotlinSyntaxActivity>()
+            7 ->
+                startActivity<WaterMarkActivity>()
+            8 ->
+                startActivity<PictureActivity>()
+            9 ->
+                startActivity<CameraActivity>()
 
             else -> return
         }
