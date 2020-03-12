@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,9 +59,13 @@ public class PictureActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_picture);
         imageView = findViewById(R.id.img_pic_result);
         findViewById(R.id.btn_get_pic).setOnClickListener(this);
+        if (!TextUtils.isEmpty(getIntent().getStringExtra("file"))) {
+            imageView.setImageURI(Uri.fromFile(new File(getIntent().getStringExtra("file"))));
+        }
     }
 
-    @Override public void onClick(@Nullable View v) {
+    @Override
+    public void onClick(@Nullable View v) {
         switch (v.getId()) {
             case R.id.btn_get_pic:
                 chooseIcon();
@@ -151,10 +156,10 @@ public class PictureActivity extends AppCompatActivity implements View.OnClickLi
     private void crop() {
         if (requestPermission(CODE_RESULT_REQUEST)) {
             desUri = Uri.fromFile(new File(
-                getExternalCacheDir() + "/crop.jpg"));
+                    getExternalCacheDir() + "/crop.jpg"));
 
             Uri originUri = FileProvider7.getUriForFile(this,
-                new File(originalFile.getPath()));
+                    new File(originalFile.getPath()));
             Intent cropIntent = new Intent("com.android.camera.action.CROP");
             cropIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             cropIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -182,7 +187,7 @@ public class PictureActivity extends AppCompatActivity implements View.OnClickLi
         File file = CompressHelper.getDefault(this).compressToFile(imgFile);
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), file);
         MultipartBody.Part part =
-            MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+                MultipartBody.Part.createFormData("file", file.getName(), requestBody);
         //TODO 上传图片
         //imageView.setImageURI(desUri);
         GlideUtils.setDefaultPic(getApplicationContext(), file.getAbsolutePath(), imageView);
@@ -191,16 +196,16 @@ public class PictureActivity extends AppCompatActivity implements View.OnClickLi
     private boolean requestPermission(int requestCode) {
         if (Build.VERSION.SDK_INT >= 23) {
             String[] permissions = {
-                Manifest.permission.CAMERA,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
             };
             //验证是否许可权限
             for (String str : permissions) {
                 if (this.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
                     //申请权限
                     ActivityCompat.requestPermissions(this,
-                        permissions, requestCode);
+                            permissions, requestCode);
                     return false;
                 }
             }
@@ -210,7 +215,7 @@ public class PictureActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-        @NonNull int[] grantResults) {
+                                           @NonNull int[] grantResults) {
         switch (requestCode) {
             case CODE_CAMERA_REQUEST:   //拍照权限申请返回
                 takePic();

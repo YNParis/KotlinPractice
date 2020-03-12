@@ -17,7 +17,17 @@ class MainActivity : AppCompatActivity() {
 
     //功能菜单
     private var list = listOf(
-            "CustomView-TouchableBall", "ijk", "NDK", "LifeCycle", "database", "webview", "KotlinSyntax", "waterMark", "TakePictureUseSystemCamera", "CustomCamera"
+            "CustomView-TouchableBall",
+            "ijk",
+            "NDK",
+            "LifeCycle",
+            "Database",
+            "WebView",
+            "KotlinSyntax",
+            "waterMark",
+            "SystemCamera",
+            "CustomCamera",
+            "WeChatCamera"
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +73,8 @@ class MainActivity : AppCompatActivity() {
                 startActivity<PictureActivity>()
             9 ->
                 startActivity<CameraActivity>()
+            10 ->
+                startActivity<WeChatMainActivity>()
 
             else -> return
         }

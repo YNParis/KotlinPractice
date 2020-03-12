@@ -6,6 +6,13 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <application
         android:name=".lifecycle.MyApp"
@@ -16,7 +23,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CameraActivity"></activity>
+        <activity android:name=".WeChatMainActivity"/>
+        <activity android:name=".CameraActivity" />
         <activity android:name=".WaterMarkActivity" />
         <activity android:name=".views.DrawerActivity" />
         <activity android:name=".TouchableBallActivity" /> <!-- 开启页面 -->
@@ -49,6 +57,7 @@
         <activity android:name=".kotlinsyntax.KotlinSyntaxActivity" />
         <activity android:name=".ijk.PlayerTest" />
         <activity android:name=".PictureActivity" />
+        <activity android:name=".WeChatCameraActivity" />
     </application>
 
 </manifest>
