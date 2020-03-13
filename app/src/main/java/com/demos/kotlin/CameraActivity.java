@@ -155,6 +155,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                     getExternalCacheDir() + "/crop.jpg"));
             Uri originUri = FileProvider7.getUriForFile(this,
                     new File(originalFile.getPath()));
+
             Intent cropIntent = new Intent("com.android.camera.action.CROP");
             cropIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             cropIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);

@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".WeChatMainActivity"/>
+        <activity android:name=".WeChatMainActivity" />
         <activity android:name=".CameraActivity" />
         <activity android:name=".WaterMarkActivity" />
         <activity android:name=".views.DrawerActivity" />
@@ -58,6 +58,20 @@
         <activity android:name=".ijk.PlayerTest" />
         <activity android:name=".PictureActivity" />
         <activity android:name=".WeChatCameraActivity" />
+
+        <!-- 必须加 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.demos.kotlin.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <!-- 指定Uri的共享路径 -->
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
 </manifest>
