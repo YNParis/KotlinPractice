@@ -1,4 +1,4 @@
-package com.demos.kotlin.picture;
+package com.demos.kotlin.utils.picture;
 
 import android.content.Context;
 import android.database.Cursor;

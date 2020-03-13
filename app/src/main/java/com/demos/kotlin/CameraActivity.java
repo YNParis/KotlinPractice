@@ -14,14 +14,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.Display;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,13 +28,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.demos.kotlin.picture.FileProvider7;
-import com.demos.kotlin.picture.GetFileUtil;
+import com.demos.kotlin.utils.picture.BitmapUtil;
+import com.demos.kotlin.utils.picture.FileProvider7;
+import com.demos.kotlin.utils.picture.GetFileUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 自定义拍照页面的功能。
@@ -56,6 +57,14 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
     private Uri desUri;
     private File finalFile;
     private File originalFile;
+    private Camera.Parameters mParameters;
+
+
+    private int picWidth = 1080;     //保存图片的宽，设置太大，保存时间会太长
+    private int picHeight = 1920;      //保存图片的高
+
+    private final String tag = "camera";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,37 +102,29 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         releaseCamera();
     }
 
+    /**
+     * 调用摄像头的拍照
+     */
     public void capture() {
-        //TODO 保存图片 设置分辨率
-        Camera.Parameters parameters = camera.getParameters();
-        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-        parameters.setPictureFormat(ImageFormat.JPEG);
-        WindowManager windowManager = getWindowManager();
-        Display display = windowManager.getDefaultDisplay();
-        int screenWidth = display.getWidth();
-        int screenHeight = display.getHeight();
-        parameters.setPictureSize(720, 1080);
-        camera.autoFocus(new Camera.AutoFocusCallback() {
+        Log.e(tag, "点击了拍照");
+        camera.takePicture(null, null, new Camera.PictureCallback() {
             @Override
-            public void onAutoFocus(boolean success, Camera camera) {
-                if (success) {
-                    camera.takePicture(null, null, new Camera.PictureCallback() {
-                        @Override
-                        public void onPictureTaken(byte[] data, Camera camera) {
-                            savePicture(data);
-                        }
-                    });
-                }
+            public void onPictureTaken(byte[] data, Camera camera) {
+                Log.e(tag, "onPictureTaken");
+                savePicture(data);
             }
         });
     }
 
     private void savePicture(byte[] data) {
+        Log.e(tag, "savePicture");
         Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
         Matrix matrix = new Matrix();
-        //TODO 存在镜像问题
         matrix.setRotate(facing == Camera.CameraInfo.CAMERA_FACING_BACK ? 90 : 270);
         bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        if (facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+            bitmap = BitmapUtil.mirror(bitmap);
+        }
         saveToFile(bitmap);
     }
 
@@ -176,7 +177,6 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
     public void openGallery() {
         if (requestPermission(CODE_GALLERY_REQUEST)) {
-            //TODO 打开相册
             choosePhoto();
         }
     }
@@ -200,6 +200,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             if (supportCameraFacing) {
                 try {
                     camera = Camera.open(facing);
+                    initParameters(camera);
                     return true;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -257,7 +258,10 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        if (camera != null) startPreview(holder);
+        if (camera != null) {
+            initParameters(camera);
+            startPreview(holder);
+        }
     }
 
     @Override
@@ -337,7 +341,6 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
      * @param finalFile
      */
     private void searchWithFile(File finalFile) {
-        //TODO 修改跳转到查找页面
         Intent intent = new Intent(this, PictureActivity.class);
         intent.putExtra("file", finalFile.getAbsolutePath());
         startActivity(intent);
@@ -397,5 +400,57 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         if (openCamera()) startPreview(surfaceHolder);
 
     }
+
+    //配置相机参数
+    private void initParameters(Camera camera) {
+        try {
+            mParameters = camera.getParameters();
+            mParameters.setPreviewFormat(ImageFormat.NV21); //设置预览图片的格式
+
+            //获取与指定宽高相等或最接近的尺寸
+            //设置预览尺寸
+            Camera.Size bestPreviewSize = getBestSize(surfaceView.getWidth(), surfaceView.getHeight(),
+                    mParameters.getSupportedPreviewSizes());
+            mParameters.setPreviewSize(bestPreviewSize.width, bestPreviewSize.height);
+            //设置保存图片尺寸
+            Camera.Size bestPicSize = getBestSize(picWidth, picHeight, mParameters.getSupportedPictureSizes());
+            mParameters.setPictureSize(bestPicSize.width, bestPicSize.height);
+            //对焦模式
+            mParameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+            camera.setParameters(mParameters);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(tag, "相机初始化失败!");
+        }
+    }
+
+    /**
+     * 获取与指定宽高相等或最接近的尺寸
+     */
+    private Camera.Size getBestSize(int targetWidth, int targetHeight, List<Camera.Size> sizeList) {
+        Camera.Size bestSize = null;
+        double targetRatio = (targetHeight + 0.0) / targetWidth;//目标大小的宽高比
+        double minDiff = targetRatio;
+
+        for (Camera.Size eachSize : sizeList) {
+            double supportedRatio = (eachSize.width + 0.0) / eachSize.height;
+            Log.e(tag, "系统支持的尺寸 : " + eachSize.width + " * " + eachSize.height + ",    比例 " + supportedRatio);
+        }
+        for (Camera.Size eachSize : sizeList) {
+            if (eachSize.width == targetHeight && eachSize.height == targetWidth) {
+                bestSize = eachSize;
+                break;
+            }
+            double supportedRatio = (eachSize.width + 0.0) / eachSize.height;
+            if (Math.abs(supportedRatio - targetRatio) < minDiff) {
+                minDiff = Math.abs(supportedRatio - targetRatio);
+                bestSize = eachSize;
+            }
+        }
+        Log.e(tag, "目标尺寸 " + targetWidth + "* " + targetHeight + " ，   比例  " + targetRatio);
+        Log.e(tag, "最优尺寸 ：" + bestSize.height + " * " + bestSize.width);
+        return bestSize;
+    }
+
 
 }

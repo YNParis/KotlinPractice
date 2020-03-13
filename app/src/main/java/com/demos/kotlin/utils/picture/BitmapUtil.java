@@ -1,4 +1,4 @@
-package com.demos.kotlin.picture;
+package com.demos.kotlin.utils.picture;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,6 +10,7 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,7 +20,7 @@ import java.io.InputStream;
 
 /**
  * 图片处理工具类
- *
+ * <p>
  * Author: nanchen
  * Email: liushilin520@foxmail.com
  * Date: 2017-03-08  9:03
@@ -28,6 +29,7 @@ import java.io.InputStream;
 public class BitmapUtil {
 
     private static String TAG = "BitmapUtil";
+
     private BitmapUtil() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
@@ -42,13 +44,13 @@ public class BitmapUtil {
         options.inJustDecodeBounds = true;
         Bitmap bmp = BitmapFactory.decodeFile(filePath, options);
         if (bmp == null) {
-            InputStream inputStream ;
+            InputStream inputStream;
             try {
                 inputStream = new FileInputStream(filePath);
                 BitmapFactory.decodeStream(inputStream, null, options);
                 inputStream.close();
             } catch (IOException exception) {
-                Log.e(TAG,exception.getMessage());
+                Log.e(TAG, exception.getMessage());
 
             }
         }
@@ -56,22 +58,22 @@ public class BitmapUtil {
         int actualHeight = options.outHeight;
         int actualWidth = options.outWidth;
 
-        if (actualHeight == -1 || actualWidth == -1){
+        if (actualHeight == -1 || actualWidth == -1) {
             try {
                 ExifInterface exifInterface = new ExifInterface(filePath);
                 actualHeight = exifInterface.getAttributeInt(ExifInterface.TAG_IMAGE_LENGTH, ExifInterface.ORIENTATION_NORMAL);//获取图片的高度
                 actualWidth = exifInterface.getAttributeInt(ExifInterface.TAG_IMAGE_WIDTH, ExifInterface.ORIENTATION_NORMAL);//获取图片的宽度
             } catch (IOException e) {
-                Log.e(TAG,e.getMessage());
+                Log.e(TAG, e.getMessage());
             }
         }
 
         if (actualWidth <= 0 || actualHeight <= 0) {
             Bitmap bitmap2 = BitmapFactory.decodeFile(filePath);
-            if (bitmap2 != null){
+            if (bitmap2 != null) {
                 actualWidth = bitmap2.getWidth();
                 actualHeight = bitmap2.getHeight();
-            }else{
+            } else {
                 return null;
             }
         }
@@ -115,9 +117,9 @@ public class BitmapUtil {
                 inputStream.close();
             }
         } catch (OutOfMemoryError | IOException exception) {
-            Log.e(TAG,exception.getMessage());
+            Log.e(TAG, exception.getMessage());
         }
-        if (actualHeight <= 0 || actualWidth <= 0){
+        if (actualHeight <= 0 || actualWidth <= 0) {
             return null;
         }
         // 采用 ExitInterface 设置图片旋转方向
@@ -142,11 +144,11 @@ public class BitmapUtil {
             } else if (orientation == 8) {
                 matrix.postRotate(270);
             }
-            return  Bitmap.createBitmap(scaledBitmap, 0, 0,
+            return Bitmap.createBitmap(scaledBitmap, 0, 0,
                     scaledBitmap.getWidth(), scaledBitmap.getHeight(),
                     matrix, true);
         } catch (OutOfMemoryError | IOException exception) {
-            Log.e(TAG,exception.getMessage());
+            Log.e(TAG, exception.getMessage());
             return null;
         }
     }
@@ -160,21 +162,21 @@ public class BitmapUtil {
             out = new FileOutputStream(filename);
             // 通过文件名写入
             Bitmap newBmp = BitmapUtil.getScaledBitmap(context, imageUri, maxWidth, maxHeight, bitmapConfig);
-            if (newBmp != null){
+            if (newBmp != null) {
                 newBmp.compress(compressFormat, quality, out);
             }
 
         } catch (FileNotFoundException e) {
-            Log.e(TAG,e.getMessage());
+            Log.e(TAG, e.getMessage());
         } finally {
 
-                if (out != null) {
-                    try {
-                        out.close();
-                    } catch (IOException e) {
-                        Log.e(TAG,e.getMessage());
-                    }
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    Log.e(TAG, e.getMessage());
                 }
+            }
 
         }
 
@@ -217,4 +219,23 @@ public class BitmapUtil {
 
         return inSampleSize;
     }
+
+    /**
+     * 水平镜像翻转
+     */
+    public static Bitmap mirror(Bitmap rawBitmap) {
+        Matrix matrix = new Matrix();
+        matrix.postScale(-1f, 1f);
+        return Bitmap.createBitmap(rawBitmap, 0, 0, rawBitmap.getWidth(), rawBitmap.getHeight(), matrix, true);
+    }
+
+    /**
+     * 旋转
+     */
+    public static Bitmap rotate(Bitmap rawBitmap, Float degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        return Bitmap.createBitmap(rawBitmap, 0, 0, rawBitmap.getWidth(), rawBitmap.getHeight(), matrix, true);
+    }
+
 }

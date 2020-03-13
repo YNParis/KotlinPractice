@@ -23,10 +23,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.demos.kotlin.picture.CompressHelper;
-import com.demos.kotlin.picture.FileProvider7;
-import com.demos.kotlin.picture.GetFileUtil;
-import com.demos.kotlin.picture.GlideUtils;
+import com.demos.kotlin.utils.picture.CompressHelper;
+import com.demos.kotlin.utils.picture.FileProvider7;
+import com.demos.kotlin.utils.picture.GetFileUtil;
+import com.demos.kotlin.utils.picture.GlideUtils;
 
 import org.jetbrains.annotations.Nullable;
 
