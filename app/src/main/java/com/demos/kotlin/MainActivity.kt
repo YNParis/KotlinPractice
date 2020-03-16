@@ -27,7 +27,8 @@ class MainActivity : AppCompatActivity() {
             "waterMark",
             "SystemCamera",
             "CustomCamera",
-            "WeChatCamera"
+            "WeChatCamera",
+            "Widgets"
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,6 +76,8 @@ class MainActivity : AppCompatActivity() {
                 startActivity<CameraActivity>()
             10 ->
                 startActivity<WeChatMainActivity>()
+            11 ->
+                startActivity<WidgetsActivity>()
 
             else -> return
         }

@@ -23,6 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".WidgetsActivity"></activity>
         <activity android:name=".WeChatMainActivity" />
         <activity android:name=".CameraActivity" />
         <activity android:name=".WaterMarkActivity" />
@@ -57,9 +58,7 @@
         <activity android:name=".kotlinsyntax.KotlinSyntaxActivity" />
         <activity android:name=".ijk.PlayerTest" />
         <activity android:name=".PictureActivity" />
-        <activity android:name=".WeChatCameraActivity" />
-
-        <!-- 必须加 -->
+        <activity android:name=".WeChatCameraActivity" /> <!-- 必须加 -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.demos.kotlin.fileprovider"
@@ -71,7 +70,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
     </application>
 
 </manifest>
