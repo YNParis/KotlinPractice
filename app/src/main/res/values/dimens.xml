@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <dimen name="width_of_switch_thumb">24dp</dimen>
+    <dimen name="height_of_switch_thumb">24dp</dimen>
+    <dimen name="width_of_switch_track">40dp</dimen>
+    <dimen name="height_of_switch_track">24dp</dimen>
+    <dimen name="radius_of_switch">5dp</dimen>
+</resources>
