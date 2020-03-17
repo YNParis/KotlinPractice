@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CameraActivity">
+    tools:context=".activity.CameraActivity">
 
     <SurfaceView
         android:id="@+id/surface_view_preview"
@@ -32,7 +32,7 @@
         android:layout_height="20dp"
         android:layout_margin="20dp"
         android:layout_toLeftOf="@id/btn_info"
-        android:src="@drawable/ic_switch_camera" />
+        android:src="@mipmap/ic_switch_camera" />
 
     <ImageView
         android:id="@+id/btn_open_gallery"
@@ -41,7 +41,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="50dp"
         android:layout_marginBottom="40dp"
-        android:src="@drawable/ic_gallery" />
+        android:src="@mipmap/ic_gallery" />
 
     <RelativeLayout
         android:id="@+id/btn_capture"
@@ -55,13 +55,13 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/ic_capture_bg" />
+            android:src="@mipmap/ic_capture_bg" />
 
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/ic_capture_front" />
+            android:src="@mipmap/ic_capture_front" />
     </RelativeLayout>
 
 

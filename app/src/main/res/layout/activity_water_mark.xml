@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.demos.kotlin.WaterMarkActivity">
+    tools:context="com.demos.kotlin.activity.WaterMarkActivity">
 
     <LinearLayout
         android:id="@+id/layout_water_mark_child_1"

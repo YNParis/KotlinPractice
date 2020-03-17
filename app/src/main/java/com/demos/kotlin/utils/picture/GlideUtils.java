@@ -26,7 +26,7 @@ public class GlideUtils {
     public static void setDefaultPic(Context context, String url, ImageView imageView,
         int errorRes) {
         if (errorRes == 0) {
-            errorRes = R.drawable.ic_default;
+            errorRes = R.mipmap.ic_default;
         }
         if (TextUtils.isEmpty(url)) {
             imageView.setImageResource(errorRes);
@@ -51,7 +51,7 @@ public class GlideUtils {
         int errorRes) {
         //若传了默认失败图像，则用默认的，不然用R.drawable.ic_error
         if (errorRes == 0) {
-            errorRes = R.drawable.ic_default;
+            errorRes = R.mipmap.ic_default;
         }
         if (TextUtils.isEmpty(url)) {
             imageView.setImageResource(errorRes);
@@ -74,7 +74,7 @@ public class GlideUtils {
     public static void setCenterCropImage(Context context, String url, ImageView imageView,
         int errorRes) {
         if (errorRes == 0) {
-            errorRes = R.drawable.ic_default;
+            errorRes = R.mipmap.ic_default;
         }
         if (TextUtils.isEmpty(url)) {
             imageView.setImageResource(errorRes);
@@ -97,7 +97,7 @@ public class GlideUtils {
     public static void setFitCenterImage(Context context, String url, ImageView imageView,
         int errorRes) {
         if (errorRes == 0) {
-            errorRes = R.drawable.ic_default;
+            errorRes = R.mipmap.ic_default;
         }
         if (TextUtils.isEmpty(url)) {
             imageView.setImageResource(errorRes);
@@ -121,7 +121,7 @@ public class GlideUtils {
     public static void setCornerImage(Context context, String url, ImageView imageView,
         int errorRes, int corner) {
         if (errorRes == 0) {
-            errorRes = R.drawable.ic_default;
+            errorRes = R.mipmap.ic_default;
         }
         if (TextUtils.isEmpty(url)) {
             imageView.setImageResource(errorRes);

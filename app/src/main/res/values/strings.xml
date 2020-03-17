@@ -9,4 +9,6 @@
     <string name="photo">take picture</string>
     <string name="cancel">Cancel</string>
     <string name="choose">add picture</string>
+    <string name="fingerprint_login">指纹登录</string>
+    <string name="title_hint">This is title.Show something basic.</string>
 </resources>
