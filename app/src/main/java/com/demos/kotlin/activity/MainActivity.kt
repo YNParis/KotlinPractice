@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity() {
             "CustomCamera",
             "WeChatCamera",
             "Widgets",
-            "TabScrollView"
+            "TabScrollView",
+            "CommodityDetail"
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,6 +83,8 @@ class MainActivity : AppCompatActivity() {
                 startActivity<WidgetsActivity>()
             12 ->
                 startActivity<TabScrollViewActivity>()
+            13 ->
+                startActivity<CommodityDetailActivity>()
 
             else -> return
         }
