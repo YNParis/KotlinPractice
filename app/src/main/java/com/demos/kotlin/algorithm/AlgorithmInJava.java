@@ -1,5 +1,7 @@
 package com.demos.kotlin.algorithm;
 
+import android.util.Log;
+
 import java.util.HashMap;
 
 public class AlgorithmInJava {
@@ -134,4 +136,64 @@ public class AlgorithmInJava {
         }
         return r;
     }
+
+    /**
+     * 获取每月等额本息的每月还款额
+     *
+     * @param principal    本金
+     * @param year         贷款年限
+     * @param yearInterest 贷款年利率
+     */
+    public static void getMonthPayEqual(double principal, int year, double yearInterest) {
+        double monthInterest = yearInterest / 12.0;
+        int month = year * 12;
+
+        Log.e("repay", "每月等额本息还款方式");
+        // 每月本息金额  = (本金×月利率×((1＋月利率)＾还款月数)÷ ((1＋月利率)＾还款月数-1))
+        double payMonthEqual = (principal * monthInterest * Math.pow(1 + monthInterest, month)) / (Math.pow(1 + monthInterest, month) - 1);
+        Log.e("repay", "每月还款：" + payMonthEqual);
+        // 每月本金 = 本金×月利率×(1+月利率)^(还款月序号-1)÷((1+月利率)^还款月数-1))
+        for (int i = 1; i <= month; i++) {
+            double monthPrincipal = principal * monthInterest * (Math.pow(1 + monthInterest, i - 1)) / (Math.pow(1 + monthInterest, month) - 1);
+            Log.e("repay", "第" + i + "个月还款本金：" + monthPrincipal + "，利息：" + (payMonthEqual - monthPrincipal));
+        }
+
+        // 每月利息  = 剩余本金 x 贷款月利率
+        Log.e("repay", "总利息：" + (payMonthEqual * month - principal));
+        double totalInterest = (payMonthEqual * month - principal) / principal;
+        Log.e("repay", "总利率：" + totalInterest);
+    }
+
+    /**
+     * 等额本金还款
+     *
+     * @param principal    本金
+     * @param year         贷款年限
+     * @param yearInterest 贷款年利率
+     */
+    public static void getMonthPayEqualPrincipal(double principal, int year, double yearInterest) {
+        double monthInterest = yearInterest / 12.0;
+        int month = year * 12;
+
+        Log.e("repay", "每月等额本金还款方式");
+        double principalMonth = principal / month;
+        Log.e("repay", "每月还本金：" + principalMonth);
+        // 每月本金 = 本金×月利率×(1+月利率)^(还款月序号-1)÷((1+月利率)^还款月数-1))
+        double leftPrincipal = principal;
+        double interest = 0;
+        for (int i = 1; i <= month; i++) {
+            double monthInt = leftPrincipal * monthInterest;
+            interest += monthInt;
+            leftPrincipal -= principalMonth;
+            Log.e("repay", "第" + i + "个月还款本息：" + (principalMonth + monthInt) + "，利息：" + monthInt);
+        }
+
+        // 每月利息  = 剩余本金 x 贷款月利率
+        Log.e("repay", "总利息：" + interest);
+        double totalInterest = interest / principal;
+        Log.e("repay", "总利率：" + totalInterest);
+    }
+
+
+
 }

@@ -23,5 +23,23 @@
         <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
     </style>
 
+    <declare-styleable name="WrapLinearLayout">
+        <attr name="grivate" format="enum"><!--对齐方式 !-->
+            <enum name="right" value="0"></enum>
+            <enum name="left" value="1"></enum>
+            <enum name="center" value="2"></enum>
+        </attr>
+        <attr name="horizontal_space" format="dimension"></attr>
+        <attr name="vertical_space" format="dimension"></attr>
+        <attr name="isFull" format="boolean"></attr>
+    </declare-styleable>
+
+    <style name="WrapLinearLayoutDefault">
+        <item name="grivate">left</item>
+        <item name="horizontal_space">20dp</item>
+        <item name="vertical_space">20dp</item>
+        <item name="isFull">false</item>
+    </style>
+
 
 </resources>

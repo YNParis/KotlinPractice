@@ -15,4 +15,9 @@
         android:thumb="@drawable/selector_switch_thumb"
         android:track="@drawable/selector_switch_track" />
 
+    <com.demos.kotlin.views.WrapLinearLayout
+        android:id="@+id/wrap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

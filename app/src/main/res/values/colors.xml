@@ -10,6 +10,17 @@
     <color name="colorGreen">#0f0</color>
     <color name="colorGray">#999</color>
 
+    <color name="colorBlueLight">#4291eb</color>
+    <color name="colorRedLight">#f44a4a</color>
+    <color name="colorOrange">#f68e3a</color>
+    <color name="colorGreenLight">#66CD00</color>
+    <!--档案详情页面某些条目的背景颜色-->
+    <array name="colorCardBackground">
+        <item>@color/colorBlueLight</item>
+        <item>@color/colorRedLight</item>
+        <item>@color/colorOrange</item>
+        <item>@color/colorGreenLight</item>
+    </array>
     <color name="white">#ffffff</color>
     <color name="bg_color">#f9f9f9</color>
     <color name="tran_black">#80999999</color>

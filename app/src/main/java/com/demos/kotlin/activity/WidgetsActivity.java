@@ -7,6 +7,11 @@ import android.widget.Switch;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.demos.kotlin.R;
+import com.demos.kotlin.utils.WrapLayoutUtils;
+import com.demos.kotlin.views.WrapLinearLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WidgetsActivity extends AppCompatActivity {
 
@@ -24,5 +29,11 @@ public class WidgetsActivity extends AppCompatActivity {
 
             }
         });
+        List<String> data = new ArrayList<>();
+        data.add("周杰伦");
+        data.add("潘玮柏");
+        data.add("林俊杰");
+        data.add("S.H.E");
+        WrapLayoutUtils.setColorfulWrapLayout(this, data, (WrapLinearLayout) findViewById(R.id.wrap));
     }
 }
