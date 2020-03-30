@@ -11,6 +11,9 @@ import com.demos.kotlin.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 流式列表
+ */
 public class WrapLinearLayout extends ViewGroup {
 
     private Type mType;
