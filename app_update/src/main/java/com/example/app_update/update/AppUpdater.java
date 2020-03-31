@@ -5,10 +5,6 @@ import com.example.app_update.update.net.INetManager;
 
 /**
  * APP更新管理类。
- * 需要实现的方法：
- * 1.获取最新版本信息；
- * 2.下载/取消下载
- * 3.安装
  */
 public class AppUpdater {
 

@@ -29,6 +29,7 @@ public class UpdateVersionDialog extends DialogFragment {
     private static String KEY = "dialog_key";
     private static String DIALOG_TAG = "update_version_dialog";
     private VersionDataBean dataBean;
+    private File targetFile;
 
     public static void show(FragmentActivity activity, VersionDataBean bean) {
         Bundle bundle = new Bundle();
@@ -64,46 +65,56 @@ public class UpdateVersionDialog extends DialogFragment {
 
     private void bindView(View view) {
         if (dataBean == null) return;
-        final File targetFile = new File(getActivity().getCacheDir(), "update.apk");
+        targetFile = new File(getActivity().getCacheDir(), "update.apk");
         if (!targetFile.exists()) {
             targetFile.getParentFile().mkdirs();
         }
+        ((TextView) view.findViewById(R.id.dialog_content)).setText(dataBean.getContent());
+        ((TextView) view.findViewById(R.id.dialog_title)).setText(dataBean.getTitle());
         view.findViewById(R.id.dialog_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 v.setEnabled(false);
-                AppUpdater.getInstance().getNetManager().download(dataBean.getUrl(), targetFile, new IDownloadCallback() {
-                    @Override
-                    public void onSuccess(File apkFile) {
-                        v.setEnabled(true);
-                        Log.e(DIALOG_TAG, apkFile.getAbsolutePath());
-                        //MD5校验
-                        String fileMd5 = AppUtils.getFileMd5(apkFile);
-                        if (fileMd5 != null && fileMd5.equals(dataBean.getMd5())) {
-                            //安装
-                            AppUtils.install(getActivity(), apkFile);
-                        } else {
-                            Toast.makeText(getActivity(), "md5校验失败", Toast.LENGTH_SHORT).show();
-                        }
-                        dismiss();
-                    }
-
-                    @Override
-                    public void onFailed(Throwable throwable) {
-                        v.setEnabled(true);
-                        Toast.makeText(getActivity(), "下载失败", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onProcess(int process) {
-                        ((TextView) v).setText(process + "%");
-                        Log.e(DIALOG_TAG, process + "%");
-                    }
-                }, UpdateVersionDialog.this);
+                if (targetFile.exists() && AppUtils.getFileMd5(targetFile).equals(dataBean.getMd5())) {
+                    //若文件存在，则不下载，直接安装
+                    AppUtils.install(getActivity(), targetFile);
+                    dismiss();
+                    return;
+                }
+                download(v);
             }
         });
-        ((TextView) view.findViewById(R.id.dialog_content)).setText(dataBean.getContent());
-        ((TextView) view.findViewById(R.id.dialog_title)).setText(dataBean.getTitle());
+    }
+
+    private void download(final View view) {
+        AppUpdater.getInstance().getNetManager().download(dataBean.getUrl(), targetFile, new IDownloadCallback() {
+            @Override
+            public void onSuccess(File apkFile) {
+                view.setEnabled(true);
+                Log.e(DIALOG_TAG, apkFile.getAbsolutePath());
+                //MD5校验
+                String fileMd5 = AppUtils.getFileMd5(apkFile);
+                if (fileMd5 != null && fileMd5.equals(dataBean.getMd5())) {
+                    //安装
+                    AppUtils.install(getActivity(), apkFile);
+                } else {
+                    Toast.makeText(getActivity(), "md5校验失败", Toast.LENGTH_SHORT).show();
+                }
+                dismiss();
+            }
+
+            @Override
+            public void onFailed(Throwable throwable) {
+                view.setEnabled(true);
+                Toast.makeText(getActivity(), "下载失败", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onProcess(int process) {
+                ((TextView) view).setText(process + "%");
+                Log.e(DIALOG_TAG, process + "%");
+            }
+        }, UpdateVersionDialog.this);
     }
 
     @Override
