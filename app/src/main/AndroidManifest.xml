@@ -22,7 +22,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:icon">
         <activity android:name=".activity.TabScrollViewActivity"></activity>
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.WidgetsActivity" />
@@ -62,16 +63,17 @@
         <activity android:name=".activity.PictureActivity" />
         <activity android:name=".activity.WeChatCameraActivity" />
         <activity android:name=".activity.CommodityDetailActivity" /> <!-- 必须加 -->
+        <activity android:name=".activity.UpdateAppActivity" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.demos.kotlin.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
 
-            <!-- 指定Uri的共享路径 -->
+            <!-- 指定Uri的共享路径，路径是module app_update中的 -->
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/file_provider_paths" />
         </provider>
     </application>
 

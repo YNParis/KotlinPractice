@@ -12,32 +12,44 @@ import com.demos.kotlin.adaper.MySimpleAdapter.MyOnItemOnClickListener
 import com.demos.kotlin.algorithm.AlgorithmInJava
 import com.demos.kotlin.algorithm.KotlinSyntaxActivity
 import com.demos.kotlin.ijk.PlayerActivity
+import com.demos.kotlin.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_open.*
 import org.jetbrains.anko.startActivity
 
 class MainActivity : AppCompatActivity() {
 
-    //功能菜单
-    private var list = listOf(
-            "CustomView-TouchableBall",
-            "ijk",
-            "NDK",
-            "LifeCycle",
-            "Database",
-            "WebView",
-            "KotlinSyntax",
-            "waterMark",
-            "SystemCamera",
-            "CustomCamera",
-            "WeChatCamera",
-            "Widgets",
-            "TabScrollView",
-            "CommodityDetail"
-    )
+    private var list = listOf<String>()
+    private var activityList = mutableMapOf<String, Class<AppCompatActivity>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_open)
+        initData()
+        initView()
+    }
+
+    private fun initData() {
+        list = listOf(
+                "CustomView-TouchableBall",
+                "ijk",
+                "NDK",
+                "LifeCycle",
+                "Database",
+                "WebView",
+                "KotlinSyntax",
+                "waterMark",
+                "SystemCamera",
+                "CustomCamera",
+                "WeChatCamera",
+                "Widgets",
+                "TabScrollView",
+                "CommodityDetail",
+                "UpdateAppVersion"
+        )
+
+    }
+
+    private fun initView() {
         val adapter = MySimpleAdapter(list, this)
         adapter.setMyOnItemClickListener(object : MyOnItemOnClickListener {
             override fun onItemClick(position: Int) {
@@ -60,36 +72,41 @@ class MainActivity : AppCompatActivity() {
         AlgorithmInJava.getMonthPayEqualPrincipal(120000.0, 10, 0.06)
     }
 
-    fun onClick(position: Int) {
-        when (position) {
-            0 ->
-                startActivity<TouchableBallActivity>()
-            1 ->
-                startActivity<PlayerActivity>()
-            2 ->
-                startActivity<NdkDemoActivity>()
-            3 ->
-                startActivity<FirstActivity>()
-            5 ->
-                startActivity<WebViewActivity>()
-            6 ->
-                startActivity<KotlinSyntaxActivity>()
-            7 ->
-                startActivity<WaterMarkActivity>()
-            8 ->
-                startActivity<PictureActivity>()
-            9 ->
-                startActivity<CameraActivity>()
-            10 ->
-                startActivity<WeChatMainActivity>()
-            11 ->
-                startActivity<WidgetsActivity>()
-            12 ->
-                startActivity<TabScrollViewActivity>()
-            13 ->
-                startActivity<CommodityDetailActivity>()
 
-            else -> return
+    fun onClick(position: Int) {
+        when (list.get(position)) {
+            "CustomView-TouchableBall" ->
+                startActivity<TouchableBallActivity>()
+            "ijk" ->
+                startActivity<PlayerActivity>()
+            "NDK" ->
+                startActivity<NdkDemoActivity>()
+            "LifeCycle" ->
+                startActivity<FirstActivity>()
+            "WebView" ->
+                startActivity<WebViewActivity>()
+            "KotlinSyntax" ->
+                startActivity<KotlinSyntaxActivity>()
+            "waterMark" ->
+                startActivity<WaterMarkActivity>()
+            "SystemCamera" ->
+                startActivity<PictureActivity>()
+            "CustomCamera" ->
+                startActivity<CameraActivity>()
+            "WeChatCamera" ->
+                startActivity<WeChatMainActivity>()
+            "Widgets" ->
+                startActivity<WidgetsActivity>()
+            "TabScrollView" ->
+                startActivity<TabScrollViewActivity>()
+            "CommodityDetail" ->
+                startActivity<CommodityDetailActivity>()
+            "UpdateAppVersion" ->
+                startActivity<UpdateAppActivity>()
+            else -> {
+                ToastUtil.show(this, "没有对应的页面")
+                return
+            }
         }
     }
 

@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.WebViewActivity"
-    >
+    android:orientation="vertical"
+    tools:context=".activity.WebViewActivity">
 
     <WebView
         android:id="@+id/web_view"
-        android:layout_width="395dp"
-        android:layout_height="715dp"
-        android:layout_marginBottom="8dp"
-        tools:layout_editor_absoluteX="8dp"
-        />
-</androidx.constraintlayout.ConstraintLayout>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

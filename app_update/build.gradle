@@ -1,11 +1,10 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 28
 
 
     defaultConfig {
-        applicationId "com.example.app_update"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1

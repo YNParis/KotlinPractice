@@ -109,7 +109,7 @@ public class UpdateVersionDialog extends DialogFragment {
     @Override
     public void onDismiss(@NonNull DialogInterface dialog) {
         super.onDismiss(dialog);
-        //TODO 取消下载
+        //取消下载
         AppUpdater.getInstance().getNetManager().cancel(this);
     }
 }
