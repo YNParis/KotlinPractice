@@ -1,0 +1,59 @@
+{
+    "code": 200,
+    "data": [{
+        "cellStyleMap": {},
+        "recordId": "1",
+        "composeId": "0001",
+        "operatorTime": "2020/03/31 11:28:47",
+        "operatorState": 3,
+        "operatorTitle": "接收警情详情",
+        "operatorContent": "",
+        "operatorType": 1,
+        "detail": {
+            "alarmInfo": {
+                "id": "0001",
+                "callPersonName": "三哥",
+                "callPersonPhone": "110110110",
+                "callAddress": "就是传说中的天堂",
+                "callSex": 1,
+                "deptId": "87",
+                "policeStationId": "1",
+                "callTime": "2020-03-31 11:05:03",
+                "lng": "113.072",
+                "lat": "40.959",
+                "acceptanceNumber": "00000000000000000001",
+                "region": "110",
+                "incidentAddress": "乌蒙医院撞车了",
+                "alarmContent": "瞎逼搞 没正事",
+                "eventNumber": "0000000000000001",
+                "processeType": "1",
+                "alarmStaffNumber": "000001",
+                "alarmStaffName": "赵四",
+                "alarmDuration": "3小时 玩成了聊天",
+                "alarmStarttime": "开始时间",
+                "alarmEndtime": "结束时间",
+                "alarmMode": 1,
+                "acceptanceStatus": "啥状态",
+                "alertLevel": 4,
+                "caseAction": "没事打110聊天"
+            },
+            "file": [{
+                "fid": "1",
+                "fileName": "1.doc",
+                "fileLocation": "",
+                "url": "",
+                "relationId": "1",
+                "fileType": ""
+            }]
+        },
+        "relationId": "",
+        "alarmList": [{
+            "cellStyleMap": {},
+            "policeType": 1,
+            "policeName": "测试官",
+            "pcode": "P00001"
+        }]
+    },
+    ],
+    "msg": ""
+}

@@ -44,7 +44,8 @@ class MainActivity : AppCompatActivity() {
                 "Widgets",
                 "TabScrollView",
                 "CommodityDetail",
-                "UpdateAppVersion"
+                "UpdateAppVersion",
+                "Json"
         )
 
     }
@@ -70,6 +71,7 @@ class MainActivity : AppCompatActivity() {
         list_functions.adapter = adapter
         AlgorithmInJava.getMonthPayEqual(120000.0, 10, 0.06)
         AlgorithmInJava.getMonthPayEqualPrincipal(120000.0, 10, 0.06)
+
     }
 
 
@@ -103,6 +105,8 @@ class MainActivity : AppCompatActivity() {
                 startActivity<CommodityDetailActivity>()
             "UpdateAppVersion" ->
                 startActivity<UpdateAppActivity>()
+            "Json" ->
+                startActivity<JsonParseActivity>()
             else -> {
                 ToastUtil.show(this, "没有对应的页面")
                 return
