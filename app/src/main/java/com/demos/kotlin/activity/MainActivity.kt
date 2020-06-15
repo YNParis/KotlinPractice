@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initData() {
         list = listOf(
+                "Banner",
                 "CustomView-TouchableBall",
                 "ijk",
                 "NDK",
@@ -107,6 +108,8 @@ class MainActivity : AppCompatActivity() {
                 startActivity<UpdateAppActivity>()
             "Json" ->
                 startActivity<JsonParseActivity>()
+            "Banner" ->
+                startActivity<BannerActivity>()
             else -> {
                 ToastUtil.show(this, "没有对应的页面")
                 return

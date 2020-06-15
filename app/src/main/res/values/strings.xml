@@ -11,4 +11,8 @@
     <string name="choose">add picture</string>
     <string name="fingerprint_login">指纹登录</string>
     <string name="title_hint">This is title.Show something basic.</string>
+    <string name="title_activity_banner">BannerActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

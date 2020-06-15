@@ -7,4 +7,6 @@
     <dimen name="width_of_switch_track">40dp</dimen>
     <dimen name="height_of_switch_track">24dp</dimen>
     <dimen name="radius_of_switch">5dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>
