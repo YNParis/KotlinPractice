@@ -115,4 +115,6 @@ dependencies {
     implementation 'cjt.library.wheel:camera:1.1.9'
     implementation project(path: ':app_update')
 
+    implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 }

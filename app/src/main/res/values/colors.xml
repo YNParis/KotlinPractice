@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#00CD66</color>
-    <color name="colorPrimaryDark">#32CD32</color>
-    <color name="colorAccent">#90EE90</color>
+    <color name="colorPrimary">#FF4F77FA</color>
     <color name="colorWhite">@android:color/white</color>
     <color name="colorBackground">#e0e0e0</color>
     <color name="colorRed">#f00</color>
@@ -25,4 +23,7 @@
         <item>@color/colorOrange</item>
         <item>@color/colorGreenLight</item>
     </array>
+
+    <color name="colorTabSelected">#557CFA</color>
+    <color name="colorTabBorder">#A0B5FC</color>
 </resources>

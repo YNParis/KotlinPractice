@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -17,23 +19,30 @@ import com.demos.kotlin.fragment.BlankFragment3;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class BannerActivity extends AppCompatActivity {
 
-    int currentIndex;//现在在哪个下表下
     Handler handler;
     ViewPager viewPager;
-    TimerRunnable runnable;
     List<Fragment> mList = new ArrayList<>();
     private ViewPager.OnPageChangeListener onPageChangeListener;
+    private Timer timer;
+    private TimerTask timerTask;
+    private String tag = "banner";
+    private int period = 5000, delay = 5000, currentIndex = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_banner);
         initData();
+        initViewPager();
+        initTimer();
+    }
 
-        runnable = new TimerRunnable();
+    private void initTimer() {
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -44,16 +53,16 @@ public class BannerActivity extends AppCompatActivity {
                         Log.e("tag", "currentIndex------------------" + currentIndex);
                         break;
                     case 0:
-                        try {
-                            runnable.wait(3000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        resetTimer();
                         break;
                 }
                 super.handleMessage(msg);
             }
         };
+        startTimer();
+    }
+
+    private void initViewPager() {
         viewPager = findViewById(R.id.view_pager);
         MyViewPageAdapter myViewPageAdapter = new MyViewPageAdapter(getSupportFragmentManager(), mList);
         viewPager.setAdapter(myViewPageAdapter);
@@ -67,42 +76,89 @@ public class BannerActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 //TODO 计时开始，5秒后翻下一页
-//                handler.postDelayed(runnable, 5000);
-                Log.e("tag", "OnPageChangeListener--------------onPageSelected");
+                currentIndex = position;
+                Log.e(tag, "OnPageChangeListener--------------onPageSelected");
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                Log.e("tag", "OnPageChangeListener--------------onPageScrollStateChanged");
+                Log.e(tag, "OnPageChangeListener--------------onPageScrollStateChanged");
             }
         };
         viewPager.addOnPageChangeListener(onPageChangeListener);
-        handler.postDelayed(runnable, 3000);
+        viewPager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        stopTimer();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        resetTimer();
+                        break;
+                }
+                return false;
+            }
+        });
+
     }
 
     private void initData() {
-        currentIndex = 300;
         mList.add(new BlankFragment());
         mList.add(new BlankFragment2());
         mList.add(new BlankFragment3());
+    }
+
+    private void startTimer() {
+
+        if (timer == null) {
+            timer = new Timer();
+        }
+        if (timerTask == null) {
+            timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    handler.sendEmptyMessage(1);
+                }
+            };
+        }
+        timer.schedule(timerTask, delay, period);
+        Log.e(tag, "--------------startTimer");
+    }
+
+    private void stopTimer() {
+        if (timerTask != null) {
+            timerTask.cancel();
+            timerTask = null;
+        }
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+        Log.e(tag, "--------------stopTimer");
+    }
+
+    private void resetTimer() {
+        //重置
+        Log.e(tag, "---------reset");
+        stopTimer();
+        startTimer();
     }
 
     public void setFragmentWithIndex(int index) {
         viewPager.setCurrentItem(index);
     }
 
-    class TimerRunnable implements Runnable {
-
-        @Override
-        public void run() {
-            handler.sendEmptyMessage(1);
-            handler.postDelayed(runnable, 3000);
-        }
-    }
-
     @Override
     protected void onDestroy() {
         viewPager.removeOnPageChangeListener(onPageChangeListener);
+        stopTimer();
         super.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+        stopTimer();
+        super.onStop();
     }
 }
