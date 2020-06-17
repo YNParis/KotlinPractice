@@ -23,6 +23,7 @@
         app:tabIndicator="@null"
         app:tabMaxWidth="0dp"
         app:tabPaddingBottom="40dp"
-        app:tabTextColor="@color/white" />
+        app:tabRippleColor="@null"
+        app:tabTextColor="@color/colorTabBorder" />
 
 </RelativeLayout>

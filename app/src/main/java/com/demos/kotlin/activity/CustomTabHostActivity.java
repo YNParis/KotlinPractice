@@ -1,11 +1,13 @@
 package com.demos.kotlin.activity;
 
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,11 +33,11 @@ public class CustomTabHostActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        tabList.add("tab1");
-        tabList.add("tab2");
-        tabList.add("tab3");
-        tabList.add("tab4");
-        tabList.add("tab5");
+        tabList.add("养老保险");
+        tabList.add("工伤保险");
+        tabList.add("失业保险");
+        tabList.add("生育保险");
+        tabList.add("医疗保险");
     }
 
 
@@ -88,10 +90,16 @@ public class CustomTabHostActivity extends AppCompatActivity {
         String text = tab.getText().toString().trim();
         SpannableString spStr = new SpannableString(text);
         if (selected) {
-            spStr.setSpan(new AbsoluteSizeSpan(50), 0, text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spStr.setSpan(new AbsoluteSizeSpan(45), 0, text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             spStr.setSpan(new StyleSpan(Typeface.BOLD), 0, text.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                spStr.setSpan(new ForegroundColorSpan(getColor(R.color.colorWhite)), 0, text.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
         } else {
-            spStr.setSpan(new AbsoluteSizeSpan(30), 0, text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                spStr.setSpan(new ForegroundColorSpan(getColor(R.color.colorTabBorder)), 0, text.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
+            spStr.setSpan(new AbsoluteSizeSpan(40), 0, text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             spStr.setSpan(new StyleSpan(Typeface.NORMAL), 0, text.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         tab.setText(spStr);
