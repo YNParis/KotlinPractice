@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
             "Banner" ->
                 startActivity<BannerActivity>()
             "Tab" ->
-                startActivity<CustomTabHostActivity>()
+                startActivity<CustomTabLayoutActivity>()
             else -> {
                 ToastUtil.show(this, "没有对应的页面")
                 return

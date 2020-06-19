@@ -12,17 +12,23 @@ import android.text.style.StyleSpan;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.demos.kotlin.R;
+import com.demos.kotlin.adaper.MyViewPageAdapter;
+import com.demos.kotlin.fragment.BlankFragment3;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomTabHostActivity extends AppCompatActivity {
+public class CustomTabLayoutActivity extends AppCompatActivity {
 
-    private TabLayout tabHost;
-    private List<String> tabList = new ArrayList<>();
+    private TabLayout tabLayout;
+    private List<String> tabList;
+    private ViewPager viewPager;
+    private List<Fragment> fragmentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,22 +39,39 @@ public class CustomTabHostActivity extends AppCompatActivity {
     }
 
     private void initData() {
+        tabList = new ArrayList<>();
         tabList.add("养老保险");
         tabList.add("工伤保险");
         tabList.add("失业保险");
         tabList.add("生育保险");
         tabList.add("医疗保险");
+        fragmentList = new ArrayList<>();
     }
-
 
     private void initView() {
 
-        tabHost = findViewById(R.id.tab_layout);
-        tabHost.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        viewPager = findViewById(R.id.view_pager_layout);
+        tabLayout = findViewById(R.id.tab_layout);
+        for (int i = 0; i < tabList.size(); i++) {
+            TabLayout.Tab tab = tabLayout.newTab();
+            tab.setText(tabList.get(i));
+            if (i == 0) {
+                //默认选中第一个
+                tab.select();
+                ViewCompat.setBackground(tab.view, tabLayout.getContext().getDrawable(R.drawable.selector_tab_background_left));
+            } else if (i == tabList.size() - 1) {
+                ViewCompat.setBackground(tab.view, tabLayout.getContext().getDrawable(R.drawable.selector_tab_background_right));
+            }
+            tabLayout.addTab(tab);
+            fragmentList.add(new BlankFragment3());
+        }
+        MyViewPageAdapter pageAdapter = new MyViewPageAdapter(getSupportFragmentManager(), fragmentList);
+        viewPager.setAdapter(new MyViewPageAdapter(getSupportFragmentManager(), fragmentList, tabList));
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 setTabText(tab, true);
-//                setCustomTabBackground(tabHost, tabHost.getTabCount(), tabHost.getSelectedTabPosition());
             }
 
             @Override
@@ -61,29 +84,7 @@ public class CustomTabHostActivity extends AppCompatActivity {
 
             }
         });
-        for (int i = 0; i < tabList.size(); i++) {
-            TabLayout.Tab tab = tabHost.newTab();
-            tab.setText(tabList.get(i));
-            if (i == 0) {
-                //默认选中第一个
-                tab.select();
-                ViewCompat.setBackground(tab.view, tabHost.getContext().getDrawable(R.drawable.selector_tab_background_left));
-            } else if (i == tabList.size() - 1) {
-                ViewCompat.setBackground(tab.view, tabHost.getContext().getDrawable(R.drawable.selector_tab_background_right));
-            }
-            tabHost.addTab(tab);
-        }
-    }
 
-    public void setCustomTabBackground(TabLayout tabLayout, int tabListSize, int position) {
-        TabLayout.Tab tabAt = tabLayout.getTabAt(position);
-        if (tabAt != null) {
-            if (position == 0) {
-                ViewCompat.setBackground(tabAt.view, tabLayout.getContext().getDrawable(R.drawable.selector_tab_background_left));
-            } else if (position == tabListSize - 1) {
-                ViewCompat.setBackground(tabAt.view, tabLayout.getContext().getDrawable(R.drawable.selector_tab_background_right));
-            }
-        }
     }
 
     private void setTabText(TabLayout.Tab tab, boolean selected) {

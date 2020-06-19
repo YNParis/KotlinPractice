@@ -12,4 +12,15 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <!--自定义tablayout相关-->
+    <!-- @tab_border_width + @tab_view_pager_offset_top = @tab_bottom_layer_offset_top -->
+    <!--  @tab_view_pager_offset_top + @tab_corner_radius = @tab_layout_height ，要是修改要对应修改-->
+    <dimen name="tab_view_pager_offset_top">60dp</dimen>
+    <dimen name="tab_corner_radius">40dp</dimen>
+    <dimen name="tab_layout_height">100dp</dimen>
+    <dimen name="tab_padding_bottom">@dimen/tab_corner_radius</dimen>
+    <dimen name="tab_bottom_layer_offset_top">61dp</dimen>
+    <dimen name="tab_border_width">1dp</dimen>
+
+
 </resources>

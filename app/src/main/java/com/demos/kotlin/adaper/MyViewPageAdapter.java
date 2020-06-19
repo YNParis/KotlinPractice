@@ -1,13 +1,10 @@
 package com.demos.kotlin.adaper;
 
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-
-import com.demos.kotlin.fragment.BlankFragment;
-import com.demos.kotlin.fragment.BlankFragment2;
-import com.demos.kotlin.fragment.BlankFragment3;
 
 import java.util.List;
 
@@ -17,22 +14,29 @@ import java.util.List;
 
 public class MyViewPageAdapter extends FragmentStatePagerAdapter {
 
-    List<Fragment> mList;
-    FragmentManager mFragmentmanager;
+    private List<Fragment> mList;
+    private List<String> titles;
+    private FragmentManager fragmentManager;
 
     public MyViewPageAdapter(FragmentManager fm, List<Fragment> mList) {
         super(fm);
         this.mList = mList;
-        this.mFragmentmanager = fm;
+        this.fragmentManager = fm;
+    }
+
+    public MyViewPageAdapter(FragmentManager fm, List<Fragment> mList, List<String> titles) {
+        super(fm);
+        if (mList != null)
+            this.mList = mList;
+        this.titles = titles;
+        this.fragmentManager = fm;
     }
 
     @Override
     public Fragment getItem(int position) {
-       /* if (position < mList.size()) {
-            return mList.get(position);
-        }*/
-//        return mList.get(position % mList.size());
-        switch (position % mList.size()) {
+        return mList.get(position);
+        //轮播
+        /*switch (position % mList.size()) {
             case 0:
                 return new BlankFragment();
             case 1:
@@ -40,13 +44,22 @@ public class MyViewPageAdapter extends FragmentStatePagerAdapter {
             case 2:
             default:
                 return new BlankFragment3();
-        }
+        }*/
     }
 
 
     @Override
     public int getCount() {
+        if (mList != null && titles != null) {
+            return Math.min(mList.size(), titles.size());
+        }
+        //循环播放
         return Integer.MAX_VALUE;
     }
 
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return titles == null ? "" : titles.get(position);
+    }
 }
