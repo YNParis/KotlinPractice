@@ -17,7 +17,7 @@ import java.util.List;
 public class WrapLinearLayout extends ViewGroup {
 
     private Type mType;
-    private List<WarpLine> mWarpLineGroup;
+    private List<WrapLine> mWrapLineGroup;
 
     public WrapLinearLayout(Context context) {
         this(context, null);
@@ -79,41 +79,41 @@ public class WrapLinearLayout extends ViewGroup {
         /**
          * 根据计算出的宽度，计算出所需要的行数
          */
-        WarpLine warpLine = new WarpLine();
+        WrapLine wrapLine = new WrapLine();
         /**
          * 不能够在定义属性时初始化，因为onMeasure方法会多次调用
          */
-        mWarpLineGroup = new ArrayList<>();
+        mWrapLineGroup = new ArrayList<>();
         for (int i = 0; i < childCount; i++) {
-            if (warpLine.lineWidth + getChildAt(i).getMeasuredWidth() + mType.horizontal_space > with) {
-                if (warpLine.lineView.size() == 0) {
-                    warpLine.addView(getChildAt(i));
-                    mWarpLineGroup.add(warpLine);
-                    warpLine = new WarpLine();
+            if (wrapLine.lineWidth + getChildAt(i).getMeasuredWidth() + mType.horizontal_space > with) {
+                if (wrapLine.lineView.size() == 0) {
+                    wrapLine.addView(getChildAt(i));
+                    mWrapLineGroup.add(wrapLine);
+                    wrapLine = new WrapLine();
                 } else {
-                    mWarpLineGroup.add(warpLine);
-                    warpLine = new WarpLine();
-                    warpLine.addView(getChildAt(i));
+                    mWrapLineGroup.add(wrapLine);
+                    wrapLine = new WrapLine();
+                    wrapLine.addView(getChildAt(i));
                 }
             } else {
-                warpLine.addView(getChildAt(i));
+                wrapLine.addView(getChildAt(i));
             }
         }
         /**
          * 添加最后一行
          */
-        if (warpLine.lineView.size() > 0 && !mWarpLineGroup.contains(warpLine)) {
-            mWarpLineGroup.add(warpLine);
+        if (wrapLine.lineView.size() > 0 && !mWrapLineGroup.contains(wrapLine)) {
+            mWrapLineGroup.add(wrapLine);
         }
         /**
          * 计算宽度
          */
         height = getPaddingTop() + getPaddingBottom();
-        for (int i = 0; i < mWarpLineGroup.size(); i++) {
+        for (int i = 0; i < mWrapLineGroup.size(); i++) {
             if (i != 0) {
                 height += mType.vertical_space;
             }
-            height += mWarpLineGroup.get(i).height;
+            height += mWrapLineGroup.get(i).height;
         }
         switch (heightMode) {
             case MeasureSpec.EXACTLY:
@@ -133,15 +133,15 @@ public class WrapLinearLayout extends ViewGroup {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         t = getPaddingTop();
-        for (int i = 0; i < mWarpLineGroup.size(); i++) {
+        for (int i = 0; i < mWrapLineGroup.size(); i++) {
             int left = getPaddingLeft();
-            WarpLine warpLine = mWarpLineGroup.get(i);
-            int lastWidth = getMeasuredWidth() - warpLine.lineWidth;
-            for (int j = 0; j < warpLine.lineView.size(); j++) {
-                View view = warpLine.lineView.get(j);
+            WrapLine wrapLine = mWrapLineGroup.get(i);
+            int lastWidth = getMeasuredWidth() - wrapLine.lineWidth;
+            for (int j = 0; j < wrapLine.lineView.size(); j++) {
+                View view = wrapLine.lineView.get(j);
                 if (isFull()) {//需要充满当前行时
-                    view.layout(left, t, left + view.getMeasuredWidth() + lastWidth / warpLine.lineView.size(), t + view.getMeasuredHeight());
-                    left += view.getMeasuredWidth() + mType.horizontal_space + lastWidth / warpLine.lineView.size();
+                    view.layout(left, t, left + view.getMeasuredWidth() + lastWidth / wrapLine.lineView.size(), t + view.getMeasuredHeight());
+                    left += view.getMeasuredWidth() + mType.horizontal_space + lastWidth / wrapLine.lineView.size();
                 } else {
                     switch (getGrivate()) {
                         case 0://右对齐
@@ -157,14 +157,14 @@ public class WrapLinearLayout extends ViewGroup {
                     left += view.getMeasuredWidth() + mType.horizontal_space;
                 }
             }
-            t += warpLine.height + mType.vertical_space;
+            t += wrapLine.height + mType.vertical_space;
         }
     }
 
     /**
      * 用于存放一行子View
      */
-    private final class WarpLine {
+    private final class WrapLine {
         private List<View> lineView = new ArrayList<View>();
         /**
          * 当前行中所需要占用的宽度

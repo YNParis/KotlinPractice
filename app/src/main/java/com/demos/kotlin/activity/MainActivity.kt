@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initData() {
         list = listOf(
-                "Tab",
+                "ChromeStyleTab",
                 "Banner",
                 "CustomView-TouchableBall",
                 "ijk",
@@ -111,8 +111,8 @@ class MainActivity : AppCompatActivity() {
                 startActivity<JsonParseActivity>()
             "Banner" ->
                 startActivity<BannerActivity>()
-            "Tab" ->
-                startActivity<CustomTabLayoutActivity>()
+            "ChromeStyleTab" ->
+                startActivity<ChromeTabActivity>()
             else -> {
                 ToastUtil.show(this, "没有对应的页面")
                 return
