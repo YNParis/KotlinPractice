@@ -51,4 +51,17 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
+    <!--tab字体样式-->
+    <style name="TabLayoutTextNormalStyle" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/tab_text_normal_size</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/colorTabBorder</item>
+    </style>
+
+    <style name="TabLayoutTextSelectedStyle" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/tab_text_selected_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
 </resources>

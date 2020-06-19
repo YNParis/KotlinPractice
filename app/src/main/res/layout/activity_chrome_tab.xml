@@ -14,7 +14,7 @@
         android:text="仿Chrome标签页效果的TabLayout"
         android:textSize="14sp" />
 
-    <com.demos.kotlin.views.tablayout.ChromeTabLayout
+    <com.demos.kotlin.views.tablayout.ChromeTabView
         android:id="@+id/chrome_tab_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

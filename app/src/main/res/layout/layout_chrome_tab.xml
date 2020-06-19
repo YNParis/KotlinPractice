@@ -22,6 +22,6 @@
         app:tabMaxWidth="0dp"
         app:tabPaddingBottom="@dimen/tab_padding_bottom"
         app:tabRippleColor="@null"
-        app:tabTextColor="@color/colorTabBorder" />
+        app:tabTextAppearance="@style/TabLayoutTextNormalStyle" />
 
 </RelativeLayout>

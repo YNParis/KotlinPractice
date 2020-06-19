@@ -21,6 +21,7 @@
     <dimen name="tab_padding_bottom">@dimen/tab_corner_radius</dimen>
     <dimen name="tab_bottom_layer_offset_top">61dp</dimen>
     <dimen name="tab_border_width">1dp</dimen>
-
+    <dimen name="tab_text_selected_size">22sp</dimen>
+    <dimen name="tab_text_normal_size">20sp</dimen>
 
 </resources>

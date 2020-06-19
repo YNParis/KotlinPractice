@@ -9,7 +9,7 @@ import com.demos.kotlin.R;
 import com.demos.kotlin.fragment.BlankFragment;
 import com.demos.kotlin.fragment.BlankFragment2;
 import com.demos.kotlin.fragment.BlankFragment3;
-import com.demos.kotlin.views.tablayout.ChromeTabLayout;
+import com.demos.kotlin.views.tablayout.ChromeTabView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +31,8 @@ public class ChromeTabActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        ChromeTabLayout chromeTabLayout = findViewById(R.id.chrome_tab_view);
-        chromeTabLayout.init(this, getSupportFragmentManager(), fragments, titles);
+        ChromeTabView chromeTabView = findViewById(R.id.chrome_tab_view);
+        chromeTabView.init(this, getSupportFragmentManager(), fragments, titles);
     }
 
     private void initData() {
