@@ -76,9 +76,9 @@ public class ChromeTabView extends FrameLayout {
             TabLayout.Tab tab = tabLayout.newTab();
             if (i == 0) {
                 //默认选中第一个
-                ViewCompat.setBackground(tab.view, tabLayout.getContext().getDrawable(R.drawable.selector_tab_background_left));
+                ViewCompat.setBackground(tab.view, mContext.getDrawable(R.drawable.selector_tab_background_left));
             } else if (i == titles.size() - 1) {
-                ViewCompat.setBackground(tab.view, tabLayout.getContext().getDrawable(R.drawable.selector_tab_background_right));
+                ViewCompat.setBackground(tab.view, mContext.getDrawable(R.drawable.selector_tab_background_right));
             }
             tabLayout.addTab(tab);
         }

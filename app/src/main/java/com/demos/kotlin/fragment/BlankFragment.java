@@ -6,30 +6,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.demos.kotlin.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link BlankFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class BlankFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+    private static final String ARG_PARAM1 = "type";
+    private static final String ARG_PARAM2 = "name";
+
     private String mParam1;
     private String mParam2;
     private String text = "BlankFragment---------";
-
+    private String type;
 
     public BlankFragment() {
         // Required empty public constructor
+        this.type = type;
         Log.e("fragment", "-------empty constructor");
     }
 
@@ -67,7 +62,10 @@ public class BlankFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.e("fragment", "-------fragment onCreateView");
-        return inflater.inflate(R.layout.fragment_blank, container, false);
+        View view = inflater.inflate(R.layout.fragment_blank, container, false);
+        ((TextView) view.findViewById(R.id.type_fragment_01)).setText(mParam1);
+        ((TextView) view.findViewById(R.id.name_fragment_01)).setText(mParam2);
+        return view;
     }
 
     @Override

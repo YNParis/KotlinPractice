@@ -42,7 +42,7 @@ public class ChromeTabActivity extends AppCompatActivity {
         titles.add("tab3");
         titles.add("tab4");
         fragments = new ArrayList<>();
-        fragments.add(new BlankFragment());
+        fragments.add(BlankFragment.newInstance("01", "type 01"));
         fragments.add(new BlankFragment2());
         fragments.add(new BlankFragment());
         fragments.add(new BlankFragment3());

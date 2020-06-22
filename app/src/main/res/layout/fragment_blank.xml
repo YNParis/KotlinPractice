@@ -7,6 +7,14 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/type_fragment_01"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/hello_blank_fragment" />
+
+    <TextView
+        android:id="@+id/name_fragment_01"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
