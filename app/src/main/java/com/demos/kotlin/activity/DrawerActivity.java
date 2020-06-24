@@ -1,12 +1,12 @@
 
 package com.demos.kotlin.activity;
 
-import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -15,7 +15,7 @@ import com.demos.kotlin.R;
 public class DrawerActivity extends AppCompatActivity {
 
     // 抽屉菜单对象
-    private ActionBarDrawerToggle drawerbar;
+//    private ActionBarDrawerToggle drawerbar;
     public DrawerLayout drawerLayout;
     private RelativeLayout main_left_drawer_layout, main_right_drawer_layout;
 
@@ -31,12 +31,33 @@ public class DrawerActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
 
         //设置菜单内容之外其他区域的背景色
-        drawerLayout.setScrimColor(Color.TRANSPARENT);
+        drawerLayout.setScrimColor(getResources().getColor(R.color.alpha_white));
 
         //左边菜单
         main_left_drawer_layout = (RelativeLayout) findViewById(R.id.main_left_drawer_layout);
         //右边菜单
         main_right_drawer_layout = (RelativeLayout) findViewById(R.id.main_right_drawer_layout);
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+                Log.e("drawer", "onDrawerSlide");
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {
+                Log.e("drawer", "onDrawerOpened");
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull View drawerView) {
+                Log.e("drawer", "onDrawerClosed");
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+                Log.e("drawer", "onDrawerStateChanged");
+            }
+        });
 
     }
 
@@ -56,7 +77,7 @@ public class DrawerActivity extends AppCompatActivity {
 //            }
 //        };
 
-        drawerLayout.addDrawerListener(drawerbar);
+//        drawerLayout.addDrawerListener(drawerbar);
     }
 
     //左边菜单开关事件
@@ -76,4 +97,9 @@ public class DrawerActivity extends AppCompatActivity {
             drawerLayout.openDrawer(main_right_drawer_layout);
         }
     }
+
+    public void closeDrawer(View view) {
+        drawerLayout.closeDrawers();
+    }
+
 }

@@ -6,12 +6,26 @@
     tools:context=".fragment.BlankFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/type_fragment_01"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/hello_blank_fragment" />
+    <com.demos.kotlin.views.SquareLayout
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/img_norm_type"
+            android:layout_width="40dp"
+            android:src="@drawable/ic_camera_enhance_black_24dp"
+            android:layout_height="40dp" />
+
+        <TextView
+            android:id="@+id/type_fragment_01"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/hello_blank_fragment" />
+    </com.demos.kotlin.views.SquareLayout>
+
 
     <TextView
         android:id="@+id/name_fragment_01"

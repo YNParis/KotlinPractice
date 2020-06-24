@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main_drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/transparent">
+    android:layout_height="match_parent">
 
     <!-- 下面显示的主要是主界面内容 -->
     <RelativeLayout
         android:id="@+id/main_content_frame_parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/transparent"
         android:gravity="center">
 
         <Button
@@ -36,14 +34,15 @@
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/shape_corner_bg_with_shadow"
         android:paddingTop="50dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="左边菜单测试" />
+            android:onClick="closeDrawer"
+            android:text="关闭" />
 
     </RelativeLayout>
 
@@ -53,15 +52,16 @@
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/shape_corner_bg_with_shadow"
         android:paddingTop="50dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="右边菜单测试" />
+            android:onClick="closeDrawer"
+            android:text="关闭" />
+
     </RelativeLayout>
 
-
-</androidx.core.widget.DrawerLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -16,6 +16,7 @@
     <color name="white">#ffffff</color>
     <color name="bg_color">#f9f9f9</color>
     <color name="tran_black">#80999999</color>
+    <color name="alpha_white">#66000000</color>
 
     <array name="colorCardBackground">
         <item>@color/colorBlueLight</item>
