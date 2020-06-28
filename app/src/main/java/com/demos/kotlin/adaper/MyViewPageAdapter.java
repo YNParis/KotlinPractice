@@ -5,10 +5,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.demos.kotlin.fragment.BlankFragment;
-import com.demos.kotlin.fragment.BlankFragment2;
-import com.demos.kotlin.fragment.BlankFragment3;
-
 import java.util.List;
 
 /**
@@ -29,7 +25,7 @@ public class MyViewPageAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         //轮播
-        switch (position % mList.size()) {
+        /*switch (position % mList.size()) {
             case 0:
                 return new BlankFragment();
             case 1:
@@ -37,13 +33,15 @@ public class MyViewPageAdapter extends FragmentStatePagerAdapter {
             case 2:
             default:
                 return new BlankFragment3();
-        }
+        }*/
+        return mList.get(position);
     }
 
     @Override
     public int getCount() {
         //循环播放
-        return Integer.MAX_VALUE;
+//        return Integer.MAX_VALUE;
+        return mList.size();
     }
 
 }
