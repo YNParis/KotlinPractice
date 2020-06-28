@@ -1,8 +1,10 @@
 package com.demos.kotlin.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -23,6 +25,7 @@ public class CardViewPagerActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private List<Fragment> mList = new ArrayList<>();
     private int currentIndex = 0;
+    private boolean mIsScrolled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +38,6 @@ public class CardViewPagerActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position == currentIndex) {
-
-                }
             }
 
             @Override
@@ -47,37 +47,63 @@ public class CardViewPagerActivity extends AppCompatActivity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
+                //检测滑动到第一页或者最后一页
+                switch (state) {
+                    case ViewPager.SCROLL_STATE_DRAGGING:
+                        mIsScrolled = false;
+                        break;
+                    case ViewPager.SCROLL_STATE_SETTLING:
+                        mIsScrolled = true;
+                        break;
+                    case ViewPager.SCROLL_STATE_IDLE:
+                        if (!mIsScrolled) {
+                            checkHasNext(null);
+                        }
+                        mIsScrolled = true;
+                        break;
+
+                }
 
             }
         });
-        viewPager.setOffscreenPageLimit(3);//设置缓存view 的个数（实际有3个，缓存2个+正在显示的1个）
-//        viewPager.setPageMargin(20);//设置viewpager每个页卡的间距，与gallery的spacing属性类似
+        viewPager.setOffscreenPageLimit(2);//设置缓存view 的个数（实际有3个，缓存2个+正在显示的1个）
         viewPager.setAdapter(adapter);
     }
 
     private void initData() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 2; i++) {
             mList.add(new BlankFragment());
             mList.add(new BlankFragment2());
             mList.add(new BlankFragment3());
         }
     }
 
-    public void toPre(View view) {
-        if (currentIndex == 0) {
-            ToastUtil.show(this, "当前是第一张");
-            return;
+    /**
+     * 检查是否有上一张或者下一张
+     *
+     * @return 有下一张
+     */
+    private boolean checkHasNext(@Nullable String tag) {
+        boolean isDrag = TextUtils.isEmpty(tag);
+        if (currentIndex == 0 && (isDrag || "0".equals(tag))) {
+            ToastUtil.show(this, "已经是第一张了！");
+            return false;
         }
+        if (currentIndex == mList.size() - 1 && (isDrag || "1".equals(tag))) {
+            ToastUtil.show(this, "已经是最后一张了！");
+            return false;
+        }
+        return true;
+    }
 
-        viewPager.setCurrentItem(--currentIndex, true);
+
+    public void toPre(View view) {
+        if (checkHasNext("0"))
+            viewPager.setCurrentItem(--currentIndex, true);
     }
 
     public void toNext(View view) {
-
-        if (currentIndex == mList.size() - 1) {
-            ToastUtil.show(this, "当前是最后一张");
-            return;
-        }
-        viewPager.setCurrentItem(++currentIndex, true);
+        if (checkHasNext("1"))
+            viewPager.setCurrentItem(++currentIndex, true);
     }
 }

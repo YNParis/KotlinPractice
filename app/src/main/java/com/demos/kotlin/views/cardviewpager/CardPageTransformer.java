@@ -9,10 +9,10 @@ public class CardPageTransformer implements ViewPager.PageTransformer {
     }
 
     private static final float MIN_SCALE = 0.75f;
+    private static final float NORMAL_SCALE = 0.9f;
 
     public void transformPage(View view, float position) {
         int pageWidth = view.getWidth();
-
         if (position < -1) { // [-Infinity,-1)
             // This page is way off-screen to the left.
             view.setAlpha(0);
@@ -32,7 +32,7 @@ public class CardPageTransformer implements ViewPager.PageTransformer {
             // Scale the page down (between MIN_SCALE and 1)
             float scaleFactor = MIN_SCALE + (1 - MIN_SCALE) * (1 - position);
             view.setScaleX(scaleFactor);
-            view.setScaleY(1);
+            view.setScaleY(scaleFactor);
 
         } else { // (1,+Infinity]
             // This page is way off-screen to the right.
