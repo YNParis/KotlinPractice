@@ -1,17 +1,24 @@
 package com.demos.kotlin.views.cardviewpager;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.viewpager.widget.ViewPager;
 
 public class CardPageTransformer implements ViewPager.PageTransformer {
-    public CardPageTransformer() {
+    private int loadPageCount;
+
+    public CardPageTransformer(int loadPageCount) {
+        this.loadPageCount = loadPageCount;
     }
 
     private static final float MIN_SCALE = 0.75f;
+    private static final float MIN_ALPHA = 0.5f;
     private static final float NORMAL_SCALE = 0.9f;
+    private static final int NORMAL_OFFSET = 100;
 
     public void transformPage(View view, float position) {
+        Log.e("viewpager", "position:" + position);
         int pageWidth = view.getWidth();
         if (position < -1) { // [-Infinity,-1)
             // This page is way off-screen to the left.
@@ -21,21 +28,16 @@ public class CardPageTransformer implements ViewPager.PageTransformer {
             // Use the default slide transition when moving to the left page
             view.setAlpha(1);
             view.setTranslationX(0);
-            view.setScaleX(1);
-            view.setScaleY(1);
-
-        } else if (position <= 1) { // (0,1]
-            // Fade the page out.
-            view.setAlpha(1 - position);
-            view.setTranslationX(pageWidth * -position);
-
-            // Scale the page down (between MIN_SCALE and 1)
-            float scaleFactor = MIN_SCALE + (1 - MIN_SCALE) * (1 - position);
+            view.setScaleX(NORMAL_SCALE);
+            view.setScaleY(NORMAL_SCALE);
+        } else if (position <= loadPageCount) {
+            //缓冲两个在后面，有透明度效果
+            view.setAlpha(Math.max(1 - position, MIN_ALPHA));
+            view.setTranslationX((pageWidth - NORMAL_OFFSET) * -position);
+            float scaleFactor = MIN_SCALE + (NORMAL_SCALE - MIN_SCALE) * (1 - position);
             view.setScaleX(scaleFactor);
             view.setScaleY(scaleFactor);
-
-        } else { // (1,+Infinity]
-            // This page is way off-screen to the right.
+        } else { // (3,+Infinity]
             view.setAlpha(0);
         }
     }

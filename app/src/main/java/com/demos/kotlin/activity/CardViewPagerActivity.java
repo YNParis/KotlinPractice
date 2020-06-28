@@ -25,6 +25,7 @@ public class CardViewPagerActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private List<Fragment> mList = new ArrayList<>();
     private int currentIndex = 0;
+    private int cachedPages = 3;
     private boolean mIsScrolled;
 
     @Override
@@ -33,7 +34,7 @@ public class CardViewPagerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_card_view_pager);
         initData();
         viewPager = findViewById(R.id.view_pager_card);
-        viewPager.setPageTransformer(true, new CardPageTransformer());
+        viewPager.setPageTransformer(true, new CardPageTransformer(cachedPages));
         MyViewPageAdapter adapter = new MyViewPageAdapter(getSupportFragmentManager(), mList);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -66,7 +67,7 @@ public class CardViewPagerActivity extends AppCompatActivity {
 
             }
         });
-        viewPager.setOffscreenPageLimit(2);//设置缓存view 的个数（实际有3个，缓存2个+正在显示的1个）
+        viewPager.setOffscreenPageLimit(cachedPages);//设置缓存view 的个数（实际有3个，缓存2个+正在显示的1个）
         viewPager.setAdapter(adapter);
     }
 
