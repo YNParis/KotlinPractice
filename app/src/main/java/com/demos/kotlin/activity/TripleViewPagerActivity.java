@@ -6,33 +6,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.demos.kotlin.R;
-import com.demos.kotlin.fragment.BlankFragment;
-import com.demos.kotlin.fragment.BlankFragment2;
-import com.demos.kotlin.fragment.BlankFragment3;
+import com.demos.kotlin.fragment.ViewPagerFragment;
 import com.demos.kotlin.views.tablayout.ChromeTabView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 仿Chrome浏览器的tab切换效果
- */
-public class ChromeTabActivity extends AppCompatActivity {
+public class TripleViewPagerActivity extends AppCompatActivity {
 
+    ChromeTabView chromeTabView;
     private List<String> titles;
     private List<Fragment> fragments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chrome_tab);
+        setContentView(R.layout.activity_triple_view_pager);
         initData();
         initView();
     }
 
     private void initView() {
-        ChromeTabView chromeTabView = findViewById(R.id.chrome_tab_view);
-        chromeTabView.init(this, getSupportFragmentManager(), fragments, titles, true);
+        chromeTabView = findViewById(R.id.chrome_view_triple);
+        chromeTabView.init(this, getSupportFragmentManager(), fragments, titles, false);
     }
 
     private void initData() {
@@ -42,11 +38,9 @@ public class ChromeTabActivity extends AppCompatActivity {
         titles.add("tab3");
         titles.add("tab4");
         fragments = new ArrayList<>();
-        fragments.add(BlankFragment.newInstance("01", "type 01"));
-        fragments.add(new BlankFragment2());
-        fragments.add(new BlankFragment());
-        fragments.add(new BlankFragment3());
+        fragments.add(new ViewPagerFragment());
+        fragments.add(new ViewPagerFragment());
+        fragments.add(new ViewPagerFragment());
+        fragments.add(new ViewPagerFragment());
     }
-
-
 }

@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initData() {
         list = listOf(
+                "TripleViewPager",
                 "CardViewPager",
                 "DrawerView",
                 "ChromeStyleTab",
@@ -119,6 +120,8 @@ class MainActivity : AppCompatActivity() {
                 startActivity<DrawerActivity>()
             "CardViewPager" ->
                 startActivity<CardViewPagerActivity>()
+            "TripleViewPager" ->
+                startActivity<TripleViewPagerActivity>()
             else -> {
                 ToastUtil.show(this, "没有对应的页面")
                 return

@@ -30,9 +30,12 @@ public class ChromeTabView extends FrameLayout {
     private List<Fragment> fragments;
     private List<String> titles;
     private FragmentManager fragmentManager;
+    private boolean canScroll;
+    private ChromeViewPager viewPager;
 
     public ChromeTabView(Context context, FragmentManager fm, List<Fragment> fragments, List<String> titles) {
         super(context);
+
     }
 
     public ChromeTabView(Context context, AttributeSet attrs) {
@@ -55,11 +58,12 @@ public class ChromeTabView extends FrameLayout {
      * @param fragments
      * @param titles
      */
-    public void init(Context context, FragmentManager fm, List<Fragment> fragments, List<String> titles) {
+    public void init(Context context, FragmentManager fm, List<Fragment> fragments, List<String> titles, boolean canScroll) {
         this.mContext = context;
         this.fragmentManager = fm;
         this.fragments = fragments;
         this.titles = titles;
+        this.canScroll = canScroll;
         initView();
     }
 
@@ -70,7 +74,8 @@ public class ChromeTabView extends FrameLayout {
         //设置页面属性
         View fatherView =
                 LayoutInflater.from(mContext).inflate(R.layout.layout_chrome_tab, this, true);
-        ViewPager viewPager = fatherView.findViewById(R.id.chrome_view_pager);
+        viewPager = fatherView.findViewById(R.id.chrome_view_pager);
+        viewPager.setCanScroll(canScroll);
         TabLayout tabLayout = fatherView.findViewById(R.id.chrome_tab_layout);
         for (int i = 0; i < titles.size(); i++) {
             TabLayout.Tab tab = tabLayout.newTab();
@@ -118,6 +123,10 @@ public class ChromeTabView extends FrameLayout {
         int textStyle = selected ? R.style.TabLayoutTextSelectedStyle : R.style.TabLayoutTextNormalStyle;
         spStr.setSpan(new TextAppearanceSpan(mContext, textStyle), 0, text.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         tab.setText(spStr);
+    }
+
+    public ViewPager getViewPager() {
+        return viewPager;
     }
 
 }
