@@ -35,7 +35,7 @@ import java.util.List;
 public class CityMapView extends View {
     private static final String TAG = "DetialMapView";
     private Paint mPaint;
-    private List<CityItem> cityItemList ;
+    private List<CityItem> cityItemList;
     private CityItem selectCity;
     private Context mContext;
     private float scale = 1.3f;
@@ -43,6 +43,8 @@ public class CityMapView extends View {
 
     private int miniWidth;
     private int miniHeight;
+    private int maxWidth;
+    private int maxHeight;
     private static final int LOAD_FINISH = 1;
 
     private GestureDetectorCompat gestureDetectorCompat;
@@ -81,6 +83,8 @@ public class CityMapView extends View {
 
         miniWidth = getContext().getResources().getDimensionPixelSize(R.dimen.map_min_width);
         miniHeight = getContext().getResources().getDimensionPixelSize(R.dimen.map_min_height);
+        maxWidth = getContext().getResources().getDimensionPixelSize(R.dimen.map_max_width);
+        maxHeight = getContext().getResources().getDimensionPixelSize(R.dimen.map_max_height);
         Log.d(TAG, "miniWidth=" + miniWidth + "|miniHeight=" + miniHeight);
         cityItemList = new ArrayList<>();
         mHander = new Handler() {
@@ -152,23 +156,24 @@ public class CityMapView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int width = getMeasure(miniWidth, widthMeasureSpec);
-        int height = getMeasure(miniHeight, heightMeasureSpec);
+        int width = getMeasure(miniWidth, maxWidth, widthMeasureSpec);
+        int height = getMeasure(miniHeight, maxHeight, heightMeasureSpec);
         Log.d(TAG, "onMeasure: " + width + "---" + height);
         setMeasuredDimension(width, height);
     }
 
-    public int getMeasure(int defaultSize, int measureSpec) {
+    public int getMeasure(int minSize, int maxSize, int measureSpec) {
         int resultSize = 0;
         int mode = MeasureSpec.getMode(measureSpec);
         int size = MeasureSpec.getSize(measureSpec);
+        Log.e("map", "mode,size:" + mode + "  " + size);
         switch (mode) {
             case MeasureSpec.EXACTLY: //自己定义大小
-                resultSize = size;
+                resultSize = Math.max(minSize, size);
                 break;
             case MeasureSpec.AT_MOST: //wrap_content
             case MeasureSpec.UNSPECIFIED:
-                resultSize = Math.max(defaultSize, size);
+                resultSize = Math.min(maxSize, size);
                 break;
         }
         return resultSize;
