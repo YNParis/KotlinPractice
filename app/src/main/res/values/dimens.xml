@@ -24,4 +24,8 @@
     <dimen name="tab_text_selected_size">22sp</dimen>
     <dimen name="tab_text_normal_size">20sp</dimen>
 
+    <!--map-->
+    <dimen name="map_min_width">200dp</dimen>
+    <dimen name="map_min_height">147dp</dimen>
+
 </resources>
