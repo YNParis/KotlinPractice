@@ -27,4 +27,12 @@
 
     <color name="colorTabSelected">#557CFA</color>
     <color name="colorTabBorder">#A0B5FC</color>
+    <color name="colorTypeSolidSelected">#33FFFFFF</color>
+    <color name="colorTypeSolidNormal">#14FFFFFF</color>
+    <color name="colorBorderNormal">#66FFFFFF</color>
+    <color name="colorBorderSelected">#FFFFFFFF</color>
+    <color name="alpha_white_66">#66000000</color>
+    <color name="alpha_white_99">#99000000</color>
+    <color name="item_selected_bg_color">#144F77FA</color>
+    <color name="item_unselected_bg_color">#FFE8EBF5</color>
 </resources>

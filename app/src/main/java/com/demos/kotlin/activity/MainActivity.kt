@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initData() {
         list = listOf(
+                "CustomMapView",
                 "TripleViewPager",
                 "CardViewPager",
                 "DrawerView",
@@ -122,6 +123,8 @@ class MainActivity : AppCompatActivity() {
                 startActivity<CardViewPagerActivity>()
             "TripleViewPager" ->
                 startActivity<TripleViewPagerActivity>()
+            "CustomMapView" ->
+                startActivity<CustomMapActivity>()
             else -> {
                 ToastUtil.show(this, "没有对应的页面")
                 return

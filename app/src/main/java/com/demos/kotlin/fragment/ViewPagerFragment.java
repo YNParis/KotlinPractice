@@ -2,26 +2,34 @@ package com.demos.kotlin.fragment;
 
 
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.demos.kotlin.R;
+import com.demos.kotlin.adaper.ChromeTabViewPageAdapter;
 import com.demos.kotlin.utils.ToastUtil;
-import com.demos.kotlin.views.tablayout.ChromeTabView;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ViewPagerFragment extends Fragment {
 
-    private ChromeTabView chromeTabView;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
     private List<String> titles;
+    private List<Integer> imgRrc;
     private List<Fragment> fragments;
     private int currentIndex;
     private boolean mIsScrolled;
@@ -55,16 +63,17 @@ public class ViewPagerFragment extends Fragment {
     }
 
     private void initView(View view) {
-        chromeTabView = view.findViewById(R.id.chrome_view_fragment);
-        chromeTabView.init(getActivity(), getChildFragmentManager(), fragments, titles, true);
-        chromeTabView.getViewPager().addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+        viewPager = view.findViewById(R.id.view_pager_fragment);
+        tabLayout = view.findViewById(R.id.tab_layout_fragment);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
 
             @Override
             public void onPageSelected(int position) {
-//                currentIndex = position;
+                currentIndex = position;
             }
 
             @Override
@@ -88,6 +97,32 @@ public class ViewPagerFragment extends Fragment {
 
             }
         });
+
+        ChromeTabViewPageAdapter pageAdapter = new ChromeTabViewPageAdapter(getChildFragmentManager(), fragments, titles);
+        viewPager.setAdapter(pageAdapter);
+//        tabLayout.setupWithViewPager(viewPager);
+        for (int i = 0; i < titles.size(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            getTabView(tab, i);
+        }
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                setTabText(tab, true);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                setTabText(tab, false);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        if (tabLayout.getTabCount() > 0)
+            tabLayout.getTabAt(0).select();
     }
 
     private void initData() {
@@ -101,6 +136,11 @@ public class ViewPagerFragment extends Fragment {
         fragments.add(new BlankFragment2());
         fragments.add(new BlankFragment2());
         fragments.add(new BlankFragment2());
+        imgRrc = new ArrayList<>();
+        imgRrc.add(R.drawable.ic_all);
+        imgRrc.add(R.drawable.ic_insured);
+        imgRrc.add(R.drawable.ic_org);
+        imgRrc.add(R.drawable.ic_income);
     }
 
     /**
@@ -123,7 +163,7 @@ public class ViewPagerFragment extends Fragment {
 
     public void toPre() {
         if (currentIndex != 0) {
-            chromeTabView.getViewPager().setCurrentItem(--currentIndex);
+            viewPager.setCurrentItem(--currentIndex);
         } else {
             ToastUtil.show(getActivity(), "已经是第一张了！");
         }
@@ -132,11 +172,36 @@ public class ViewPagerFragment extends Fragment {
 
     public void toNext() {
         if (currentIndex != fragments.size() - 1) {
-            chromeTabView.getViewPager().setCurrentItem(++currentIndex);
+            viewPager.setCurrentItem(++currentIndex);
         } else {
             ToastUtil.show(getActivity(), "已经是最后一张了！");
         }
 
+    }
+
+    /**
+     * 改变字体样式
+     *
+     * @param tab
+     * @param selected 选中状态
+     */
+    private void setTabText(TabLayout.Tab tab, boolean selected) {
+        if (TextUtils.isEmpty(tab.getText())) return;
+        String text = tab.getText().toString().trim();
+        SpannableString spStr = new SpannableString(text);
+        int textStyle = selected ? R.style.TabLayoutTextSelectedStyle : R.style.TabLayoutTextNormalStyle;
+        spStr.setSpan(new TextAppearanceSpan(getContext(), textStyle), 0, text.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        tab.setText(spStr);
+    }
+
+    private View getTabView(TabLayout.Tab tab, int position) {
+        tab.setCustomView(R.layout.item_tab);
+        View v = tab.getCustomView();
+        ImageView imageView = v.findViewById(R.id.tab_img);
+        TextView textView = v.findViewById(R.id.tab_title);
+        textView.setText(titles.get(position));
+        imageView.setImageResource(imgRrc.get(position));
+        return v;
     }
 
 }

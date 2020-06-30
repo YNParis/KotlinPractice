@@ -24,7 +24,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:icon">
-        <activity android:name=".activity.TripleViewPagerActivity"></activity>
+        <activity android:name=".activity.CustomMapActivity"></activity>
+        <activity android:name=".activity.TripleViewPagerActivity" />
         <activity android:name=".activity.CardViewPagerActivity" />
         <activity android:name=".activity.ChromeTabActivity" />
         <activity

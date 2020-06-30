@@ -1,7 +1,6 @@
 package com.demos.kotlin.adaper;
 
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -39,9 +38,9 @@ public class ChromeTabViewPageAdapter extends FragmentStatePagerAdapter {
         return 0;
     }
 
-    @Nullable
+  /*  @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
         return titles == null ? "" : titles.get(position);
-    }
+    }*/
 }
