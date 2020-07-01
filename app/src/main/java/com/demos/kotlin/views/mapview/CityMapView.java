@@ -169,11 +169,11 @@ public class CityMapView extends View {
         Log.e("map", "mode,size:" + mode + "  " + size);
         switch (mode) {
             case MeasureSpec.EXACTLY: //自己定义大小
-                resultSize = Math.max(minSize, size);
+                resultSize = Math.min(minSize, size);
                 break;
             case MeasureSpec.AT_MOST: //wrap_content
             case MeasureSpec.UNSPECIFIED:
-                resultSize = Math.min(maxSize, size);
+                resultSize = Math.max(maxSize, size);
                 break;
         }
         return resultSize;
@@ -197,17 +197,20 @@ public class CityMapView extends View {
                 try {
                     List<CityItem> result = new ArrayList<>();
                     long startTime = System.currentTimeMillis();
-                    InputStream inputStream = mContext.getResources().openRawResource(R.raw.china);
+                    InputStream inputStream = mContext.getResources().openRawResource(R.raw.ic_dade);
                     XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
                     parser.setInput(inputStream, "utf-8");
                     int eventType;
+                    int i = 1;
                     while ((eventType = parser.getEventType()) != XmlPullParser.END_DOCUMENT) {
                         if (eventType == XmlPullParser.START_TAG) {
                             String name = parser.getName();
                             if ("path".equals(name)) {
-                                String id = parser.getAttributeValue(null, "id");
-                                String title = parser.getAttributeValue(null, "title");
-                                String pathData = parser.getAttributeValue(null, "d");
+                                /*String id = parser.getAttributeValue(null, "id");
+                                String title = parser.getAttributeValue(null, "title");*/
+                                String id = "id" + (i);
+                                String title = "title" + (i++);
+                                String pathData = parser.getAttributeValue(null, "android:pathData");
                                 Path path = PathParser.createPathFromPathData(pathData);
                                 Region region = new Region();
                                 if (path != null) {

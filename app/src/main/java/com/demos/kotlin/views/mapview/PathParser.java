@@ -25,8 +25,8 @@ public class PathParser {
      * @param start    the start index, inclusive
      * @param end      the end index, exclusive
      * @return the new array
-     * @throws IllegalArgumentException       if {@code start > end}
-     * @throws NullPointerException           if {@code original == null}
+     * @throws IllegalArgumentException if {@code start > end}
+     * @throws NullPointerException     if {@code original == null}
      */
     private static float[] copyOfRange(float[] original, int start, int end) {
         if (start > end) {
@@ -326,7 +326,10 @@ public class PathParser {
 
         private static void addCommand(Path path, float[] current,
                                        char previousCmd, char cmd, float[] val) {
-
+            float scale = 1000f / 1960;
+            for (int i = 0; i < val.length; i++) {
+                val[i] *= scale;
+            }
             int incr = 2;
             float currentX = current[0];
             float currentY = current[1];

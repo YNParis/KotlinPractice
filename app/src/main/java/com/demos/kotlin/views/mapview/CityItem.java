@@ -31,7 +31,10 @@ public class CityItem {
     /**
      * 区域背景色，默认白色
      */
-    private int drawColor = Color.YELLOW;
+    private int normalFillColor = Color.TRANSPARENT;
+    private int normalStrokeColor = Color.BLUE;
+    private int selectedFillColor = Color.WHITE;
+    private int selectedStrokeColor = Color.WHITE;
 
     public Path getmPath() {
         return mPath;
@@ -75,25 +78,23 @@ public class CityItem {
      */
     public void onDraw(Canvas canvas, Paint paint, boolean isSelected) {
         if (isSelected) {
-            paint.setStrokeWidth(2);
-            paint.setColor(Color.BLUE);
+            paint.setColor(selectedFillColor);
             paint.setStyle(Paint.Style.FILL);
-            paint.setShadowLayer(8, 0, 0, 0xFFFFFFFF);
+            paint.setShadowLayer(8, 10, 10, selectedFillColor);
             canvas.drawPath(mPath, paint);
             paint.clearShadowLayer();
-            paint.setColor(Color.BLUE);
-            paint.setStyle(Paint.Style.FILL);
-            paint.setStrokeWidth(2);
+            paint.setColor(selectedStrokeColor);
+            paint.setStrokeWidth(4);
+            paint.setStyle(Paint.Style.STROKE);
             canvas.drawPath(mPath, paint);
         } else {
             paint.clearShadowLayer();
-            paint.setStrokeWidth(1);
+            paint.setColor(normalFillColor);
             paint.setStyle(Paint.Style.FILL);
-            paint.setColor(drawColor);
             canvas.drawPath(mPath, paint);
+            paint.setColor(normalStrokeColor);
+            paint.setStrokeWidth(2);
             paint.setStyle(Paint.Style.STROKE);
-            int strokeColor = 0xFFD0E8F4;
-            paint.setColor(strokeColor);
             canvas.drawPath(mPath, paint);
         }
     }
