@@ -9,7 +9,6 @@ import com.demos.kotlin.R
 import com.demos.kotlin.activity.lifecycle.FirstActivity
 import com.demos.kotlin.adaper.MySimpleAdapter
 import com.demos.kotlin.adaper.MySimpleAdapter.MyOnItemOnClickListener
-import com.demos.kotlin.algorithm.AlgorithmInJava
 import com.demos.kotlin.algorithm.KotlinSyntaxActivity
 import com.demos.kotlin.ijk.PlayerActivity
 import com.demos.kotlin.utils.ToastUtil
@@ -75,8 +74,6 @@ class MainActivity : AppCompatActivity() {
 
         list_functions.addItemDecoration(itemDecoration)
         list_functions.adapter = adapter
-        AlgorithmInJava.getMonthPayEqual(120000.0, 10, 0.06)
-        AlgorithmInJava.getMonthPayEqualPrincipal(120000.0, 10, 0.06)
 
     }
 

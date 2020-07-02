@@ -61,8 +61,6 @@ public class CityMapView extends View {
     public CityMapView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         mContext = context.getApplicationContext();
-        init();
-        initData();
     }
 
     /**
@@ -73,9 +71,10 @@ public class CityMapView extends View {
     }
 
     /**
-     * 初始化
+     * 初始化，必须调用
      */
-    private void init() {
+    public void init(Context context) {
+        mContext = context;
         mPaint = new Paint();
         mPaint.setColor(Color.BLUE);
         mPaint.setAntiAlias(true);
@@ -107,7 +106,7 @@ public class CityMapView extends View {
                 return true;
             }
         });
-
+        initData();
     }
 
     /**
@@ -206,10 +205,9 @@ public class CityMapView extends View {
                         if (eventType == XmlPullParser.START_TAG) {
                             String name = parser.getName();
                             if ("path".equals(name)) {
-                                /*String id = parser.getAttributeValue(null, "id");
-                                String title = parser.getAttributeValue(null, "title");*/
+//                                String id = parser.getAttributeValue(null, "id");
                                 String id = "id" + (i);
-                                String title = "title" + (i++);
+                                String title = parser.getAttributeValue(null, "title");
                                 String pathData = parser.getAttributeValue(null, "android:pathData");
                                 Path path = PathParser.createPathFromPathData(pathData);
                                 Region region = new Region();
@@ -220,7 +218,7 @@ public class CityMapView extends View {
                                     // 设置区域路径和剪辑描述的区域
                                     region.setPath(path, new Region((int) (r.left), (int) (r.top), (int) (r.right), (int) (r.bottom)));
                                 }
-                                CityItem cityItem = new CityItem();
+                                CityItem cityItem = new CityItem(mContext);
                                 cityItem.setCityId(id);
                                 cityItem.setCityName(title);
                                 cityItem.setmPath(path);

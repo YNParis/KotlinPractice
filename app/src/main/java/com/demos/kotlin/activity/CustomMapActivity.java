@@ -15,7 +15,8 @@ public class CustomMapActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_map);
-        CityMapView detailMapView = (CityMapView) findViewById(R.id.svg_map);
+        CityMapView detailMapView = findViewById(R.id.svg_map);
+        detailMapView.init(this);
         detailMapView.setOnMapClickListener(new CityMapView.OnMapClickListener() {
             @Override
             public void onClick(CityItem cityItem) {
