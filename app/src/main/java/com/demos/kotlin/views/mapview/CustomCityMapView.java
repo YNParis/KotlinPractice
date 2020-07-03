@@ -32,17 +32,19 @@ import java.util.List;
  * province map info
  */
 
-public class CityMapView extends View {
+public class CustomCityMapView extends View {
     private static final String TAG = "DetialMapView";
     private Paint mPaint;
-    private List<CityItem> cityItemList;
-    private CityItem selectCity;
+    private List<CustomCityItem> cityItemList;
+    private CustomCityItem selectCity;
     private Context mContext;
     private float scale = 1.3f;
     private static Handler mHander;
 
     private int miniWidth;
     private int miniHeight;
+    private int maxWidth;
+    private int maxHeight;
     private static final int LOAD_FINISH = 1;
 
     private GestureDetectorCompat gestureDetectorCompat;
@@ -52,15 +54,13 @@ public class CityMapView extends View {
         this.onMapClickListener = onMapClickListener;
     }
 
-    public CityMapView(Context context) {
+    public CustomCityMapView(Context context) {
         this(context, null);
     }
 
-    public CityMapView(Context context, @Nullable AttributeSet attrs) {
+    public CustomCityMapView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         mContext = context.getApplicationContext();
-        init();
-        initData();
     }
 
     /**
@@ -71,9 +71,10 @@ public class CityMapView extends View {
     }
 
     /**
-     * 初始化
+     * 初始化，必须调用
      */
-    private void init() {
+    public void init(Context context) {
+        mContext = context;
         mPaint = new Paint();
         mPaint.setColor(Color.BLUE);
         mPaint.setAntiAlias(true);
@@ -81,6 +82,8 @@ public class CityMapView extends View {
 
         miniWidth = getContext().getResources().getDimensionPixelSize(R.dimen.map_min_width);
         miniHeight = getContext().getResources().getDimensionPixelSize(R.dimen.map_min_height);
+        maxWidth = getContext().getResources().getDimensionPixelSize(R.dimen.map_max_width);
+        maxHeight = getContext().getResources().getDimensionPixelSize(R.dimen.map_max_height);
         Log.d(TAG, "miniWidth=" + miniWidth + "|miniHeight=" + miniHeight);
         cityItemList = new ArrayList<>();
         mHander = new Handler() {
@@ -88,7 +91,7 @@ public class CityMapView extends View {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case LOAD_FINISH:
-                        cityItemList = (List<CityItem>) msg.obj;
+                        cityItemList = (List<CustomCityItem>) msg.obj;
                         postInvalidate();
                         break;
                 }
@@ -103,7 +106,7 @@ public class CityMapView extends View {
                 return true;
             }
         });
-
+        initData();
     }
 
     /**
@@ -113,10 +116,10 @@ public class CityMapView extends View {
      * @param y 点击的Y坐标
      */
     private boolean handlerTouch(int x, int y) {
-        final List<CityItem> list = cityItemList;
-        CityItem cityItem = null;
+        final List<CustomCityItem> list = cityItemList;
+        CustomCityItem cityItem = null;
         if (list == null) return false;
-        for (CityItem temp : list) {
+        for (CustomCityItem temp : list) {
             if (temp.isOnTouch((int) (x / scale), (int) (y / scale))) {//除以放大倍数
                 cityItem = temp;
                 break;
@@ -133,10 +136,10 @@ public class CityMapView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        final List<CityItem> list = cityItemList;
+        final List<CustomCityItem> list = cityItemList;
         canvas.save();
         canvas.scale(scale, scale);
-        for (CityItem cityItem : list) {
+        for (CustomCityItem cityItem : list) {
             if (!cityItem.equals(selectCity))
                 cityItem.onDraw(canvas, mPaint, false);
         }
@@ -152,23 +155,24 @@ public class CityMapView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int width = getMeasure(miniWidth, widthMeasureSpec);
-        int height = getMeasure(miniHeight, heightMeasureSpec);
+        int width = getMeasure(miniWidth, maxWidth, widthMeasureSpec);
+        int height = getMeasure(miniHeight, maxHeight, heightMeasureSpec);
         Log.d(TAG, "onMeasure: " + width + "---" + height);
         setMeasuredDimension(width, height);
     }
 
-    public int getMeasure(int defaultSize, int measureSpec) {
+    public int getMeasure(int minSize, int maxSize, int measureSpec) {
         int resultSize = 0;
         int mode = MeasureSpec.getMode(measureSpec);
         int size = MeasureSpec.getSize(measureSpec);
+        Log.e("map", "mode,size:" + mode + "  " + size);
         switch (mode) {
             case MeasureSpec.EXACTLY: //自己定义大小
-                resultSize = size;
+                resultSize = Math.min(minSize, size);
                 break;
             case MeasureSpec.AT_MOST: //wrap_content
             case MeasureSpec.UNSPECIFIED:
-                resultSize = Math.max(defaultSize, size);
+                resultSize = Math.max(maxSize, size);
                 break;
         }
         return resultSize;
@@ -190,20 +194,22 @@ public class CityMapView extends View {
             @Override
             public void run() {
                 try {
-                    List<CityItem> result = new ArrayList<>();
+                    List<CustomCityItem> result = new ArrayList<>();
                     long startTime = System.currentTimeMillis();
-                    InputStream inputStream = mContext.getResources().openRawResource(R.raw.china);
+                    InputStream inputStream = mContext.getResources().openRawResource(R.raw.ic_dade);
                     XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
                     parser.setInput(inputStream, "utf-8");
                     int eventType;
+                    int i = 1;
                     while ((eventType = parser.getEventType()) != XmlPullParser.END_DOCUMENT) {
                         if (eventType == XmlPullParser.START_TAG) {
                             String name = parser.getName();
                             if ("path".equals(name)) {
-                                String id = parser.getAttributeValue(null, "id");
+//                                String id = parser.getAttributeValue(null, "id");
+                                String id = "id" + (i);
                                 String title = parser.getAttributeValue(null, "title");
-                                String pathData = parser.getAttributeValue(null, "d");
-                                Path path = PathParser.createPathFromPathData(pathData);
+                                String pathData = parser.getAttributeValue(null, "android:pathData");
+                                Path path = CustomPathParser.createPathFromPathData(pathData);
                                 Region region = new Region();
                                 if (path != null) {
                                     RectF r = new RectF();
@@ -212,7 +218,7 @@ public class CityMapView extends View {
                                     // 设置区域路径和剪辑描述的区域
                                     region.setPath(path, new Region((int) (r.left), (int) (r.top), (int) (r.right), (int) (r.bottom)));
                                 }
-                                CityItem cityItem = new CityItem();
+                                CustomCityItem cityItem = new CustomCityItem(mContext);
                                 cityItem.setCityId(id);
                                 cityItem.setCityName(title);
                                 cityItem.setmPath(path);
@@ -238,6 +244,6 @@ public class CityMapView extends View {
      * 点击监听事件 回调得到城市信息
      */
     public interface OnMapClickListener {
-        void onClick(CityItem cityItem);
+        void onClick(CustomCityItem cityItem);
     }
 }

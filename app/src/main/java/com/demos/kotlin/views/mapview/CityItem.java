@@ -1,17 +1,10 @@
 package com.demos.kotlin.views.mapview;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Region;
-import android.text.TextUtils;
-import android.util.Log;
-
-import com.demos.kotlin.R;
 
 /**
  * @auther sxshi on 2017/6/1.
@@ -38,20 +31,7 @@ public class CityItem {
     /**
      * 区域背景色，默认白色
      */
-    private int normalFillColor = Color.TRANSPARENT;
-    private int normalStrokeColor = Color.BLUE;
-    private int selectedFillColor = Color.WHITE;
-    private int selectedStrokeColor = Color.WHITE;
-
-    private Context context;
-    private Bitmap normalBitmap;
-    private Bitmap selectedBitmap;
-
-    public CityItem(Context context) {
-        this.context = context;
-        normalBitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_capture_bg);
-        selectedBitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_camera_blue);
-    }
+    private int drawColor = Color.YELLOW;
 
     public Path getmPath() {
         return mPath;
@@ -86,15 +66,6 @@ public class CityItem {
         this.cityId = cityId;
     }
 
-
-    public Context getContext() {
-        return context;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
-    }
-
     /**
      * 绘制出自己
      *
@@ -103,40 +74,28 @@ public class CityItem {
      * @param isSelected 是否是选中的地图
      */
     public void onDraw(Canvas canvas, Paint paint, boolean isSelected) {
-        Log.e("map", "----------------------cityName:" + cityName);
         if (isSelected) {
-            paint.setColor(selectedFillColor);
+            paint.setStrokeWidth(2);
+            paint.setColor(Color.BLUE);
             paint.setStyle(Paint.Style.FILL);
+            paint.setShadowLayer(8, 0, 0, 0xFFFFFFFF);
             canvas.drawPath(mPath, paint);
-            paint.setColor(selectedStrokeColor);
-            paint.setStrokeWidth(4);
-            paint.setStyle(Paint.Style.STROKE);
+            paint.clearShadowLayer();
+            paint.setColor(Color.BLUE);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setStrokeWidth(2);
             canvas.drawPath(mPath, paint);
         } else {
-            paint.setColor(normalFillColor);
+            paint.clearShadowLayer();
+            paint.setStrokeWidth(1);
             paint.setStyle(Paint.Style.FILL);
+            paint.setColor(drawColor);
             canvas.drawPath(mPath, paint);
-            paint.setColor(normalStrokeColor);
-            paint.setStrokeWidth(2);
             paint.setStyle(Paint.Style.STROKE);
+            int strokeColor = 0xFFD0E8F4;
+            paint.setColor(strokeColor);
             canvas.drawPath(mPath, paint);
         }
-        drawTitleAndDrawable(isSelected, paint, canvas);
-    }
-
-    private void drawTitleAndDrawable(boolean isSelected, Paint paint, Canvas canvas) {
-        if (TextUtils.isEmpty(cityName)) {
-            return;
-        }
-        float textSize = isSelected ? 25 : 20;
-        paint.setColor(Color.BLUE);
-        paint.setTextSize(textSize);
-        int offsetX = (mRegion.getBounds().left + mRegion.getBounds().right) / 2;
-        int offsetY = (mRegion.getBounds().top + mRegion.getBounds().bottom) / 2;
-        canvas.drawText(cityName, offsetX, offsetY, paint);
-        paint.setAntiAlias(true);
-        Bitmap bitmap = isSelected ? selectedBitmap : normalBitmap;
-        canvas.drawBitmap(bitmap, offsetX, offsetY - bitmap.getHeight() - textSize, paint);
     }
 
     /**
