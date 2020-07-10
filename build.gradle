@@ -2,11 +2,12 @@
 
 buildscript {
     ext.kotlin_version = '1.2.51'
-    ext.anko_version='0.10.5'
+    ext.anko_version = '0.10.5'
     repositories {
-	maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
         google()
         jcenter()
+        maven { url 'https://jitpack.io' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.0'
@@ -20,9 +21,10 @@ buildscript {
 
 allprojects {
     repositories {
-	maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
         google()
         jcenter()
+        maven { url 'https://jitpack.io' }
     }
 }
 

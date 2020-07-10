@@ -29,6 +29,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initData() {
         list = listOf(
+                "PieCharts",
+                "BarCharts",
+                "PopWindow",
                 "CustomMapView",
                 "TripleViewPager",
                 "CardViewPager",
@@ -122,6 +125,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity<TripleViewPagerActivity>()
             "CustomMapView" ->
                 startActivity<CustomMapActivity>()
+            "PopWindow" ->
+                startActivity<PopwindowActivity>()
+            "BarCharts" ->
+                startActivity<BarChartActivityMultiDataset>()
+            "PieCharts" ->
+                startActivity<PieChartActivity>()
             else -> {
                 ToastUtil.show(this, "没有对应的页面")
                 return

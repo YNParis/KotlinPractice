@@ -119,4 +119,9 @@ dependencies {
 
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+
+    //任意位置的popwindow
+    implementation 'com.labo.kaji:relativepopupwindow:0.4.1'
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

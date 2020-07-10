@@ -24,7 +24,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:icon">
-        <activity android:name=".activity.CustomMapActivity"></activity>
+        <activity android:name=".activity.PopwindowActivity"></activity>
+        <activity android:name=".activity.CustomMapActivity" />
         <activity android:name=".activity.TripleViewPagerActivity" />
         <activity android:name=".activity.CardViewPagerActivity" />
         <activity android:name=".activity.ChromeTabActivity" />
@@ -74,6 +75,8 @@
         <activity android:name=".activity.UpdateAppActivity" />
         <activity android:name=".activity.JsonParseActivity" />
         <activity android:name=".activity.ui.login.LoginSystemActivity" />
+        <activity android:name=".activity.BarChartActivityMultiDataset" />
+        <activity android:name=".activity.PieChartActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

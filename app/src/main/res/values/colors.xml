@@ -35,4 +35,15 @@
     <color name="alpha_white_99">#99000000</color>
     <color name="item_selected_bg_color">#144F77FA</color>
     <color name="item_unselected_bg_color">#FFE8EBF5</color>
+
+    <!--图表中用到的颜色-->
+    <array name="color_charts">
+        <item>#A64F77FA</item>
+        <item>#D95AD8A6</item>
+        <item>#A65D7092</item>
+        <item>#D9F6BD16</item>
+        <item>#D9E8684A</item>
+        <item>#355AD8A6</item>
+
+    </array>
 </resources>
