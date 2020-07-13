@@ -75,8 +75,9 @@
         <activity android:name=".activity.UpdateAppActivity" />
         <activity android:name=".activity.JsonParseActivity" />
         <activity android:name=".activity.ui.login.LoginSystemActivity" />
-        <activity android:name=".activity.BarChartActivityMultiDataset" />
+        <activity android:name=".activity.charts.BarChartActivityMultiDataset" />
         <activity android:name=".activity.PieChartActivity" />
+        <activity android:name=".activity.charts.BarChartActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

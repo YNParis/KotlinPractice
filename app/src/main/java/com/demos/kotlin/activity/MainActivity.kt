@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.demos.kotlin.R
+import com.demos.kotlin.activity.charts.BarChartActivity
+import com.demos.kotlin.activity.charts.BarChartActivityMultiDataset
 import com.demos.kotlin.activity.lifecycle.FirstActivity
 import com.demos.kotlin.adaper.MySimpleAdapter
 import com.demos.kotlin.adaper.MySimpleAdapter.MyOnItemOnClickListener
@@ -29,8 +31,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initData() {
         list = listOf(
+                "BarChart",
                 "PieCharts",
-                "BarCharts",
+                "MultiBarCharts",
                 "PopWindow",
                 "CustomMapView",
                 "TripleViewPager",
@@ -127,10 +130,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity<CustomMapActivity>()
             "PopWindow" ->
                 startActivity<PopwindowActivity>()
-            "BarCharts" ->
+            "MultiBarCharts" ->
                 startActivity<BarChartActivityMultiDataset>()
             "PieCharts" ->
                 startActivity<PieChartActivity>()
+            "BarChart" ->
+                startActivity<BarChartActivity>()
             else -> {
                 ToastUtil.show(this, "没有对应的页面")
                 return

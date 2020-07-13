@@ -19,14 +19,18 @@ import com.github.mikephil.charting.utils.Utils;
  * @author Philipp Jahoda
  */
 @SuppressLint("ViewConstructor")
-public class MyMarkerView extends MarkerView {
+public class BarMarkerView extends MarkerView {
 
     private final TextView tvContent;
 
-    public MyMarkerView(Context context, int layoutResource) {
+    public BarMarkerView(Context context, int layoutResource) {
         super(context, layoutResource);
-
+        initView();
         tvContent = findViewById(R.id.tvContent);
+    }
+
+    private void initView() {
+
     }
 
     // runs every time the MarkerView is redrawn, can be used to update the
