@@ -5,15 +5,14 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@mipmap/bg_left_arrow"
-    android:orientation="vertical"
-    tools:ignore="Overdraw">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/title_marker_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="title"
-        android:textSize="12sp" />
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_data_marker_view"

@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.demos.kotlin.R;
 import com.demos.kotlin.activity.DemoBase;
-import com.demos.kotlin.views.charts.CombinedMarkerView;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -135,12 +134,6 @@ public class BarChartActivityMultiDataset extends DemoBase implements OnChartVal
         chart.getXAxis().setAxisMinimum(startYear);
         chart.getXAxis().setAxisMaximum(startYear + chart.getBarData().getGroupWidth(groupSpace, barSpace) * 5);
         chart.groupBars(startYear, groupSpace, barSpace);
-
-        CombinedMarkerView mv = new CombinedMarkerView(this, R.layout.bar_marker_view);
-        mv.setData(null, 5);
-        mv.setChartView(chart); // For bounds control
-        chart.setMarker(mv); // Set the marker to the chart
-
         chart.invalidate();
     }
 

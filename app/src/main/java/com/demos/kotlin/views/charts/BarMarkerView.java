@@ -23,8 +23,8 @@ public class BarMarkerView extends MarkerView {
 
     private final TextView tvContent;
 
-    public BarMarkerView(Context context, int layoutResource) {
-        super(context, layoutResource);
+    public BarMarkerView(Context context) {
+        super(context, R.layout.bar_marker_view);
         initView();
         tvContent = findViewById(R.id.tvContent);
     }

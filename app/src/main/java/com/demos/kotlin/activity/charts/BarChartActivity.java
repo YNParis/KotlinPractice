@@ -12,9 +12,10 @@ import androidx.core.content.ContextCompat;
 
 import com.demos.kotlin.R;
 import com.demos.kotlin.activity.DemoBase;
+import com.demos.kotlin.bean.MarkerDataBean;
+import com.demos.kotlin.views.charts.CombinedMarkerView;
 import com.demos.kotlin.views.charts.DayAxisValueFormatter;
 import com.demos.kotlin.views.charts.MyValueFormatter;
-import com.demos.kotlin.views.charts.XYMarkerView;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.Legend.LegendForm;
@@ -34,6 +35,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.MPPointF;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BarChartActivity extends DemoBase implements OnSeekBarChangeListener,
         OnChartValueSelectedListener {
@@ -113,13 +115,10 @@ public class BarChartActivity extends DemoBase implements OnSeekBarChangeListene
         l.setTextSize(11f);
         l.setXEntrySpace(4f);
 
-        XYMarkerView mv = new XYMarkerView(this, xAxisFormatter);
-        mv.setChartView(chart); // For bounds control
-        chart.setMarker(mv); // Set the marker to the chart
+        setData(12, 50);
+
 
         // setting data
-        seekBarY.setProgress(50);
-        seekBarX.setProgress(12);
 
         // chart.setDrawLegend(false);
     }
@@ -128,7 +127,7 @@ public class BarChartActivity extends DemoBase implements OnSeekBarChangeListene
 
         float start = 1f;
 
-        ArrayList<BarEntry> values = new ArrayList<>();
+        final ArrayList<BarEntry> values = new ArrayList<>();
 
         for (int i = (int) start; i < start + count; i++) {
             float val = (float) (Math.random() * (range + 1));
@@ -140,7 +139,7 @@ public class BarChartActivity extends DemoBase implements OnSeekBarChangeListene
             }
         }
 
-        BarDataSet set1;
+        final BarDataSet set1;
 
         if (chart.getData() != null &&
                 chart.getData().getDataSetCount() > 0) {
@@ -177,11 +176,26 @@ public class BarChartActivity extends DemoBase implements OnSeekBarChangeListene
             ArrayList<IBarDataSet> dataSets = new ArrayList<>();
             dataSets.add(set1);
 
-            BarData data = new BarData(dataSets);
+            final BarData data = new BarData(dataSets);
             data.setValueTextSize(10f);
             data.setBarWidth(0.9f);
-
             chart.setData(data);
+            final CombinedMarkerView mv = new CombinedMarkerView(this);
+            final List<MarkerDataBean> markerDataBeans = new ArrayList<>();
+            mv.setOnEntryClickedListener(new CombinedMarkerView.OnEntryClickedListener() {
+
+
+                @Override
+                public void onEntryClicked(int position) {
+                    markerDataBeans.clear();
+//                    markerDataBeans.add(new MarkerDataBean(set1.getLabel(), String.valueOf(values.get(position).getY())));
+                    markerDataBeans.add(new MarkerDataBean(set1.getLabel(), "value"));
+                    mv.setData(markerDataBeans, "marker的title", values.size());
+                }
+            });
+//
+            mv.setChartView(chart); // For bounds control
+            chart.setMarker(mv); // Set the marker to the chart
         }
     }
 

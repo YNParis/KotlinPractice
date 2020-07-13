@@ -1,17 +1,17 @@
 package com.demos.kotlin.bean;
 
-public class ChartDataBean {
+public class MarkerDataBean {
 
     private String key;
     private String value;
     private int color;
 
-    public ChartDataBean(String key, String value) {
+    public MarkerDataBean(String key, String value) {
         this.key = key;
         this.value = value;
     }
 
-    public ChartDataBean(String key, String value, int color) {
+    public MarkerDataBean(String key, String value, int color) {
         this.key = key;
         this.value = value;
         this.color = color;
