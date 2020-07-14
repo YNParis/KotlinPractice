@@ -2,13 +2,7 @@ package com.demos.kotlin.activity.charts;
 
 import android.graphics.RectF;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.WindowManager;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.TextView;
-
-import androidx.core.content.ContextCompat;
 
 import com.demos.kotlin.R;
 import com.demos.kotlin.activity.DemoBase;
@@ -37,12 +31,16 @@ import com.github.mikephil.charting.utils.MPPointF;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BarChartActivity extends DemoBase implements OnSeekBarChangeListener,
-        OnChartValueSelectedListener {
+/**
+ * 柱状图
+ */
+public class BarChartActivity extends DemoBase implements OnChartValueSelectedListener {
 
     private BarChart chart;
-    private SeekBar seekBarX, seekBarY;
-    private TextView tvX, tvY;
+    private CombinedMarkerView mv;
+    private List<MarkerDataBean> markerDataBeans;
+    private BarDataSet set1;
+    private ArrayList<BarEntry> values;//柱状图，填充横竖坐标值，两个属性
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,15 +50,6 @@ public class BarChartActivity extends DemoBase implements OnSeekBarChangeListene
         setContentView(R.layout.activity_bar_chart);
 
         setTitle("BarChartActivity");
-
-        tvX = findViewById(R.id.tvXMax);
-        tvY = findViewById(R.id.tvYMax);
-
-        seekBarX = findViewById(R.id.seekBar1);
-        seekBarY = findViewById(R.id.seekBar2);
-
-        seekBarY.setOnSeekBarChangeListener(this);
-        seekBarX.setOnSeekBarChangeListener(this);
 
         chart = findViewById(R.id.chart1);
         chart.setOnChartValueSelectedListener(this);
@@ -114,100 +103,45 @@ public class BarChartActivity extends DemoBase implements OnSeekBarChangeListene
         l.setFormSize(9f);
         l.setTextSize(11f);
         l.setXEntrySpace(4f);
+        setData();
 
-        setData(12, 50);
-
-
-        // setting data
-
-        // chart.setDrawLegend(false);
+        chart.getLegend().setEnabled(true);
     }
 
-    private void setData(int count, float range) {
-
+    //TODO 网络请求之后，设置图表，或者是刷新数据
+    private void setData() {
+        //填数据
         float start = 1f;
-
-        final ArrayList<BarEntry> values = new ArrayList<>();
-
-        for (int i = (int) start; i < start + count; i++) {
-            float val = (float) (Math.random() * (range + 1));
-
-            if (Math.random() * 100 < 25) {
-                values.add(new BarEntry(i, val, getResources().getDrawable(R.mipmap.ic_camera_blue)));
-            } else {
-                values.add(new BarEntry(i, val));
-            }
+        if (values == null) {
+            values = new ArrayList<>();
+        } else {
+            values.clear();
         }
-
-        final BarDataSet set1;
-
-        if (chart.getData() != null &&
-                chart.getData().getDataSetCount() > 0) {
+        for (int i = (int) start; i < start + 10; i++) {
+            float val = (float) (Math.random() * (20 + 1));
+            values.add(new BarEntry(i, val));
+        }
+        if (chart.getData() != null && chart.getData().getDataSetCount() > 0) {
             set1 = (BarDataSet) chart.getData().getDataSetByIndex(0);
             set1.setValues(values);
             chart.getData().notifyDataChanged();
             chart.notifyDataSetChanged();
-
         } else {
             set1 = new BarDataSet(values, "The year 2017");
-
             set1.setDrawIcons(false);
-
-            int startColor1 = ContextCompat.getColor(this, android.R.color.holo_orange_light);
-            int startColor2 = ContextCompat.getColor(this, android.R.color.holo_blue_light);
-            int startColor3 = ContextCompat.getColor(this, android.R.color.holo_orange_light);
-            int startColor4 = ContextCompat.getColor(this, android.R.color.holo_green_light);
-            int startColor5 = ContextCompat.getColor(this, android.R.color.holo_red_light);
-            int endColor1 = ContextCompat.getColor(this, android.R.color.holo_blue_dark);
-            int endColor2 = ContextCompat.getColor(this, android.R.color.holo_purple);
-            int endColor3 = ContextCompat.getColor(this, android.R.color.holo_green_dark);
-            int endColor4 = ContextCompat.getColor(this, android.R.color.holo_red_dark);
-            int endColor5 = ContextCompat.getColor(this, android.R.color.holo_orange_dark);
-
-          /*  List<Fill> gradientFills = new ArrayList<>();
-            gradientFills.add(new Fill(startColor1, endColor1));
-            gradientFills.add(new Fill(startColor2, endColor2));
-            gradientFills.add(new Fill(startColor3, endColor3));
-            gradientFills.add(new Fill(startColor4, endColor4));
-            gradientFills.add(new Fill(startColor5, endColor5));
-
-            set1.setFills(gradientFills);
-*/
             ArrayList<IBarDataSet> dataSets = new ArrayList<>();
             dataSets.add(set1);
-
             final BarData data = new BarData(dataSets);
-            data.setValueTextSize(10f);
-            data.setBarWidth(0.9f);
+//            data.setValueTextSize(10f);
+            data.setBarWidth(0.4f);
             chart.setData(data);
-            final CombinedMarkerView mv = new CombinedMarkerView(this);
-            final List<MarkerDataBean> markerDataBeans = new ArrayList<>();
-            mv.setOnEntryClickedListener(new CombinedMarkerView.OnEntryClickedListener() {
-
-
-                @Override
-                public void onEntryClicked(int position) {
-                    markerDataBeans.clear();
-//                    markerDataBeans.add(new MarkerDataBean(set1.getLabel(), String.valueOf(values.get(position).getY())));
-                    markerDataBeans.add(new MarkerDataBean(set1.getLabel(), "value"));
-                    mv.setData(markerDataBeans, "marker的title", values.size());
-                }
-            });
-//
+            mv = new CombinedMarkerView(this);
+            markerDataBeans = new ArrayList<>();//
             mv.setChartView(chart); // For bounds control
             chart.setMarker(mv); // Set the marker to the chart
         }
     }
 
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-        tvX.setText(String.valueOf(seekBarX.getProgress()));
-        tvY.setText(String.valueOf(seekBarY.getProgress()));
-
-        setData(seekBarX.getProgress(), seekBarY.getProgress());
-        chart.invalidate();
-    }
 
     @Override
     protected void saveToGallery() {
@@ -215,32 +149,17 @@ public class BarChartActivity extends DemoBase implements OnSeekBarChangeListene
     }
 
     @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-    }
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-    }
-
-    private final RectF onValueSelectedRectF = new RectF();
-
-    @Override
     public void onValueSelected(Entry e, Highlight h) {
 
         if (e == null)
             return;
-
-        RectF bounds = onValueSelectedRectF;
-        chart.getBarBounds((BarEntry) e, bounds);
+        //刷新markerView的数据
+        markerDataBeans.clear();
+        markerDataBeans.add(new MarkerDataBean(set1.getLabel(), String.valueOf(values.get((int) (h.getX() - 1)).getY())));
+        mv.setData(markerDataBeans, "marker的title", values.size());
+        chart.getBarBounds((BarEntry) e, new RectF());
         MPPointF position = chart.getPosition(e, AxisDependency.LEFT);
-
-        Log.i("bounds", bounds.toString());
-        Log.i("position", position.toString());
-
-        Log.i("x-index",
-                "low: " + chart.getLowestVisibleX() + ", high: "
-                        + chart.getHighestVisibleX());
-
+        mv.refreshContent(e, h);
         MPPointF.recycleInstance(position);
     }
 

@@ -6,8 +6,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.demos.kotlin.R
-import com.demos.kotlin.activity.charts.BarChartActivity
-import com.demos.kotlin.activity.charts.BarChartActivityMultiDataset
+import com.demos.kotlin.activity.charts.*
 import com.demos.kotlin.activity.lifecycle.FirstActivity
 import com.demos.kotlin.adaper.MySimpleAdapter
 import com.demos.kotlin.adaper.MySimpleAdapter.MyOnItemOnClickListener
@@ -31,6 +30,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun initData() {
         list = listOf(
+                "Candle",
+                "Pie",
+                "Combined",
+                "Stacked",
+                "Horizontal",
                 "BarChart",
                 "PieCharts",
                 "MultiBarCharts",
@@ -136,6 +140,16 @@ class MainActivity : AppCompatActivity() {
                 startActivity<PieChartActivity>()
             "BarChart" ->
                 startActivity<BarChartActivity>()
+            "Combined" ->
+                startActivity<CombinedChartActivity>()
+            "Stacked" ->
+                startActivity<StackedBarActivity>()
+            "Horizontal" ->
+                startActivity<HorizontalBarChartActivity>()
+            "Candle" ->
+                startActivity<CandleStickChartActivity>()
+            "Pie" ->
+                startActivity<PiePolylineChartActivity>()
             else -> {
                 ToastUtil.show(this, "没有对应的页面")
                 return

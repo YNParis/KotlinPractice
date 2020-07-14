@@ -22,6 +22,9 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+/**
+ * 多个的柱状图
+ */
 public class BarChartActivityMultiDataset extends DemoBase implements OnChartValueSelectedListener {
 
     private BarChart chart;

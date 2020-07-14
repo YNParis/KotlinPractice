@@ -21,7 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Custom implementation of the MarkerView.
+ * 混合图的markerview。
+ * 需要实现的效果：
+ * 1.点击任意一个点，显示当前x轴对应的所有数据——传入数据，或者动态设置数据；
+ * 2.需要向左或向右弹出框——判断是前50%，向右弹，后50%，向左弹。
  *
  * @author Philipp Jahoda
  */
@@ -63,12 +66,8 @@ public class CombinedMarkerView extends MarkerView {
     // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-        if (onEntryClickedListener != null) {
-            onEntryClickedListener.onEntryClicked(((int) e.getX()));
-            //横轴的第几个
-            isRight = e.getX() < totalSize / 2;
-            adapter.notifyDataSetChanged();
-        }
+        isRight = e.getX() < totalSize / 2;
+        adapter.notifyDataSetChanged();
         super.refreshContent(e, highlight);
     }
 

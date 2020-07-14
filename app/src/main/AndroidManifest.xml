@@ -78,6 +78,11 @@
         <activity android:name=".activity.charts.BarChartActivityMultiDataset" />
         <activity android:name=".activity.PieChartActivity" />
         <activity android:name=".activity.charts.BarChartActivity" />
+        <activity android:name=".activity.charts.CombinedChartActivity" />
+        <activity android:name=".activity.charts.PiePolylineChartActivity" />
+        <activity android:name=".activity.charts.HorizontalBarChartActivity" />
+        <activity android:name=".activity.charts.StackedBarActivity" />
+        <activity android:name=".activity.charts.CandleStickChartActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
