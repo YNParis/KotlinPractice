@@ -89,9 +89,6 @@ public class CustomPieRenderer extends PieChartRenderer {
         mValuePaint.setTextAlign(Paint.Align.CENTER);
 
         mEntryLabelsPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mEntryLabelsPaint.setColor(Color.BLACK);
-        mEntryLabelsPaint.setTextAlign(Paint.Align.CENTER);
-        mEntryLabelsPaint.setTextSize(Utils.convertDpToPixel(13f));
 
         mValueLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mValueLinePaint.setStyle(Paint.Style.STROKE);
@@ -660,6 +657,8 @@ public class CustomPieRenderer extends PieChartRenderer {
      */
     protected void drawEntryLabel(Canvas c, String label, float x, float y) {
         String[] labels = label.split(",");
+        mEntryLabelsPaint.setColor(0xA6000000);
+        mEntryLabelsPaint.setTextSize(Utils.convertDpToPixel(13f));
         c.drawText(labels[0], x, y, mEntryLabelsPaint);
         c.drawText(labels[1], x, y + 40, mEntryLabelsPaint);
     }

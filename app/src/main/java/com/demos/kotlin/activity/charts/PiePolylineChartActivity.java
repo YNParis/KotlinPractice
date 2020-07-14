@@ -44,9 +44,9 @@ public class PiePolylineChartActivity extends DemoBase implements OnChartValueSe
         chart = findViewById(R.id.chart1);
         chart.setUsePercentValues(true);
         chart.getDescription().setEnabled(true);
-        chart.setExtraOffsets(5, 10, 5, 5);
         chart.setDragDecelerationFrictionCoef(0.8f);
-//        chart.setExtraOffsets(20.f, 0.f, 20.f, 0.f);
+        //设置图表的偏移量，使得图表两边的空白处增大，如果label显示不下，可以将left和right再设置大一点
+        chart.setExtraOffsets(30.f, 0.f, 30.f, 0.f);
 
         chart.setDrawHoleEnabled(true);//环形
         chart.setDrawCenterText(false);//中间不绘制文字
@@ -59,11 +59,8 @@ public class PiePolylineChartActivity extends DemoBase implements OnChartValueSe
         chart.setTransparentCircleRadius(61f);
         chart.setRotationAngle(0);
         // enable rotation of the chart by touch
-        chart.setRotationEnabled(false);
+        chart.setRotationEnabled(true);
         chart.setHighlightPerTapEnabled(true);//设置可点击效果
-
-        // chart.setUnit(" €");
-        // chart.setDrawUnitsInChart(true);
 
         // add a selection listener
         chart.setOnChartValueSelectedListener(this);
