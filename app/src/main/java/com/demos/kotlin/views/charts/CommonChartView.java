@@ -9,26 +9,35 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.demos.kotlin.R;
+import com.github.mikephil.charting.charts.Chart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 /**
  * @author yangna
- * @Description 通用的chartview
+ * @Description 通用的chartView。需要传入表格的类型。
  */
 public class CommonChartView extends FrameLayout {
 
     public static final String PIE_CHART = "pie_chart";//饼图
+    public static final String LINES_CHART = "lines_chart";//折线图
+    public static final String BARS_CHART = "bars_chart";//柱状图
 
     /**
      * 传入参数
@@ -47,6 +56,13 @@ public class CommonChartView extends FrameLayout {
     private Context mContext;
 
     private PieChart mPieChart;
+    private LineChart mLinesChart;
+
+    private ValueFormatter valueFormatter;
+
+    private int[] colors;
+
+    private Chart currentChart;
 
     public CommonChartView(Context context) {
         super(context);
@@ -76,17 +92,17 @@ public class CommonChartView extends FrameLayout {
                 attrs, R.styleable.CommonChartView, defStyle, 0);
         mChartType = a.getString(R.styleable.CommonChartView_chartType);
         mValueTextColor = a.getColor(R.styleable.CommonChartView_valueTextColor,
-                getResources().getColor(R.color.colorWhite));
+                getResources().getColor(R.color.chart_value_color));
         mLabelTextColor = a.getColor(R.styleable.CommonChartView_labelTextColor,
-                getResources().getColor(R.color.colorPrimary));
+                getResources().getColor(R.color.chart_value_color));
         mGridColor = a.getColor(R.styleable.CommonChartView_gridColor,
-                getResources().getColor(R.color.colorPrimary));
+                getResources().getColor(R.color.chart_grid_color));
 
         mLabelTextSize = a.getDimension(R.styleable.CommonChartView_labelTextSize, 15);
         mValueTextSize = a.getDimension(R.styleable.CommonChartView_valueTextSize, 15);
         mGridWidth = a.getDimension(R.styleable.CommonChartView_gridWidth, 0.5f);
-
         a.recycle();
+        colors = getResources().getIntArray(R.array.color_charts_detail);
     }
 
     /**
@@ -98,8 +114,72 @@ public class CommonChartView extends FrameLayout {
             case PIE_CHART:
                 initPieChart();
                 break;
+            case LINES_CHART:
+                initLinesChart();
+                break;
 
         }
+
+    }
+
+    /**
+     * 必须在initView之前调用，不然不生效
+     *
+     * @param valueFormatter
+     */
+    public void setXAxisValueFormatter(ValueFormatter valueFormatter) {
+        this.valueFormatter = valueFormatter;
+        if (currentChart == null) return;
+        currentChart.getXAxis().setValueFormatter(valueFormatter);
+    }
+
+    /**
+     * 初始化折线图
+     */
+    private void initLinesChart() {
+        View fatherView = LayoutInflater.from(mContext).inflate(R.layout.chart_lines, this, true);
+        mLinesChart = fatherView.findViewById(R.id.line_chart_common);
+        currentChart = mLinesChart;
+        mLinesChart.setOnChartValueSelectedListener(onChartValueSelectedListener);
+
+        mLinesChart.setDrawGridBackground(false);
+        mLinesChart.getDescription().setEnabled(false);
+        mLinesChart.setDrawBorders(false);
+
+        mLinesChart.setExtraLeftOffset(30);
+        mLinesChart.setExtraRightOffset(30);
+
+        mLinesChart.getAxisLeft().setEnabled(true);
+        mLinesChart.getAxisLeft().setDrawGridLines(true);
+        mLinesChart.getAxisLeft().setGridLineWidth(0.5f);
+        mLinesChart.getAxisLeft().setDrawAxisLine(false);
+        mLinesChart.getAxisLeft().mAxisMinimum = 0;
+
+        mLinesChart.getAxisRight().setEnabled(false);
+
+        mLinesChart.getXAxis().setDrawAxisLine(true);
+        mLinesChart.getXAxis().setDrawGridLines(false);
+        mLinesChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        if (valueFormatter != null) {
+            mLinesChart.getXAxis().setValueFormatter(valueFormatter);
+        }
+
+        // enable touch gestures
+        mLinesChart.setTouchEnabled(true);
+
+        // enable scaling and dragging
+        mLinesChart.setDragEnabled(true);
+        mLinesChart.setScaleEnabled(true);/*缩放*/
+
+        // if disabled, scaling can be done on x- and y-axis separately
+        mLinesChart.setPinchZoom(false);
+
+        Legend l = mLinesChart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setXEntrySpace(20);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        l.setDrawInside(false);
 
     }
 
@@ -109,9 +189,11 @@ public class CommonChartView extends FrameLayout {
     private void initPieChart() {
         View fatherView = LayoutInflater.from(mContext).inflate(R.layout.chart_pie, this, true);
         mPieChart = fatherView.findViewById(R.id.pie_chart_common);
-        mPieChart.setUsePercentValues(true);
-        mPieChart.getDescription().setEnabled(true);
+        currentChart = mPieChart;
+        mPieChart.setUsePercentValues(true);//显示百分比
+        mPieChart.getDescription().setEnabled(false);//表格的说明去掉
         mPieChart.setDragDecelerationFrictionCoef(0.8f);
+
         //设置图表的偏移量，使得图表两边的空白处增大，如果label显示不下，可以将left和right再设置大一点
         mPieChart.setExtraOffsets(30.f, 0.f, 30.f, 0.f);
 
@@ -119,33 +201,22 @@ public class CommonChartView extends FrameLayout {
         mPieChart.setDrawCenterText(false);//中间不绘制文字
         mPieChart.setHoleColor(Color.WHITE);
 
-       /* mPieChart.setTransparentCircleColor(Color.WHITE);
-        mPieChart.setTransparentCircleAlpha(120);*/
-
-        mPieChart.setHoleRadius(58f);
-        mPieChart.setTransparentCircleRadius(61f);
+        mPieChart.setHoleRadius(60f);
+        /*设置内边的透明度效果，0为没有*/
+        mPieChart.setTransparentCircleRadius(0f);
         mPieChart.setRotationAngle(0);
         // enable rotation of the chart by touch
         mPieChart.setRotationEnabled(true);
-        mPieChart.setHighlightPerTapEnabled(true);//设置可点击效果
+//        mPieChart.setHighlightPerTapEnabled(true);//设置可点击效果
 
-        // add a selection listener
-        mPieChart.setOnChartValueSelectedListener(onChartValueSelectedListener);
         //设置label颜色
         mPieChart.setDrawEntryLabels(true);
-        mPieChart.setEntryLabelColor(0xFF000000);
+        mPieChart.setEntryLabelColor(mLabelTextColor);
         mPieChart.setRenderer(new CustomPieRenderer(mPieChart, mPieChart.getAnimator(), mPieChart.getViewPortHandler()));
 
-//        mPieChart.animateY(1400, Easing.EaseInOutQuad);//动画效果
-        // mPieChart.spin(2000, 0, 360);
-
+        //设置不绘制图例
         Legend l = mPieChart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.VERTICAL);
-        l.setDrawInside(false);
         l.setEnabled(false);
-
     }
 
     private OnChartValueSelectedListener onChartValueSelectedListener = new OnChartValueSelectedListener() {
@@ -163,19 +234,27 @@ public class CommonChartView extends FrameLayout {
     public void setData(int count, float range) {
         switch (mChartType) {
             case PIE_CHART:
-                setPieData(count, range);
+//                setPieData(count, range);
+                break;
+            case LINES_CHART:
+//                setLinesChartData(count, range);
                 break;
 
         }
     }
 
-    private void setPieData(int count, float range) {
+    /**
+     * 设置饼图数据
+     *
+     * @param labels 标签
+     * @param values 值
+     */
+    public void setPieData(List<String> labels, List<Float> values) {
         if (mPieChart == null) return;
+        int count = Math.min(labels.size(), values.size());
         ArrayList<PieEntry> entries = new ArrayList<>();
-
         for (int i = 0; i < count; i++) {
-            float value = (float) (Math.random() * range) + range / 5;
-            entries.add(new PieEntry(value, "label " + i + "," + value));
+            entries.add(new PieEntry(values.get(i), labels.get(i) + "," + values.get(i)));
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "Election Results");
@@ -184,8 +263,7 @@ public class CommonChartView extends FrameLayout {
         //选中后放大的偏移量
         dataSet.setSelectionShift(15f);
 
-        //图标颜色
-        int[] colors = getResources().getIntArray(R.array.color_charts_detail);
+        //图表颜色
         dataSet.setColors(colors);
 
         //设置折线指示线
@@ -193,26 +271,55 @@ public class CommonChartView extends FrameLayout {
         dataSet.setValueLinePart1Length(0.3f);
         dataSet.setValueLinePart2Length(0.5f);
         dataSet.setValueLineWidth(0.7f);
-        dataSet.setValueLineColor(0x73000000);
+        dataSet.setValueLineColor(mLabelTextColor);
 
         //饼图内，显示百分比
         dataSet.setYValuePosition(PieDataSet.ValuePosition.INSIDE_SLICE);
-
+        //饼图外，显示label
         dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
-
 
         PieData data = new PieData(dataSet);
         //value的样式
-        data.setValueFormatter(new PercentFormatter(mPieChart));
-        data.setValueTextSize(12f);
+        data.setValueFormatter(new PercentFormatter(mPieChart));//显示百分数
+        data.setValueTextSize(mValueTextSize);
         data.setValueTextColor(Color.WHITE);
-
         mPieChart.setData(data);
-        //自定义X轴标签位置
-
-        // undo all highlights
-//        chart.highlightValues(null);
         mPieChart.invalidate();
     }
 
+    public void setLinesChartData(List<String> labels, List<List<Float>> values) {
+
+        if (mLinesChart == null) return;
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+
+        /*values.size条折线*/
+        for (int z = 0; z < values.size(); z++) {
+            ArrayList<Entry> entry = new ArrayList<>();
+            List<Float> each = values.get(z);
+            for (int x = 0; x < each.size(); x++) {
+                entry.add(new Entry(x, each.get(x)));
+            }
+            LineDataSet d = new LineDataSet(entry, labels.get(z));
+            d.setLineWidth(2.5f);
+            d.setDrawCircles(false);
+            d.setDrawValues(false);
+            int color = colors[z % colors.length];
+            d.setColor(color);
+            d.setLabel(labels.get(z));/*图例*/
+            dataSets.add(d);
+        }
+
+        LineData data = new LineData(dataSets);
+        mLinesChart.setData(data);
+        mLinesChart.invalidate();
+
+    }
+
+    /**
+     * @param labels
+     * @param valuesList
+     */
+    public void setBarsData(List<String> labels, List<List<Float>> valuesList) {
+
+    }
 }

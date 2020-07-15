@@ -35,6 +35,8 @@
     <color name="alpha_white_99">#99000000</color>
     <color name="item_selected_bg_color">#144F77FA</color>
     <color name="item_unselected_bg_color">#FFE8EBF5</color>
+    <color name="chart_value_color">#73000000</color>
+    <color name="chart_grid_color">#26000000</color>
 
     <!--图表中用到的颜色-->
     <array name="color_charts">
@@ -63,4 +65,5 @@
         <item>#D9269A99</item>
 
     </array>
+
 </resources>

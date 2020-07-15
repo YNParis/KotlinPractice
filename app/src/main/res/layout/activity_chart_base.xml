@@ -1,14 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.charts.BaseChartActivity">
+    android:layout_height="wrap_content">
 
-    <com.demos.kotlin.views.charts.CommonChartView
-        android:id="@+id/chart_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="600dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <com.demos.kotlin.views.charts.CommonChartView
+            android:id="@+id/chart_view"
+            android:layout_width="match_parent"
+            android:layout_height="400dp" />
+
+        <com.demos.kotlin.views.charts.CommonChartView
+            android:id="@+id/line_view"
+            android:layout_width="match_parent"
+            android:layout_height="400dp" />
+
+        <com.demos.kotlin.views.charts.CommonChartView
+            android:id="@+id/bar_view"
+            android:layout_width="match_parent"
+            android:layout_height="400dp" />
+
+        <com.demos.kotlin.views.charts.CommonChartView
+            android:id="@+id/bars_view"
+            android:layout_width="match_parent"
+            android:layout_height="400dp" />
+
+        <com.demos.kotlin.views.charts.CommonChartView
+            android:id="@+id/lines_view"
+            android:layout_width="match_parent"
+            android:layout_height="400dp" />
+
+        <com.demos.kotlin.views.charts.CommonChartView
+            android:id="@+id/stacked_view"
+            android:layout_width="match_parent"
+            android:layout_height="400dp" />
+
+        <com.demos.kotlin.views.charts.CommonChartView
+            android:id="@+id/horizontal_view"
+            android:layout_width="match_parent"
+            android:layout_height="400dp" />
+
+        <com.demos.kotlin.views.charts.CommonChartView
+            android:id="@+id/candle_view"
+            android:layout_width="match_parent"
+            android:layout_height="400dp" />
+
+    </LinearLayout>
+
+</ScrollView>

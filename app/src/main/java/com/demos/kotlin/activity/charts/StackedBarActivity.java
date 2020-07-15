@@ -40,7 +40,6 @@ public class StackedBarActivity extends DemoBase implements OnChartValueSelected
 
         setTitle("StackedBarActivity");
 
-
         chart = findViewById(R.id.chart1);
         chart.setOnChartValueSelectedListener(this);
 
