@@ -24,7 +24,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:icon">
-        <activity android:name=".activity.PopwindowActivity"></activity>
+        <activity android:name=".activity.charts.BaseChartActivity"></activity>
+        <activity android:name=".activity.PopwindowActivity" />
         <activity android:name=".activity.CustomMapActivity" />
         <activity android:name=".activity.TripleViewPagerActivity" />
         <activity android:name=".activity.CardViewPagerActivity" />

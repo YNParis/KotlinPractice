@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initData() {
         list = listOf(
+                "BaseChart",
                 "Candle",
                 "Pie",
                 "Combined",
@@ -150,6 +151,8 @@ class MainActivity : AppCompatActivity() {
                 startActivity<CandleStickChartActivity>()
             "Pie" ->
                 startActivity<PiePolylineChartActivity>()
+            "BaseChart" ->
+                startActivity<BaseChartActivity>()
             else -> {
                 ToastUtil.show(this, "没有对应的页面")
                 return
