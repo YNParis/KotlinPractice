@@ -9,20 +9,10 @@
         android:orientation="vertical">
 
         <com.demos.kotlin.views.charts.CommonChartView
-            android:id="@+id/chart_view"
+            android:id="@+id/pie_view"
             android:layout_width="match_parent"
             android:layout_height="400dp" />
-
-        <com.demos.kotlin.views.charts.CommonChartView
-            android:id="@+id/line_view"
-            android:layout_width="match_parent"
-            android:layout_height="400dp" />
-
-        <com.demos.kotlin.views.charts.CommonChartView
-            android:id="@+id/bar_view"
-            android:layout_width="match_parent"
-            android:layout_height="400dp" />
-
+        
         <com.demos.kotlin.views.charts.CommonChartView
             android:id="@+id/bars_view"
             android:layout_width="match_parent"
@@ -30,6 +20,11 @@
 
         <com.demos.kotlin.views.charts.CommonChartView
             android:id="@+id/lines_view"
+            android:layout_width="match_parent"
+            android:layout_height="400dp" />
+
+        <com.demos.kotlin.views.charts.CommonChartView
+            android:id="@+id/combined_view"
             android:layout_width="match_parent"
             android:layout_height="400dp" />
 

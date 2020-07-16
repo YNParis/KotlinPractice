@@ -23,6 +23,8 @@ public class CustomAxisValueFormatter extends ValueFormatter {
     public static final String X_AXIS_MONTH = "month";
     public static final String X_AXIS_QUARTER = "quarter";
     public static final String X_AXIS_YEAR = "year";
+    public static final String X_AXIS_INT = "int";
+    public static final String X_AXIS_FLOAT_2 = "float_2";
 
     private String dateType;
 
@@ -41,6 +43,7 @@ public class CustomAxisValueFormatter extends ValueFormatter {
     public String getFormattedValue(float value) {
         Log.e("formatter", "getFormattedValue value:" + value);
         int index = (int) value;
+        Log.e("formatter", "getFormattedValue index:" + index);
         if (dateType != null) {
             /*横轴是时间*/
             switch (dateType) {
@@ -50,14 +53,17 @@ public class CustomAxisValueFormatter extends ValueFormatter {
                     return mQuarters[index % mQuarters.length];
                 case X_AXIS_YEAR:
                     return getYear(index);
+                case X_AXIS_INT:
+                    return String.valueOf(index);
+                case X_AXIS_FLOAT_2:
                 default:
-                    return getStringValue(value);
+                    return getStringValueOfFloat(value);
             }
         }
         if (xAxisValue != null) {
             return xAxisValue[index % xAxisValue.length];
         }
-        return getStringValue(value);
+        return getStringValueOfFloat(value);
     }
 
     /**
@@ -66,9 +72,19 @@ public class CustomAxisValueFormatter extends ValueFormatter {
      * @param value
      * @return
      */
-    private String getStringValue(float value) {
+    private String getStringValueOfFloat(float value) {
         DecimalFormat decimalFormat = new DecimalFormat(".00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
         return decimalFormat.format(value);
+    }
+
+    /**
+     * 返回整数部分
+     *
+     * @param value
+     * @return
+     */
+    private String getStringValueOfInt(float value) {
+        return String.valueOf(((int) value));
     }
 
     private String getYear(int index) {

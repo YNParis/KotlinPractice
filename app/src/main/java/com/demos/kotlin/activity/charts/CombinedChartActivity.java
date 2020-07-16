@@ -6,6 +6,7 @@ import android.view.WindowManager;
 
 import com.demos.kotlin.R;
 import com.demos.kotlin.activity.DemoBase;
+import com.demos.kotlin.views.charts.CustomAxisValueFormatter;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.CombinedChart.DrawOrder;
 import com.github.mikephil.charting.components.Legend;
@@ -27,7 +28,6 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.ScatterData;
 import com.github.mikephil.charting.data.ScatterDataSet;
-import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
@@ -39,6 +39,7 @@ public class CombinedChartActivity extends DemoBase {
 
     private CombinedChart chart;
     private final int count = 12;
+    private int[] colors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,52 +49,50 @@ public class CombinedChartActivity extends DemoBase {
         setContentView(R.layout.activity_combined);
 
         setTitle("CombinedChartActivity");
+        colors = getResources().getIntArray(R.array.color_charts_detail);
+        chart = findViewById(R.id.combined_chart);
 
-        chart = findViewById(R.id.chart1);
         chart.getDescription().setEnabled(false);
         chart.setBackgroundColor(Color.WHITE);
-        chart.setDrawGridBackground(false);
         chart.setDrawBarShadow(false);
         chart.setHighlightFullBarEnabled(false);
 
         // draw bars behind lines
         chart.setDrawOrder(new DrawOrder[]{
-                DrawOrder.BAR, DrawOrder.BUBBLE, DrawOrder.CANDLE, DrawOrder.LINE, DrawOrder.SCATTER
+                DrawOrder.BAR, DrawOrder.LINE
         });
 
         Legend l = chart.getLegend();
         l.setWordWrapEnabled(true);
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         l.setDrawInside(false);
 
         YAxis rightAxis = chart.getAxisRight();
-        rightAxis.setDrawGridLines(false);
+        rightAxis.setDrawGridLines(true);
         rightAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+        rightAxis.setAxisMaximum(100f); // this replaces setStartAtZero(true)
+        rightAxis.setDrawAxisLine(false);
 
         YAxis leftAxis = chart.getAxisLeft();
         leftAxis.setDrawGridLines(false);
         leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+        leftAxis.setAxisMaximum(100f); // this replaces setStartAtZero(true)
+        leftAxis.setDrawAxisLine(false);
 
         XAxis xAxis = chart.getXAxis();
-        xAxis.setPosition(XAxisPosition.BOTH_SIDED);
+        xAxis.setPosition(XAxisPosition.BOTTOM);
         xAxis.setAxisMinimum(0f);
-        xAxis.setGranularity(1f);
-        xAxis.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                return months[(int) value % months.length];
-            }
-        });
+        xAxis.setDrawGridLines(false);
+//        xAxis.setGranularity(1f);
+
+        xAxis.setValueFormatter(new CustomAxisValueFormatter(CustomAxisValueFormatter.X_AXIS_MONTH));
 
         CombinedData data = new CombinedData();
 
         data.setData(generateLineData());
         data.setData(generateBarData());
-        data.setData(generateBubbleData());
-        data.setData(generateScatterData());
-        data.setData(generateCandleData());
 
         xAxis.setAxisMaximum(data.getXMax() + 0.25f);
 
@@ -101,28 +100,25 @@ public class CombinedChartActivity extends DemoBase {
         chart.invalidate();
     }
 
+    /**
+     * 折线图，初始化数据
+     *
+     * @return
+     */
     private LineData generateLineData() {
 
         LineData d = new LineData();
-
-        ArrayList<Entry> entries = new ArrayList<>();
-
-        for (int index = 0; index < count; index++)
-            entries.add(new Entry(index + 0.5f, getRandom(15, 5)));
-
-        LineDataSet set = new LineDataSet(entries, "Line DataSet");
-        set.setColor(Color.rgb(240, 238, 70));
-        set.setLineWidth(2.5f);
-        set.setCircleColor(Color.rgb(240, 238, 70));
-        set.setCircleRadius(5f);
-        set.setFillColor(Color.rgb(240, 238, 70));
-        set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        set.setDrawValues(true);
-        set.setValueTextSize(10f);
-        set.setValueTextColor(Color.rgb(240, 238, 70));
-
-        set.setAxisDependency(YAxis.AxisDependency.LEFT);
-        d.addDataSet(set);
+        for (int i = 0; i < 3; i++) {
+            ArrayList<Entry> entries = new ArrayList<>();
+            for (int index = 0; index < count; index++)
+                entries.add(new Entry(index + 0.5f, getRandom(100, 0)));
+            LineDataSet set = new LineDataSet(entries, "Line DataSet " + i);
+            set.setColor(colors[i]);
+            set.setLineWidth(2.5f);
+            set.setDrawCircles(false);
+            set.setAxisDependency(YAxis.AxisDependency.RIGHT);
+            d.addDataSet(set);
+        }
 
         return d;
     }
@@ -131,35 +127,37 @@ public class CombinedChartActivity extends DemoBase {
 
         ArrayList<BarEntry> entries1 = new ArrayList<>();
         ArrayList<BarEntry> entries2 = new ArrayList<>();
+        ArrayList<BarEntry> entries3 = new ArrayList<>();
 
         for (int index = 0; index < count; index++) {
-            entries1.add(new BarEntry(0, getRandom(25, 25)));
+            entries1.add(new BarEntry(0, getRandom(100, 0)));
+            entries3.add(new BarEntry(0, getRandom(100, 0)));
 
             // stacked
-            entries2.add(new BarEntry(0, new float[]{getRandom(13, 12), getRandom(13, 12)}));
+            entries2.add(new BarEntry(0, new float[]{getRandom(40, 0), getRandom(30, 0), getRandom(30, 0)}));
         }
 
         BarDataSet set1 = new BarDataSet(entries1, "Bar 1");
-        set1.setColor(Color.rgb(60, 220, 78));
-        set1.setValueTextColor(Color.rgb(60, 220, 78));
-        set1.setValueTextSize(10f);
+        set1.setColor(colors[0]);
         set1.setAxisDependency(YAxis.AxisDependency.LEFT);
 
         BarDataSet set2 = new BarDataSet(entries2, "");
-        set2.setStackLabels(new String[]{"Stack 1", "Stack 2"});
-        set2.setColors(Color.rgb(61, 165, 255), Color.rgb(23, 197, 255));
-        set2.setValueTextColor(Color.rgb(61, 165, 255));
-        set2.setValueTextSize(10f);
+        set2.setStackLabels(new String[]{"Stack 1", "Stack 2", "Stack 3"});
+        set2.setColors(colors[1], colors[2], colors[3]);
         set2.setAxisDependency(YAxis.AxisDependency.LEFT);
 
-        float groupSpace = 0.06f;
-        float barSpace = 0.02f; // x2 dataset
-        float barWidth = 0.45f; // x2 dataset
+        BarDataSet set3 = new BarDataSet(entries3, "Bar 3");
+        set3.setColor(colors[4]);
+        set3.setAxisDependency(YAxis.AxisDependency.LEFT);
+
+
+        float groupSpace = 0.4f;
+        float barSpace = 0.01f; // x2 dataset
+        float barWidth = 0.19f; // x2 dataset
         // (0.45 + 0.02) * 2 + 0.06 = 1.00 -> interval per "group"
 
-        BarData d = new BarData(set1, set2);
+        BarData d = new BarData(set1, set2, set3);
         d.setBarWidth(barWidth);
-
         // make this BarData object grouped
         d.groupBars(0, groupSpace, barSpace); // start at x = 0
 

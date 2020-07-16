@@ -5,9 +5,6 @@ import android.graphics.RectF;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.TextView;
 
 import com.demos.kotlin.R;
 import com.demos.kotlin.activity.DemoBase;
@@ -30,12 +27,9 @@ import java.util.ArrayList;
 /**
  * 水平柱状图
  */
-public class HorizontalBarChartActivity extends DemoBase implements OnSeekBarChangeListener,
-        OnChartValueSelectedListener {
+public class HorizontalBarChartActivity extends DemoBase implements OnChartValueSelectedListener {
 
     private HorizontalBarChart chart;
-    private SeekBar seekBarX, seekBarY;
-    private TextView tvX, tvY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +40,8 @@ public class HorizontalBarChartActivity extends DemoBase implements OnSeekBarCha
 
         setTitle("HorizontalBarChartActivity");
 
-        tvX = findViewById(R.id.tvXMax);
-        tvY = findViewById(R.id.tvYMax);
 
-        seekBarX = findViewById(R.id.seekBar1);
-        seekBarY = findViewById(R.id.seekBar2);
-
-        seekBarY.setOnSeekBarChangeListener(this);
-        seekBarX.setOnSeekBarChangeListener(this);
-
-        chart = findViewById(R.id.chart1);
+        chart = findViewById(R.id.horizontal_chart);
         chart.setOnChartValueSelectedListener(this);
         // chart.setHighlightEnabled(false);
 
@@ -96,11 +82,6 @@ public class HorizontalBarChartActivity extends DemoBase implements OnSeekBarCha
 //        yr.setInverted(true);
 
         chart.setFitBars(true);
-        chart.animateY(2500);
-
-        // setting data
-        seekBarY.setProgress(50);
-        seekBarX.setProgress(12);
 
         Legend l = chart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
@@ -109,6 +90,7 @@ public class HorizontalBarChartActivity extends DemoBase implements OnSeekBarCha
         l.setDrawInside(false);
         l.setFormSize(8f);
         l.setXEntrySpace(4f);
+        setData(10, 90);
     }
 
     private void setData(int count, float range) {
@@ -145,27 +127,12 @@ public class HorizontalBarChartActivity extends DemoBase implements OnSeekBarCha
         }
     }
 
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-        tvX.setText(String.valueOf(seekBarX.getProgress()));
-        tvY.setText(String.valueOf(seekBarY.getProgress()));
-
-        setData(seekBarX.getProgress(), seekBarY.getProgress());
-        chart.setFitBars(true);
-        chart.invalidate();
-    }
 
     @Override
     protected void saveToGallery() {
         saveToGallery(chart, "HorizontalBarChartActivity");
     }
 
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {}
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {}
 
     private final RectF mOnValueSelectedRectF = new RectF();
 
@@ -188,5 +155,6 @@ public class HorizontalBarChartActivity extends DemoBase implements OnSeekBarCha
     }
 
     @Override
-    public void onNothingSelected() {}
+    public void onNothingSelected() {
+    }
 }

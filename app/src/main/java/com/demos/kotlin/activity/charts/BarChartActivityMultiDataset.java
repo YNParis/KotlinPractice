@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.demos.kotlin.R;
 import com.demos.kotlin.activity.DemoBase;
+import com.demos.kotlin.views.charts.CustomAxisValueFormatter;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -15,7 +16,6 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
@@ -69,12 +69,7 @@ public class BarChartActivityMultiDataset extends DemoBase implements OnChartVal
         xAxis.setTextSize(textSize);
         xAxis.setAxisLineColor(textColor);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                return String.valueOf((int) value);
-            }
-        });
+        xAxis.setValueFormatter(new CustomAxisValueFormatter(CustomAxisValueFormatter.X_AXIS_INT));
 
         YAxis leftAxis = chart.getAxisLeft();
         leftAxis.setValueFormatter(new LargeValueFormatter());

@@ -5,9 +5,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.WindowManager;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.TextView;
 
 import com.demos.kotlin.R;
 import com.demos.kotlin.activity.DemoBase;
@@ -21,18 +18,19 @@ import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.ICandleDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * 蜡烛图
  */
-public class CandleStickChartActivity extends DemoBase implements OnChartValueSelectedListener, OnSeekBarChangeListener {
+public class CandleStickChartActivity extends DemoBase implements OnChartValueSelectedListener {
 
     private CandleStickChart chart;
-    private SeekBar seekBarX, seekBarY;
-    private TextView tvX, tvY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,22 +41,11 @@ public class CandleStickChartActivity extends DemoBase implements OnChartValueSe
 
         setTitle("CandleStickChartActivity");
 
-        tvX = findViewById(R.id.tvXMax);
-        tvY = findViewById(R.id.tvYMax);
-
-        seekBarX = findViewById(R.id.seekBar1);
-        seekBarX.setOnSeekBarChangeListener(this);
-
-        seekBarY = findViewById(R.id.seekBar2);
-        seekBarY.setOnSeekBarChangeListener(this);
-
-        chart = findViewById(R.id.chart1);
+        chart = findViewById(R.id.candle_chart);
         chart.setBackgroundColor(Color.WHITE);
 
         chart.getDescription().setEnabled(false);
 
-        // if more than 60 entries are displayed in the chart, no values will be
-        // drawn
         chart.setMaxVisibleValueCount(60);
 
         // scaling can now only be done on x- and y-axis separately
@@ -78,77 +65,70 @@ public class CandleStickChartActivity extends DemoBase implements OnChartValueSe
 
         YAxis rightAxis = chart.getAxisRight();
         rightAxis.setEnabled(false);
-//        rightAxis.setStartAtZero(false);
-
-        // setting data
-        seekBarX.setProgress(40);
-        seekBarY.setProgress(100);
 
         chart.getLegend().setEnabled(false);
+
+        setData();
     }
 
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-        progress = (seekBarX.getProgress());
-
-        tvX.setText(String.valueOf(progress));
-        tvY.setText(String.valueOf(seekBarY.getProgress()));
-
-        chart.resetTracking();
-
+    private void setData() {
         ArrayList<CandleEntry> values = new ArrayList<>();
+        ArrayList<CandleEntry> values2 = new ArrayList<>();
 
-        for (int i = 0; i < progress; i++) {
-            float multi = (seekBarY.getProgress() + 1);
-            float val = (float) (Math.random() * 40) + multi;
+        int baseData = 15;/*上一年的结余*/
 
-            float high = (float) (Math.random() * 9) + 8f;
-            float low = (float) (Math.random() * 9) + 8f;
+        int[] val1 = new int[12];
+        int[] val2 = new int[12];
+        int[] base = new int[12];
 
-            float open = (float) (Math.random() * 6) + 1f;
-            float close = (float) (Math.random() * 6) + 1f;
+        for (int i = 0; i < 12; i++) {
+            val1[i] = new Random().nextInt(100);
+            val2[i] = new Random().nextInt(val1[i]);
+        }
+        /*第一个，low=baseData，high=low+value；后面的low=high-value*/
+        for (int i = 0; i < 12; i++) {
+            int high, low1, low2;
+            if (i == 0) {
+                low1 = baseData;
+            } else {
+                low1 = base[i - 1];
+            }
+            high = val1[i] + low1;
+            low2 = high - val2[i];
+            base[i] = low2;
+            values.add(new CandleEntry(i, high, low1, low1, high));
+            values2.add(new CandleEntry(i + 0.5f, high, low2, low2, high));
 
-            boolean even = i % 2 == 0;
-
-            values.add(new CandleEntry(
-                    i, val + high,
-                    val - low,
-                    even ? val + open : val - open,
-                    even ? val - close : val + close
-            ));
         }
 
         CandleDataSet set1 = new CandleDataSet(values, "Data Set");
+        CandleDataSet set2 = new CandleDataSet(values2, "Data Set 2");
 
         set1.setDrawIcons(false);
         set1.setAxisDependency(AxisDependency.LEFT);
-//        set1.setColor(Color.rgb(80, 80, 80));
-        set1.setShadowColor(Color.DKGRAY);
-        set1.setShadowWidth(0.7f);
-        set1.setDecreasingColor(Color.RED);
-        set1.setDecreasingPaintStyle(Paint.Style.FILL);
-        set1.setIncreasingColor(Color.rgb(122, 242, 84));
-        set1.setIncreasingPaintStyle(Paint.Style.STROKE);
-        set1.setNeutralColor(Color.BLUE);
+        set1.setIncreasingColor(Color.BLUE);
+        set1.setIncreasingPaintStyle(Paint.Style.FILL);
+        set1.setBarSpace(0.4f);
         //set1.setHighlightLineWidth(1f);
 
-        CandleData data = new CandleData(set1);
+        set2.setDrawIcons(false);
+        set2.setAxisDependency(AxisDependency.LEFT);
+        set2.setIncreasingColor(Color.RED);
+        set2.setIncreasingPaintStyle(Paint.Style.FILL);
+        set2.setBarSpace(0.8f);
+
+        List<ICandleDataSet> dataSets = new ArrayList<>();
+        dataSets.add(set1);
+        dataSets.add(set2);
+        CandleData data = new CandleData(dataSets);
+
+        float groupSpace = 0.4f;
+        float barSpace = 0.01f;
+        float barWidth = (1 - groupSpace) / dataSets.size() - barSpace;
 
         chart.setData(data);
         chart.invalidate();
     }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-
-    }
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-
-    }
-
 
     @Override
     protected void saveToGallery() {
