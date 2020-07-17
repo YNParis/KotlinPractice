@@ -3,6 +3,7 @@ package com.demos.kotlin.views.charts;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.FrameLayout;
 
 import com.demos.kotlin.R;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.CandleStickChart;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
@@ -21,6 +23,9 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.CandleData;
+import com.github.mikephil.charting.data.CandleDataSet;
+import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -32,11 +37,13 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ICandleDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author yangna
@@ -75,6 +82,7 @@ public class CommonChartView extends FrameLayout {
     private BarChart mBarChart;
     private CombinedChart mCombinedChart;
     private HorizontalBarChart mHorizontalChart;
+    private CandleStickChart mCandleChart;
 
     private ValueFormatter valueFormatter;
 
@@ -151,16 +159,19 @@ public class CommonChartView extends FrameLayout {
         }
     }
 
+    /**
+     * 初始化蜡烛图
+     */
     private void initCandleChart() {
-        View fatherView = LayoutInflater.from(mContext).inflate(R.layout.activity_horizontalbarchart, this, true);
-        mHorizontalChart = fatherView.findViewById(R.id.horizontal_chart);
-        currentChart = mHorizontalChart;
-        initLegend(mHorizontalChart.getLegend());
-        initXAis(mHorizontalChart.getXAxis(), CustomAxisValueFormatter.X_AXIS_INT);
-        mHorizontalChart.getAxisRight().setEnabled(false);
-        initLeftYAxis(mHorizontalChart.getAxisLeft());
-        mHorizontalChart.getAxisLeft().setDrawLabels(false);
-        mHorizontalChart.getDescription().setEnabled(false);
+        View fatherView = LayoutInflater.from(mContext).inflate(R.layout.activity_candlechart, this, true);
+        mCandleChart = fatherView.findViewById(R.id.candle_chart);
+        currentChart = mCandleChart;
+        initLegend(mCandleChart.getLegend());
+        initXAis(mCandleChart.getXAxis(), CustomAxisValueFormatter.X_AXIS_INT);
+        mCandleChart.getAxisRight().setEnabled(false);
+        initLeftYAxis(mCandleChart.getAxisLeft());
+        mCandleChart.getDescription().setEnabled(false);
+
     }
 
     private void initHorizontalChart() {
@@ -258,11 +269,26 @@ public class CommonChartView extends FrameLayout {
      * @param labels
      * @param values
      */
-    public void setCombinedChart(String[] labels, List<List<Float>> values) {
+    public void setCombinedChart(String[] labels, List<float[]> values) {
+        setCombinedChart(labels, values, false);
+    }
+
+    /**
+     * 设置混合图数据
+     *
+     * @param labels
+     * @param values
+     * @param stacked 如果柱状图需要是叠加的，传true；否则，可以用上面两个参数的方法
+     */
+    public void setCombinedChart(String[] labels, List<float[]> values, boolean stacked) {
         if (mCombinedChart == null) return;
         CombinedData data = new CombinedData();
-        data.setData(generateLineData(labels, values));
-        data.setData(generateBarData(labels, values));
+        data.setData(generateLineData(labels, values, false));
+        if (stacked) {
+            data.setData(generateStackedData(labels, values));
+        } else {
+            data.setData(generateBarData(labels, values));
+        }
         mCombinedChart.setData(data);
         mCombinedChart.invalidate();
     }
@@ -419,9 +445,13 @@ public class CommonChartView extends FrameLayout {
         mPieChart.invalidate();
     }
 
-    public void setLinesChartData(String[] labels, List<List<Float>> values) {
+    public void setLinesChartData(String[] labels, List<float[]> values) {
+        setLinesChartData(labels, values, false);
+    }
+
+    public void setLinesChartData(String[] labels, List<float[]> values, boolean fill) {
         if (mLinesChart == null) return;
-        mLinesChart.setData(generateLineData(labels, values));
+        mLinesChart.setData(generateLineData(labels, values, fill));
         mLinesChart.invalidate();
     }
 
@@ -429,7 +459,7 @@ public class CommonChartView extends FrameLayout {
      * @param labels
      * @param valuesList
      */
-    public void setBarsData(String[] labels, List<List<Float>> valuesList) {
+    public void setBarsData(String[] labels, List<float[]> valuesList) {
         if (mBarChart == null) return;
         mBarChart.setData(generateBarData(labels, valuesList));
         mBarChart.invalidate();
@@ -440,36 +470,38 @@ public class CommonChartView extends FrameLayout {
      *
      * @return
      */
-    private LineData generateLineData(String[] labels, List<List<Float>> values) {
+    private LineData generateLineData(String[] labels, List<float[]> values, boolean fill) {
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
         /*values.size条折线*/
         for (int z = 0; z < values.size(); z++) {
             ArrayList<Entry> entry = new ArrayList<>();
-            List<Float> each = values.get(z);
-            for (int x = 0; x < each.size(); x++) {
-                entry.add(new Entry(x, each.get(x)));
+            float[] each = values.get(z);
+            for (int x = 0; x < each.length; x++) {
+                entry.add(new Entry(x, each[x]));
             }
             LineDataSet d = new LineDataSet(entry, labels[z]);
             d.setLineWidth(2.5f);
             d.setDrawCircles(false);
             d.setDrawValues(false);
+            d.setDrawFilled(fill);
             int color = colors[z % colors.length];
             d.setColor(color);
+            d.setFillColor(color);
             d.setLabel(labels[z]);/*图例*/
             dataSets.add(d);
         }
         return new LineData(dataSets);
     }
 
-    private BarData generateBarData(String[] labels, List<List<Float>> valuesList) {
+    private BarData generateBarData(String[] labels, List<float[]> valuesList) {
         ArrayList<IBarDataSet> dataSets = new ArrayList<>();
         /*values.size条折线*/
         for (int z = 0; z < valuesList.size(); z++) {
             ArrayList<BarEntry> entry = new ArrayList<>();
-            List<Float> eachBar = valuesList.get(z);
-            for (int x = 0; x < eachBar.size(); x++) {
-                entry.add(new BarEntry(x, eachBar.get(x)));
+            float[] eachBar = valuesList.get(z);
+            for (int x = 0; x < eachBar.length; x++) {
+                entry.add(new BarEntry(x, eachBar[x]));
             }
             BarDataSet d = new BarDataSet(entry, labels[z]);
             d.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -491,21 +523,81 @@ public class CommonChartView extends FrameLayout {
         return d;
     }
 
-    private BarData generateStackedData(String[] labels, List<List<Float>> valuesList) {
-        ArrayList<BarEntry> entry = new ArrayList<>();
-        for (int z = 0; z < valuesList.size(); z++) {
-            List<Float> eachBar = valuesList.get(z);
-            float[] eachValue = new float[eachBar.size()];
-            for (int x = 0; x < eachBar.size(); x++) {
-                eachValue[x] = eachBar.get(x);
-            }
-            entry.add(new BarEntry(z, eachValue));
+    private CandleData generateCandleData(String[] labels, List<float[]> valuesList) {
+        ArrayList<CandleEntry> values = new ArrayList<>();
+        ArrayList<CandleEntry> values2 = new ArrayList<>();
 
+        int baseData = 15;/*上一年的结余*/
+
+        int[] val1 = new int[12];
+        int[] val2 = new int[12];
+        int[] base = new int[12];
+
+        for (int i = 0; i < 12; i++) {
+            val1[i] = new Random().nextInt(100);
+            val2[i] = new Random().nextInt(100);
+        }
+        /*第一个，low=baseData，high=low+value；后面的low=high-value*/
+        for (int i = 0; i < 12; i++) {
+            int high, low1, low2;
+            if (i == 0) {
+                low1 = baseData;
+            } else {
+                low1 = base[i - 1];
+            }
+            high = val1[i] + low1;
+            low2 = high - val2[i];
+            base[i] = low2;
+            values.add(new CandleEntry(i, high, low1, low1, high));
+            values2.add(new CandleEntry(i, high, low2, low2, high));
+        }
+
+        CandleDataSet set1 = new CandleDataSet(values, "Data Set");
+        CandleDataSet set2 = new CandleDataSet(values2, "Data Set 2");
+        set1.setDrawValues(false);
+        set1.setDrawIcons(false);
+        set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+        set1.setIncreasingColor(colors[0]);
+        set1.setIncreasingPaintStyle(Paint.Style.FILL);
+        set1.setBarSpace(0f);
+        //set1.setHighlightLineWidth(1f);
+
+        set2.setDrawIcons(false);
+        set2.setDrawValues(false);
+        set2.setAxisDependency(YAxis.AxisDependency.LEFT);
+        set2.setIncreasingColor(colors[1]);
+        set2.setIncreasingPaintStyle(Paint.Style.FILL);
+        set2.setBarSpace(0.25f);
+
+        List<ICandleDataSet> dataSets = new ArrayList<>();
+        dataSets.add(set2);
+        dataSets.add(set1);
+
+        return new CandleData(dataSets);
+    }
+
+    /**
+     * 叠加的数据
+     *
+     * @param labels     每个色块代表什么
+     * @param valuesList 有几个bar
+     * @return
+     */
+    private BarData generateStackedData(String[] labels, List<float[]> valuesList) {
+        ArrayList<BarEntry> entry = new ArrayList<>();
+        for (int z = 0; z < labels.length; z++) {
+            float[] eachBar = new float[valuesList.size()];
+            for (int i = 0; i < valuesList.size(); i++) {
+                eachBar[i] = valuesList.get(i)[z];
+            }
+            entry.add(new BarEntry(z, eachBar));
         }
         BarDataSet dataSet = new BarDataSet(entry, "");
         dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         dataSet.setDrawValues(false);
-        dataSet.setColors(colors);
+        int[] color = new int[valuesList.size()];
+        System.arraycopy(colors, 0, color, 0, valuesList.size());
+        dataSet.setColors(color);
         dataSet.setStackLabels(labels);
 
         ArrayList<IBarDataSet> dataSets = new ArrayList<>();
@@ -520,7 +612,7 @@ public class CommonChartView extends FrameLayout {
      * @param labels
      * @param valuesList
      */
-    public void setStackedData(String[] labels, List<List<Float>> valuesList) {
+    public void setStackedData(String[] labels, List<float[]> valuesList) {
         if (mBarChart == null) return;
         initLegend(mBarChart.getLegend());
         mBarChart.getXAxis().setAxisMinimum(-1);
@@ -529,9 +621,16 @@ public class CommonChartView extends FrameLayout {
     }
 
 
-    public void setHorizontalData(String[] label, List<List<Float>> valuesList) {
+    public void setHorizontalData(String[] label, List<float[]> valuesList) {
         if (mHorizontalChart == null) return;
         mHorizontalChart.setData(generateBarData(label, valuesList));
         mHorizontalChart.invalidate();
+    }
+
+    public void setCandleData(String[] label, List<float[]> valuesList) {
+        if (mCandleChart == null) return;
+        mCandleChart.setData(generateCandleData(label, valuesList));
+        mCandleChart.setRenderer(new CustomCandleRender(mCandleChart, mCandleChart.getAnimator(), mCandleChart.getViewPortHandler()));
+        mCandleChart.invalidate();
     }
 }

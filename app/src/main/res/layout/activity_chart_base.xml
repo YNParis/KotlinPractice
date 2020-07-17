@@ -12,7 +12,7 @@
             android:id="@+id/pie_view"
             android:layout_width="match_parent"
             android:layout_height="400dp" />
-        
+
         <com.demos.kotlin.views.charts.CommonChartView
             android:id="@+id/bars_view"
             android:layout_width="match_parent"
@@ -32,6 +32,12 @@
             android:id="@+id/stacked_view"
             android:layout_width="match_parent"
             android:layout_height="400dp" />
+
+        <com.demos.kotlin.views.charts.CommonChartView
+            android:id="@+id/combined_stacked_view"
+            android:layout_width="match_parent"
+            android:layout_height="400dp" />
+
 
         <com.demos.kotlin.views.charts.CommonChartView
             android:id="@+id/horizontal_view"

@@ -16,9 +16,7 @@ public class BaseChartActivity extends AppCompatActivity {
 
     String[] labels = new String[10];
     List<Float> values = new ArrayList<>();
-    List<List<Float>> valuesList = new ArrayList<>();
-
-    String[] label = new String[10];
+    List<float[]> valuesList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +28,13 @@ public class BaseChartActivity extends AppCompatActivity {
 
     private void initData() {
         for (int i = 0; i < 10; i++) {
-            label[i] = "标签 " + i;
             labels[i] = "标签 " + i;
             values.add(new Random().nextFloat() * 100);
         }
         for (int i = 0; i < 3; i++) {
-            List<Float> list = new ArrayList<>();
+            float[] list = new float[labels.length];
             for (int j = 0; j < labels.length; j++) {
-                list.add(new Random().nextFloat() * 100);
+                list[j] = new Random().nextFloat() * 100;
             }
             valuesList.add(list);
         }
@@ -55,7 +52,7 @@ public class BaseChartActivity extends AppCompatActivity {
         CommonChartView lineView = findViewById(R.id.lines_view);
         lineView.setXAxisValueFormatter(new CustomAxisValueFormatter(CustomAxisValueFormatter.X_AXIS_INT));
         lineView.initView(CommonChartView.LINES_CHART);
-        lineView.setLinesChartData(labels, valuesList);
+        lineView.setLinesChartData(labels, valuesList, true);
 
         /* 柱状图*/
         CommonChartView barsView = findViewById(R.id.bars_view);
@@ -73,19 +70,25 @@ public class BaseChartActivity extends AppCompatActivity {
         CommonChartView stackedView = findViewById(R.id.stacked_view);
         stackedView.setXAxisValueFormatter(new CustomAxisValueFormatter(CustomAxisValueFormatter.X_AXIS_INT));
         stackedView.initView(CommonChartView.STACKED_CHART);
-        stackedView.setStackedData(label, valuesList);/*label长度，是每个柱的块数目，valuesList长度，是x轴总共有几个柱*/
+        stackedView.setStackedData(labels, valuesList);/*label长度，是每个柱的块数目，valuesList长度，是x轴总共有几个柱*/
+
+        /* 叠加柱状图*/
+        CommonChartView combinedStackedView = findViewById(R.id.combined_stacked_view);
+        combinedStackedView.setXAxisValueFormatter(new CustomAxisValueFormatter(CustomAxisValueFormatter.X_AXIS_INT));
+        combinedStackedView.initView(CommonChartView.COMBINED_CHART);
+        combinedStackedView.setCombinedChart(labels, valuesList, true);/*label长度，是每个柱的块数目，valuesList长度，是x轴总共有几个柱*/
 
         /* 横向柱状图*/
         CommonChartView horizontalView = findViewById(R.id.horizontal_view);
         horizontalView.setXAxisValueFormatter(new CustomAxisValueFormatter(CustomAxisValueFormatter.X_AXIS_INT));
         horizontalView.initView(CommonChartView.HORIZONTAL_CHART);
-        horizontalView.setHorizontalData(label, valuesList);/*label长度，是每个柱的块数目，valuesList长度，是x轴总共有几个柱*/
+        horizontalView.setHorizontalData(labels, valuesList);/*label长度，是每个柱的块数目，valuesList长度，是x轴总共有几个柱*/
 
         /* 蜡烛图*/
         CommonChartView candleView = findViewById(R.id.candle_view);
         candleView.setXAxisValueFormatter(new CustomAxisValueFormatter(CustomAxisValueFormatter.X_AXIS_INT));
-        candleView.initView(CommonChartView.HORIZONTAL_CHART);
-        candleView.setHorizontalData(label, valuesList);/*label长度，是每个柱的块数目，valuesList长度，是x轴总共有几个柱*/
+        candleView.initView(CommonChartView.CANDLE_CHART);
+        candleView.setCandleData(labels, valuesList);/*label长度，是每个柱的块数目，valuesList长度，是x轴总共有几个柱*/
     }
 
     /**
