@@ -5,9 +5,14 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.demos.kotlin.R;
 import com.github.mikephil.charting.charts.BarChart;
@@ -49,7 +54,7 @@ import java.util.Random;
  * @author yangna
  * @Description 通用的chartView。需要传入表格的类型。
  */
-public class CommonChartView extends FrameLayout {
+public class CommonChartView extends FrameLayout implements OnChartValueSelectedListener {
 
     public static final String PIE_CHART = "pie_chart";//饼图
     public static final String LINES_CHART = "lines_chart";//折线图
@@ -58,6 +63,7 @@ public class CommonChartView extends FrameLayout {
     public static final String STACKED_CHART = "stacked_chart";//叠加柱状图
     public static final String HORIZONTAL_CHART = "horizontal_chart";//水平柱状图
     public static final String CANDLE_CHART = "candle_chart";//蜡烛图
+    private static final int PIE_CHART_VALUE_MOST_SIZE = 8;
 
     /**
      * 传入参数
@@ -85,8 +91,11 @@ public class CommonChartView extends FrameLayout {
     private CandleStickChart mCandleChart;
 
     private ValueFormatter valueFormatter;
+    private LinearLayout pieParentView;
 
     private int[] colors;
+    private PieChartLegendAdapter leftAdapter;
+    private PieChartLegendAdapter rightAdapter;
 
 
     public CommonChartView(Context context) {
@@ -346,11 +355,13 @@ public class CommonChartView extends FrameLayout {
      */
     private void initPieChart() {
         View fatherView = LayoutInflater.from(mContext).inflate(R.layout.chart_pie, this, true);
+        pieParentView = fatherView.findViewById(R.id.pie_parent_view);
         mPieChart = fatherView.findViewById(R.id.pie_chart_common);
         currentChart = mPieChart;
         mPieChart.setUsePercentValues(true);//显示百分比
         mPieChart.getDescription().setEnabled(false);//表格的说明去掉
         mPieChart.setDragDecelerationFrictionCoef(0.8f);
+        mPieChart.setOnChartValueSelectedListener(this);
 
         //设置图表的偏移量，使得图表两边的空白处增大，如果label显示不下，可以将left和right再设置大一点
         mPieChart.setExtraOffsets(30.f, 0.f, 30.f, 0.f);
@@ -366,16 +377,31 @@ public class CommonChartView extends FrameLayout {
         // enable rotation of the chart by touch
         mPieChart.setRotationEnabled(true);
 //        mPieChart.setHighlightPerTapEnabled(true);//设置可点击效果
-
-        //设置label颜色
-        mPieChart.setDrawEntryLabels(true);
-        mPieChart.setEntryLabelColor(mLabelTextColor);
         mPieChart.setRenderer(new CustomPieRenderer(mPieChart, mPieChart.getAnimator(), mPieChart.getViewPortHandler()));
-
         //设置不绘制图例
         Legend l = mPieChart.getLegend();
         l.setEnabled(false);
     }
+
+    /**
+     * 数目少，显示在图上，折线指示
+     */
+    private void setFewPieChart() {
+        //设置label颜色
+        mPieChart.setDrawEntryLabels(true);
+        mPieChart.setEntryLabelColor(mLabelTextColor);
+
+    }
+
+    /**
+     * 多于一定数目，需要显示两边的图例
+     */
+    private void setManyPieChart() {
+        //设置label颜色
+        mPieChart.setDrawEntryLabels(false);
+
+    }
+
 
     private OnChartValueSelectedListener onChartValueSelectedListener = new OnChartValueSelectedListener() {
         @Override
@@ -407,35 +433,53 @@ public class CommonChartView extends FrameLayout {
      * @param labels 标签
      * @param values 值
      */
-    public void setPieData(String[] labels, List<Float> values) {
+    public void setPieData(String[] labels, float[] values) {
         if (mPieChart == null) return;
-        int count = Math.min(labels.length, values.size());
+        int count = Math.min(labels.length, values.length);
         ArrayList<PieEntry> entries = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            entries.add(new PieEntry(values.get(i), labels[i] + "," + values.get(i)));
+            entries.add(new PieEntry(values[i], labels[i] + "," + values[i]));
         }
-
         PieDataSet dataSet = new PieDataSet(entries, "Election Results");
         //slice之间间隔
         dataSet.setSliceSpace(2f);
         //选中后放大的偏移量
         dataSet.setSelectionShift(15f);
-
         //图表颜色
         dataSet.setColors(colors);
-
-        //设置折线指示线
-        dataSet.setValueLinePart1OffsetPercentage(100.f);//设置折现离内边的距离，%，设为100表示从外边开始画
-        dataSet.setValueLinePart1Length(0.3f);
-        dataSet.setValueLinePart2Length(0.5f);
-        dataSet.setValueLineWidth(0.7f);
-        dataSet.setValueLineColor(mLabelTextColor);
-
         //饼图内，显示百分比
         dataSet.setYValuePosition(PieDataSet.ValuePosition.INSIDE_SLICE);
-        //饼图外，显示label
-        dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
 
+        if (pieParentView != null && values.length > PIE_CHART_VALUE_MOST_SIZE) {
+            mPieChart.setDrawEntryLabels(false);
+            PieChartLegendAdapter.OnItemSelectedListener onItemSelectedListener = new PieChartLegendAdapter.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(int position) {
+                    mPieChart.highlightValue(position, mPieChart.getData().getDataSetCount() - 1);
+                }
+            };
+            RecyclerView rvLeft = pieParentView.findViewById(R.id.rv_legend_left);
+            rvLeft.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
+            leftAdapter = new PieChartLegendAdapter(mContext, labels, values, colors, true);
+            leftAdapter.setOnItemSelectedListener(onItemSelectedListener);
+            rvLeft.setAdapter(leftAdapter);
+            RecyclerView rvRight = pieParentView.findViewById(R.id.rv_legend_right);
+            rvRight.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
+            rightAdapter = new PieChartLegendAdapter(mContext, labels, values, colors, false);
+            rightAdapter.setOnItemSelectedListener(onItemSelectedListener);
+            rvRight.setAdapter(rightAdapter);
+            mPieChart.setRotationEnabled(false);
+        } else {
+            mPieChart.setDrawEntryLabels(true);
+            //设置折线指示线
+            dataSet.setValueLinePart1OffsetPercentage(100.f);//设置折现离内边的距离，%，设为100表示从外边开始画
+            dataSet.setValueLinePart1Length(0.3f);
+            dataSet.setValueLinePart2Length(0.5f);
+            dataSet.setValueLineWidth(0.7f);
+            dataSet.setValueLineColor(mLabelTextColor);
+            //饼图外，显示label
+            dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+        }
         PieData data = new PieData(dataSet);
         //value的样式
         data.setValueFormatter(new PercentFormatter(mPieChart));//显示百分数
@@ -632,5 +676,36 @@ public class CommonChartView extends FrameLayout {
         mCandleChart.setData(generateCandleData(label, valuesList));
         mCandleChart.setRenderer(new CustomCandleRender(mCandleChart, mCandleChart.getAnimator(), mCandleChart.getViewPortHandler()));
         mCandleChart.invalidate();
+    }
+
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+
+        if (currentChart instanceof PieChart) {
+            //如果是大于size的，要选中对应的label
+            Log.e("legend", "e:" + e.toString() + " h:" + h.toString());
+            if (leftAdapter != null) {
+                leftAdapter.onItemClicked(((int) h.getX()));
+            }
+            if (rightAdapter != null) {
+                rightAdapter.onItemClicked(((int) h.getX()));
+            }
+
+        }
+
+    }
+
+    @Override
+    public void onNothingSelected() {
+        if (currentChart instanceof PieChart) {
+            //TODO 所有的要清空选中状态
+            if (leftAdapter != null) {
+                leftAdapter.clearSelected();
+            }
+            if (rightAdapter != null) {
+                rightAdapter.clearSelected();
+            }
+
+        }
     }
 }

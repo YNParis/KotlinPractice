@@ -15,7 +15,9 @@ import java.util.Random;
 public class BaseChartActivity extends AppCompatActivity {
 
     String[] labels = new String[10];
-    List<Float> values = new ArrayList<>();
+    String[] labels2 =new String[5];
+    float[] values =new float[10];
+    float[] values2=new float[5] ;
     List<float[]> valuesList = new ArrayList<>();
 
     @Override
@@ -29,7 +31,7 @@ public class BaseChartActivity extends AppCompatActivity {
     private void initData() {
         for (int i = 0; i < 10; i++) {
             labels[i] = "标签 " + i;
-            values.add(new Random().nextFloat() * 100);
+            values[i]=new Random().nextFloat() * 100;
         }
         for (int i = 0; i < 3; i++) {
             float[] list = new float[labels.length];
@@ -39,14 +41,22 @@ public class BaseChartActivity extends AppCompatActivity {
             valuesList.add(list);
         }
 
+        System.arraycopy(labels, 0, labels2, 0, 5);
+        System.arraycopy(values, 0, values2, 0, 5);
+
     }
 
     private void initView() {
 
         /* 饼图*/
-        CommonChartView chartView = findViewById(R.id.pie_view);
-        chartView.initView(CommonChartView.PIE_CHART);
-        chartView.setPieData(labels, values);
+        CommonChartView fewChartView = findViewById(R.id.pie_view);
+        fewChartView.initView(CommonChartView.PIE_CHART);
+        fewChartView.setPieData(labels2, values2);
+
+        /* 饼图，数量多*/
+        CommonChartView manyChartView = findViewById(R.id.pie_many_view);
+        manyChartView.initView(CommonChartView.PIE_CHART);
+        manyChartView.setPieData(labels, values);
 
         /* 折线图*/
         CommonChartView lineView = findViewById(R.id.lines_view);

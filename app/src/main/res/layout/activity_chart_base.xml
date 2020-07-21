@@ -8,44 +8,63 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!--饼图，<10-->
         <com.demos.kotlin.views.charts.CommonChartView
             android:id="@+id/pie_view"
             android:layout_width="match_parent"
-            android:layout_height="400dp" />
+            android:layout_height="500dp" />
 
+        <!--饼图，>10-->
+        <com.demos.kotlin.views.charts.CommonChartView
+            android:id="@+id/pie_many_view"
+            android:layout_width="match_parent"
+            android:layout_height="500dp" />
+
+        <!--多条柱状图-->
         <com.demos.kotlin.views.charts.CommonChartView
             android:id="@+id/bars_view"
             android:layout_width="match_parent"
             android:layout_height="400dp" />
 
+        <!--多条折线图-->
         <com.demos.kotlin.views.charts.CommonChartView
             android:id="@+id/lines_view"
             android:layout_width="match_parent"
             android:layout_height="400dp" />
 
+        <!--折线图和柱状图混合-->
         <com.demos.kotlin.views.charts.CommonChartView
             android:id="@+id/combined_view"
             android:layout_width="match_parent"
             android:layout_height="400dp" />
 
+        <!--叠加的柱状图-->
         <com.demos.kotlin.views.charts.CommonChartView
             android:id="@+id/stacked_view"
             android:layout_width="match_parent"
             android:layout_height="400dp" />
 
+        <!--叠加的柱状图和折线图混合-->
         <com.demos.kotlin.views.charts.CommonChartView
             android:id="@+id/combined_stacked_view"
             android:layout_width="match_parent"
             android:layout_height="400dp" />
 
-
+        <!--水平的柱状图-->
         <com.demos.kotlin.views.charts.CommonChartView
             android:id="@+id/horizontal_view"
             android:layout_width="match_parent"
             android:layout_height="400dp" />
 
+        <!--蜡烛图-->
         <com.demos.kotlin.views.charts.CommonChartView
             android:id="@+id/candle_view"
+            android:layout_width="match_parent"
+            android:layout_height="400dp" />
+
+        <!--柱状图下方有波浪滑块-->
+        <com.demos.kotlin.views.charts.CommonChartView
+            android:id="@+id/bar_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="400dp" />
 
