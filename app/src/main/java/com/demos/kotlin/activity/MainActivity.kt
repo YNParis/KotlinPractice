@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initData() {
         list = listOf(
+                "SeekBar",
                 "BaseChart",
                 "Candle",
                 "Pie",
@@ -91,6 +92,8 @@ class MainActivity : AppCompatActivity() {
 
     fun onClick(position: Int) {
         when (list.get(position)) {
+            "SeekBar" ->
+                startActivity<SeekBarActivity>()
             "CustomView-TouchableBall" ->
                 startActivity<TouchableBallActivity>()
             "ijk" ->

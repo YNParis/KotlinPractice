@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -683,7 +682,6 @@ public class CommonChartView extends FrameLayout implements OnChartValueSelected
 
         if (currentChart instanceof PieChart) {
             //如果是大于size的，要选中对应的label
-            Log.e("legend", "e:" + e.toString() + " h:" + h.toString());
             if (leftAdapter != null) {
                 leftAdapter.onItemClicked(((int) h.getX()));
             }

@@ -84,6 +84,7 @@
         <activity android:name=".activity.charts.HorizontalBarChartActivity" />
         <activity android:name=".activity.charts.StackedBarActivity" />
         <activity android:name=".activity.charts.CandleStickChartActivity" />
+        <activity android:name=".activity.SeekBarActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

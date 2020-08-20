@@ -12,4 +12,15 @@
         <attr name="gridColor" format="color|reference" />
         <attr name="gridWidth" format="dimension|reference" />
     </declare-styleable>
+
+
+    <declare-styleable name="RangeFilterBar">
+        <attr name="color_line_normal" format="color" />
+        <attr name="color_line_select" format="color" />
+        <attr name="stroke_width_normal" format="dimension" />
+        <attr name="stroke_width_select" format="dimension" />
+        <attr name="progress_icon" format="reference" />
+        <attr name="text_size" format="dimension" />
+        <attr name="text_color" format="color" />
+    </declare-styleable>
 </resources>
