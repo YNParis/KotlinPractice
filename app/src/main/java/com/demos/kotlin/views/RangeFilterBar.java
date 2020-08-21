@@ -1,11 +1,9 @@
 package com.demos.kotlin.views;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -13,10 +11,8 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.demos.kotlin.R;
-
 /**
- * Created by Administrator on 2017/10/30.
+ * 选定范围的进度条
  */
 
 public class RangeFilterBar extends View {
@@ -25,82 +21,71 @@ public class RangeFilterBar extends View {
 
     Paint textPaint;
 
-    private int color_line_normal;
-
-    private int color_line_select;
-
     private float leftProgress = 0f;
 
     private float rightProgress = 1f;
-    private float knobWidth = 30;
+    private int knobWidth = 30;
 
     private float pressX;
 
-    private float stroke_width_normal;
+    private int max = 120;
+    private int min = 15;
 
-    private float stroke_width_select;
+    private int textViewWidth = 70;
+    private int textKnobSpace = 10;
+    private int textSize = 30;
+    private int textColor = 0xA6000000;
+    private float knobRadius = 5f;
 
-    private int num = 100;
+    private int leftValue = min;
+    private int rightValue = max;
 
-    Rect bounds = new Rect();
+    RectF bounds = new RectF();
 
-
-    private OnProgressChangeListener onProgressChangeListener;
-
-    public void setOnProgressChangeListener(OnProgressChangeListener onProgressChangeListener) {
-        this.onProgressChangeListener = onProgressChangeListener;
-    }
-
-    public interface OnProgressChangeListener {
-        void onLeftProgressChange(float progress);
-
-        void onRightProgressChange(float progress);
-    }
+    private OnRangeChangedListener onRangeChangedListener;
 
     public RangeFilterBar(Context context) {
         super(context);
-        init(context, null, 0);
+        init(context);
     }
 
     public RangeFilterBar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs, 0);
+        init(context);
     }
 
     public RangeFilterBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs, defStyleAttr);
+        init(context);
     }
 
     public RangeFilterBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = context.obtainStyledAttributes(
-                attrs, R.styleable.RangeFilterBar, defStyleAttr, 0);
-        color_line_normal = a.getColor(R.styleable.RangeFilterBar_color_line_normal, Color.parseColor("#dedede"));
-        color_line_select = a.getColor(R.styleable.RangeFilterBar_color_line_select, Color.parseColor("#238dfb"));
-        stroke_width_normal = a.getDimension(R.styleable.RangeFilterBar_stroke_width_normal, 2f);
-        stroke_width_select = a.getDimension(R.styleable.RangeFilterBar_stroke_width_select, 4f);
-
-        float text_size = a.getDimension(R.styleable.RangeFilterBar_text_size, 24f);
-        int text_color = a.getColor(R.styleable.RangeFilterBar_text_color, color_line_select);
-        a.recycle();
+    public void init(Context context) {
         paint = new Paint();
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setAntiAlias(true);
 
         textPaint = new Paint();
         textPaint.setAntiAlias(true);
-        textPaint.setTextSize(text_size);
-        textPaint.setColor(text_color);
+        textPaint.setTextSize(textSize);
+        textPaint.setColor(textColor);
         textPaint.setStyle(Paint.Style.STROKE);
+        textPaint.setStrokeWidth(2f);
+    }
+
+    public void setRange(int min, int max) {
+        this.min = min;
+        this.max = max;
+        setLeftValue();
+        setRightValue();
+        invalidate();
     }
 
     public void setLeftProgress(float progress) {
         float end_progress;
-        end_progress = rightProgress;
+        end_progress = rightProgress - (knobWidth * 1.0f / (getWidth() - textViewWidth * 2)) * 2;
         if (progress <= 0f) {
             progress = 0f;
         }
@@ -108,15 +93,24 @@ public class RangeFilterBar extends View {
             progress = end_progress;
         }
         this.leftProgress = progress;
-        if (onProgressChangeListener != null) {
-            onProgressChangeListener.onLeftProgressChange(progress);
+        setLeftValue();
+        if (onRangeChangedListener != null) {
+            onRangeChangedListener.onRangeChanged(leftValue, rightValue);
         }
         invalidate();
     }
 
+    private void setLeftValue() {
+        leftValue = (int) (leftProgress * (max - min) + min);
+    }
+
+    private void setRightValue() {
+        rightValue = (int) (rightProgress * (max - min) + min);
+    }
+
     public void setRightProgress(float progress) {
         float start_progress;
-        start_progress = leftProgress;
+        start_progress = leftProgress + (knobWidth * 1.0f / (getWidth() - textViewWidth * 2)) * 2;
         if (progress <= start_progress) {
             progress = start_progress;
         }
@@ -124,8 +118,9 @@ public class RangeFilterBar extends View {
             progress = 1f;
         }
         this.rightProgress = progress;
-        if (onProgressChangeListener != null) {
-            onProgressChangeListener.onRightProgressChange(progress);
+        setRightValue();
+        if (onRangeChangedListener != null) {
+            onRangeChangedListener.onRangeChanged(leftValue, rightValue);
         }
         invalidate();
     }
@@ -137,28 +132,31 @@ public class RangeFilterBar extends View {
         // 获取对应高度
         int height = getHeight();
         // 获取对应宽度
-        int width = getWidth();
+        int width = getWidth() - textViewWidth * 2;
 
         paint.setColor(Color.WHITE);
         paint.setStyle(Paint.Style.FILL);
         //左侧按钮
-        float startProgressX = width * leftProgress;
-        canvas.drawRoundRect(new RectF(startProgressX, 0, startProgressX + knobWidth, height), 5, 5, paint);
+        float startProgressX = width * leftProgress + textViewWidth;
+        bounds.set(((int) startProgressX), 0, (int) (startProgressX + knobWidth), height);
+        canvas.drawRoundRect(bounds, knobRadius, knobRadius, paint);
         //右侧按钮
-        float endProgressX = width * rightProgress;
-        canvas.drawRoundRect(new RectF(endProgressX - knobWidth, 0, endProgressX, height), 5, 5, paint);
+        float endProgressX = width * rightProgress + textViewWidth;
+        bounds.set(((int) endProgressX - knobWidth), 0, (int) (endProgressX), height);
+        canvas.drawRoundRect(bounds, knobRadius, knobRadius, paint);
 
         paint.setColor(Color.BLUE);
         paint.setStyle(Paint.Style.STROKE);
-        canvas.drawRoundRect(new RectF(startProgressX, 0, startProgressX + knobWidth, height), 5, 5, paint);
-        canvas.drawRoundRect(new RectF(endProgressX - knobWidth, 0, endProgressX, height), 5, 5, paint);
+        bounds.set(((int) startProgressX), 0, (int) (startProgressX + knobWidth), height);
+        canvas.drawRoundRect(bounds, knobRadius, knobRadius, paint);
+        bounds.set(((int) endProgressX - knobWidth), 0, (int) (endProgressX), height);
+        canvas.drawRoundRect(bounds, knobRadius, knobRadius, paint);
 
         //画刻度值
-        String left_num = String.valueOf((int) (leftProgress * num));
-        String right_num = String.valueOf((int) (rightProgress * num));
-        textPaint.getTextBounds(right_num, 0, right_num.length(), bounds);
-        canvas.drawText(left_num, startProgressX - textPaint.getTextSize() * left_num.length(), height - (height - textPaint.getTextSize()) / 2, textPaint);
-        canvas.drawText(right_num, endProgressX, height - (height - textPaint.getTextSize()) / 2, textPaint);
+        String left_num = String.valueOf(leftValue);
+        String right_num = String.valueOf(rightValue);
+        canvas.drawText(left_num, startProgressX - textPaint.measureText(left_num) - textKnobSpace, height - (height - textPaint.getTextSize()) / 2, textPaint);
+        canvas.drawText(right_num, endProgressX + textKnobSpace, height - (height - textPaint.getTextSize()) / 2, textPaint);
     }
 
     /**
@@ -169,10 +167,16 @@ public class RangeFilterBar extends View {
     private int checkTouchStatus(float pointX, float pointY) {
         //注释掉的是Y轴上触摸点是否落在按钮的高度范围之内，之所以注释是为了触摸的范围大一点
 //        if (pointY >= (getHeight() - leftProgressIcon.getHeight()) / 2.0f && pointY <= getHeight() - (getHeight() - leftProgressIcon.getHeight()) / 2.0f) {
-        if (pointX >= getWidth() * leftProgress && pointX <= getWidth() * leftProgress + knobWidth) {
+
+        int leftKnobLeftEdge = (int) ((getWidth() - textViewWidth * 2) * leftProgress + textViewWidth);
+        int leftKnobRightEdge = (int) ((getWidth() - textViewWidth * 2) * leftProgress + textViewWidth + knobWidth);
+        int rightKnobLeftEdge = (int) ((getWidth() - textViewWidth * 2) * rightProgress + textViewWidth - knobWidth);
+        int rightKnobRightEdge = (int) ((getWidth() - textViewWidth * 2) * rightProgress + textViewWidth);
+
+        if (pointX >= leftKnobLeftEdge && pointX <= leftKnobRightEdge) {
             return 1;
         }
-        if (pointX >= getWidth() * rightProgress - knobWidth && pointX <= getWidth() * rightProgress) {
+        if (pointX >= rightKnobLeftEdge && pointX <= rightKnobRightEdge) {
             return 2;
         }
 //        }
@@ -191,7 +195,7 @@ public class RangeFilterBar extends View {
                 break;
             case MotionEvent.ACTION_MOVE:
                 //触摸点落在有效范围内则跟随手指移动
-                float change_progress = (event.getX() - pressX) / getWidth();
+                float change_progress = (event.getX() - pressX) / (getWidth() - textViewWidth * 2);
                 if (touchStatus == 1) {
                     setLeftProgress(leftProgress + change_progress);
                 } else if (touchStatus == 2) {
@@ -207,5 +211,13 @@ public class RangeFilterBar extends View {
                 break;
         }
         return true;
+    }
+
+    public interface OnRangeChangedListener {
+        void onRangeChanged(int left, int right);
+    }
+
+    public void setOnRangeChangedListener(OnRangeChangedListener onRangeChangedListener) {
+        this.onRangeChangedListener = onRangeChangedListener;
     }
 }

@@ -13,8 +13,7 @@
         <attr name="gridWidth" format="dimension|reference" />
     </declare-styleable>
 
-
-    <declare-styleable name="RangeFilterBar">
+    <declare-styleable name="TwoWayRattingBar">
         <attr name="color_line_normal" format="color" />
         <attr name="color_line_select" format="color" />
         <attr name="stroke_width_normal" format="dimension" />
