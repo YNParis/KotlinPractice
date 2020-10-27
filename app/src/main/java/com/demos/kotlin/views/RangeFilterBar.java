@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -162,7 +163,7 @@ public class RangeFilterBar extends View {
     /**
      * @param pointX
      * @param pointY
-     * @return 0表示触摸点不在两头按钮范围内，1表示触摸点落在左侧按钮范围内，2表示触摸点落在右侧按钮范围内
+     * @return 0表示触摸点不在两头按钮范围内，1表示触摸点落在左侧按钮范围内，2表示触摸点落在右侧按钮范围内,3表示在两个按钮中间
      */
     private int checkTouchStatus(float pointX, float pointY) {
         //注释掉的是Y轴上触摸点是否落在按钮的高度范围之内，之所以注释是为了触摸的范围大一点
@@ -179,6 +180,9 @@ public class RangeFilterBar extends View {
         if (pointX >= rightKnobLeftEdge && pointX <= rightKnobRightEdge) {
             return 2;
         }
+        if (pointX > leftKnobRightEdge && pointX < rightKnobLeftEdge) {
+            return 3;
+        }
 //        }
         return 0;
     }
@@ -187,6 +191,7 @@ public class RangeFilterBar extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        Log.e("touch", "onTouchEvent event.getX:" + event.getX() + " width:" + getWidth());
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 //down的时候记录下触摸点X位置以及触摸点是否落在有效范围的状态
@@ -204,6 +209,15 @@ public class RangeFilterBar extends View {
                 pressX = event.getX();
                 break;
             case MotionEvent.ACTION_UP:
+                Log.e("touch", "onTouchEvent event.getX:" + event.getX() + " width:" + getWidth());
+                if (touchStatus == 3) {
+                    float progress = (event.getX() - textViewWidth) / (getWidth() - textViewWidth * 2);
+                    if (event.getX() / getWidth() < 0.5) {
+                        setLeftProgress(progress);
+                    } else {
+                        setRightProgress(progress);
+                    }
+                }
                 touchStatus = 0;
                 break;
             case MotionEvent.ACTION_CANCEL:
