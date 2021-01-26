@@ -32,4 +32,12 @@
     <dimen name="map_max_width">500dp</dimen>
     <dimen name="map_max_height">400dp</dimen>
 
+    //相册选择多张图片
+    <dimen name="dimen_50">50dp</dimen>
+    <dimen name="dimen_55">55dp</dimen>
+    <dimen name="mis_image_size">120dp</dimen>
+    <dimen name="mis_space_size">2dp</dimen>
+    <dimen name="mis_folder_cover_size">72dp</dimen>
+    <dimen name="px_40">13.33dp</dimen>
+
 </resources>

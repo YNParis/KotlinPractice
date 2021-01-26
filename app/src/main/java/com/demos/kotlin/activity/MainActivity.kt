@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun initData() {
         list = listOf(
+                "ImagePicker",
+                "BaiduMap",
                 "SeekBar",
                 "BaseChart",
                 "Candle",
@@ -92,6 +94,10 @@ class MainActivity : AppCompatActivity() {
 
     fun onClick(position: Int) {
         when (list.get(position)) {
+            "ImagePicker" ->
+                startActivity<ImagePickerActivity>()
+            "BaiduMap" ->
+                startActivity<AddressChooseActivity>()
             "SeekBar" ->
                 startActivity<SeekBarActivity>()
             "CustomView-TouchableBall" ->

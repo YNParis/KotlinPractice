@@ -73,6 +73,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.so'])
 
+
     // Anko Commons
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
     // Anko Layouts
@@ -124,4 +125,7 @@ dependencies {
     implementation 'com.labo.kaji:relativepopupwindow:0.4.1'
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation files('src\\main\\libs\\BaiduLBS_Android.jar')
+
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 }

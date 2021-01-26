@@ -3,6 +3,8 @@ package com.demos.kotlin.activity.lifecycle
 import android.app.Application
 import android.content.res.Configuration
 import android.util.Log
+import com.baidu.mapapi.CoordType
+import com.baidu.mapapi.SDKInitializer
 
 /**
  * Created by YXN on 2018/5/22.
@@ -16,6 +18,8 @@ class MyApp : Application() {
   override fun onCreate() {
     super.onCreate()
     Log.e(TAG, "$TAG--onCreate 程序开始")
+    SDKInitializer.initialize(this)
+    SDKInitializer.setCoordType(CoordType.BD09LL)
 //    加载矢量图标库
   }
 

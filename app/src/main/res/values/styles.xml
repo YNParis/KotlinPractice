@@ -64,4 +64,8 @@
         <item name="android:textColor">@color/colorWhite</item>
     </style>
 
+
+    <!--相册选择多张图片-->
+    <style name="MIS_NO_ACTIONBAR" parent="Theme.AppCompat.Light.NoActionBar"/>
+
 </resources>
