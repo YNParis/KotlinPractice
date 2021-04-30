@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FF4F77FA</color>
+    <color name="colorPrimary">@color/colorBlue</color>
+    <color name="colorPrimaryDark">@color/colorBlueDark</color>
+
     <color name="colorWhite">@android:color/white</color>
-    <color name="colorBackground">#e0e0e0</color>
-    <color name="colorRed">#f00</color>
-    <color name="colorBlue">#00f</color>
-    <color name="colorGreen">#0f0</color>
-    <color name="colorGray">#999</color>
-
+    <color name="colorBackground">#f6f6f6</color>
     <color name="colorBlueLight">#4291eb</color>
+    <color name="colorBlue">#417AFF</color>
+    <color name="colorBlueDark">#557CFA</color>
     <color name="colorRedLight">#f44a4a</color>
+    <color name="colorRed">#D81E06</color>
+    <color name="colorOrangeLight">#FBAD2C</color>
     <color name="colorOrange">#f68e3a</color>
-    <color name="colorGreenLight">#66CD00</color>
+    <color name="colorGreenLight">#0FB27B</color>
 
-    <color name="white">#ffffff</color>
-    <color name="bg_color">#f9f9f9</color>
-    <color name="tran_black">#80999999</color>
-    <color name="alpha_white">#66000000</color>
+    <color name="colorSysRed">#f00</color>
+    <color name="colorSysBlue">#00f</color>
+    <color name="colorSysGreen">#0f0</color>
+    <color name="colorSysGray">#999</color>
+    <color name="colorBlack50">#80000000</color>
+    <color name="colorWhite40">#66ffffff</color>
 
     <array name="colorCardBackground">
         <item>@color/colorBlueLight</item>
@@ -24,20 +27,6 @@
         <item>@color/colorOrange</item>
         <item>@color/colorGreenLight</item>
     </array>
-
-    <color name="colorTabSelected">#557CFA</color>
-    <color name="colorTabBorder">#A0B5FC</color>
-    <color name="colorTypeSolidSelected">#33FFFFFF</color>
-    <color name="colorTypeSolidNormal">#14FFFFFF</color>
-    <color name="colorBorderNormal">#66FFFFFF</color>
-    <color name="colorBorderSelected">#FFFFFFFF</color>
-    <color name="alpha_white_66">#66000000</color>
-    <color name="alpha_white_99">#99000000</color>
-    <color name="item_selected_bg_color">#144F77FA</color>
-    <color name="item_unselected_bg_color">#FFE8EBF5</color>
-    <color name="chart_value_color">#73000000</color>
-    <color name="chart_grid_color">#26000000</color>
-    <color name="mis_actionbar_color">#21282C</color>
 
     <!--图表中用到的颜色-->
     <array name="color_charts">

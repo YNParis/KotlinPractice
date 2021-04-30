@@ -54,7 +54,7 @@ public class CommodityDetailActivity extends AppCompatActivity implements View.O
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_commodity_detail);
-        updateStatus(GlobalUtils.getColor(this, R.color.tran_black));
+        updateStatus(GlobalUtils.getColor(this, R.color.colorBlack50));
         for (int i = 0; i < 20; i++) {
             mList.add(new RecommendBean());
         }
@@ -77,7 +77,7 @@ public class CommodityDetailActivity extends AppCompatActivity implements View.O
 
         setToolbar();
         tabLayout.setAlpha(0);
-        toolbar.setBackgroundColor(GlobalUtils.setAlpha(R.color.white, 0));
+        toolbar.setBackgroundColor(GlobalUtils.setAlpha(R.color.colorWhite, 0));
 
         for (String tab : tabList) {
             tabLayout.addTab(tabLayout.newTab().setText(tab));
@@ -155,7 +155,7 @@ public class CommodityDetailActivity extends AppCompatActivity implements View.O
         if (t <= 0) {
             tabLayout.setAlpha(0);
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-            toolbar.setBackgroundColor(GlobalUtils.setAlpha(R.color.white, 0));
+            toolbar.setBackgroundColor(GlobalUtils.setAlpha(R.color.colorWhite, 0));
         } else if (t < height) {
             float scale = (float) t / height;
             if (scale > 0.2f) {
@@ -169,11 +169,11 @@ public class CommodityDetailActivity extends AppCompatActivity implements View.O
                 toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
             }
             tabLayout.setAlpha(scale);
-            toolbar.setBackgroundColor(GlobalUtils.setAlpha(R.color.white, (int) (255 * scale)));
+            toolbar.setBackgroundColor(GlobalUtils.setAlpha(R.color.colorWhite, (int) (255 * scale)));
         } else {
             tabLayout.setAlpha(1);
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-            toolbar.setBackgroundColor(GlobalUtils.setAlpha(R.color.white, 255));
+            toolbar.setBackgroundColor(GlobalUtils.setAlpha(R.color.colorWhite, 255));
         }
     }
 

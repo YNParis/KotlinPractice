@@ -6,12 +6,12 @@
     android:orientation="vertical">
 
     <TextView
-        android:onClick="checkVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_red_btn"
+        android:onClick="checkVersion"
         android:padding="10dp"
         android:text="检查更新"
-        android:textColor="@color/white" />
+        android:textColor="@color/colorWhite" />
 
 </LinearLayout>

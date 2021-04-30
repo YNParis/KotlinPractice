@@ -27,6 +27,6 @@
         android:background="@drawable/shape_corner_bg_with_shadow"
         android:padding="10dp"
         android:text="测试文字"
-        android:textColor="@color/white" />
+        android:textColor="@color/colorWhite" />
 
 </LinearLayout>

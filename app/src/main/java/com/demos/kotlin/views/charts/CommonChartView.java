@@ -125,11 +125,11 @@ public class CommonChartView extends FrameLayout implements OnChartValueSelected
                 attrs, R.styleable.CommonChartView, defStyle, 0);
         mChartType = a.getString(R.styleable.CommonChartView_chartType);
         mValueTextColor = a.getColor(R.styleable.CommonChartView_valueTextColor,
-                getResources().getColor(R.color.chart_value_color));
+                getResources().getColor(R.color.colorWhite));
         mLabelTextColor = a.getColor(R.styleable.CommonChartView_labelTextColor,
-                getResources().getColor(R.color.chart_value_color));
+                getResources().getColor(R.color.colorWhite));
         mGridColor = a.getColor(R.styleable.CommonChartView_gridColor,
-                getResources().getColor(R.color.chart_grid_color));
+                getResources().getColor(R.color.colorSysGray));
 
         mLabelTextSize = a.getDimension(R.styleable.CommonChartView_labelTextSize, 15);
         mValueTextSize = a.getDimension(R.styleable.CommonChartView_valueTextSize, 15);

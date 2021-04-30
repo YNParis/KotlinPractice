@@ -2,20 +2,20 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@color/colorTabSelected" />
+            <solid android:color="@color/colorBlueDark" />
             <corners
                 android:topLeftRadius="@dimen/tab_corner_radius"
                 android:topRightRadius="@dimen/tab_corner_radius" />
             <stroke
                 android:width="@dimen/tab_border_width"
-                android:color="@color/colorTabBorder" />
+                android:color="@color/colorWhite40" />
         </shape>
     </item>
     <item
         android:right="@dimen/tab_border_width"
         android:top="@dimen/tab_bottom_layer_offset_top">
         <shape android:shape="rectangle">
-            <solid android:color="@color/colorTabSelected" />
+            <solid android:color="@color/colorBlueDark" />
         </shape>
     </item>
 </layer-list>

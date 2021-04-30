@@ -19,7 +19,6 @@ import org.jetbrains.anko.startActivity
 class MainActivity : AppCompatActivity() {
 
     private var list = listOf<String>()
-    private var activityList = mutableMapOf<String, Class<AppCompatActivity>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,7 +92,7 @@ class MainActivity : AppCompatActivity() {
 
 
     fun onClick(position: Int) {
-        when (list.get(position)) {
+        when (list[position]) {
             "ImagePicker" ->
                 startActivity<ImagePickerActivity>()
             "BaiduMap" ->
@@ -162,10 +161,8 @@ class MainActivity : AppCompatActivity() {
                 startActivity<PiePolylineChartActivity>()
             "BaseChart" ->
                 startActivity<BaseChartActivity>()
-            else -> {
+            else ->
                 ToastUtil.show(this, "没有对应的页面")
-                return
-            }
         }
     }
 

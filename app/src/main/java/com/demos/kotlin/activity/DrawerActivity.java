@@ -31,7 +31,7 @@ public class DrawerActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
 
         //设置菜单内容之外其他区域的背景色
-        drawerLayout.setScrimColor(getResources().getColor(R.color.alpha_white));
+        drawerLayout.setScrimColor(getResources().getColor(R.color.colorWhite40));
 
         //左边菜单
         main_left_drawer_layout = (RelativeLayout) findViewById(R.id.main_left_drawer_layout);

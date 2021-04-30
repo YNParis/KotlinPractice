@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <corners android:radius="@dimen/tab_corner_radius" />
-    <solid android:color="@color/colorTypeSolidSelected" />
+    <solid android:color="@color/colorBlueDark" />
     <stroke
         android:width="4dp"
-        android:color="@color/colorBorderSelected" />
+        android:color="@color/colorWhite40" />
 </shape>

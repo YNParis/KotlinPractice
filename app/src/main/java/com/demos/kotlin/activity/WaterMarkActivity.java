@@ -27,6 +27,6 @@ public class WaterMarkActivity extends AppCompatActivity {
 
         WaterMarkUtils.getInstance().setRotation(45).setText("水印1").setTextColor(getResources().getColor(R.color.colorBlue)).setTextSize(15).show(this, child1);
         WaterMarkUtils.getInstance().setRotation(135).setText("水印2").setTextColor(getResources().getColor(R.color.colorRed)).setTextSize(20).show(this, child2);
-        WaterMarkUtils.getInstance().setRotation(90).setText("水印3").setTextColor(getResources().getColor(R.color.colorGreen)).setTextSize(15).show(this, father);
+        WaterMarkUtils.getInstance().setRotation(90).setText("水印3").setTextColor(getResources().getColor(R.color.colorGreenLight)).setTextSize(15).show(this, father);
     }
 }

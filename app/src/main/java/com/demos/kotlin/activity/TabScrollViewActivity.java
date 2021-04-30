@@ -49,7 +49,7 @@ public class TabScrollViewActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_scroll_view);
-        updateStatus(GlobalUtils.getColor(this, R.color.tran_black));
+        updateStatus(GlobalUtils.getColor(this, R.color.colorBlack50));
         initData();
         initView();
     }

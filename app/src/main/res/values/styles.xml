@@ -55,7 +55,7 @@
     <style name="TabLayoutTextNormalStyle" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">@dimen/tab_text_normal_size</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@color/colorTabBorder</item>
+        <item name="android:textColor">@color/colorWhite40</item>
     </style>
 
     <style name="TabLayoutTextSelectedStyle" parent="TextAppearance.Design.Tab">
@@ -66,6 +66,6 @@
 
 
     <!--相册选择多张图片-->
-    <style name="MIS_NO_ACTIONBAR" parent="Theme.AppCompat.Light.NoActionBar"/>
+    <style name="MIS_NO_ACTIONBAR" parent="Theme.AppCompat.Light.NoActionBar" />
 
 </resources>
