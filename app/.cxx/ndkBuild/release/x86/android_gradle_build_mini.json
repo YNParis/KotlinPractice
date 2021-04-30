@@ -1,0 +1,17 @@
+{
+  "buildFiles": [
+    "D:\\workspace\\kotlin-practice\\app\\src\\main\\jni\\Android.mk"
+  ],
+  "cleanCommands": [
+    "D:\\software\\androidstudiotools\\sdk\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\workspace\\kotlin-practice\\app\\src\\main\\jni\\Android.mk APP_ABI\u003dx86 NDK_ALL_ABIS\u003dx86 NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-21 NDK_OUT\u003dD:/workspace/kotlin-practice/app/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003dD:\\workspace\\kotlin-practice\\app\\build\\intermediates\\ndkBuild\\release\\lib clean"
+  ],
+  "buildTargetsCommand": "D:\\software\\androidstudiotools\\sdk\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\workspace\\kotlin-practice\\app\\src\\main\\jni\\Android.mk APP_ABI\u003dx86 NDK_ALL_ABIS\u003dx86 NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-21 NDK_OUT\u003dD:/workspace/kotlin-practice/app/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003dD:\\workspace\\kotlin-practice\\app\\build\\intermediates\\ndkBuild\\release\\lib {LIST_OF_TARGETS_TO_BUILD}",
+  "libraries": {
+    "hellondk-release-x86": {
+      "artifactName": "hellondk",
+      "buildCommand": "D:\\software\\androidstudiotools\\sdk\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\workspace\\kotlin-practice\\app\\src\\main\\jni\\Android.mk APP_ABI\u003dx86 NDK_ALL_ABIS\u003dx86 NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-21 NDK_OUT\u003dD:/workspace/kotlin-practice/app/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003dD:\\workspace\\kotlin-practice\\app\\build\\intermediates\\ndkBuild\\release\\lib D:/workspace/kotlin-practice/app/build/intermediates/ndkBuild/release/obj/local/x86/libhellondk.so",
+      "abi": "x86",
+      "output": "D:\\workspace\\kotlin-practice\\app\\build\\intermediates\\ndkBuild\\release\\obj\\local\\x86\\libhellondk.so"
+    }
+  }
+}
