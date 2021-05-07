@@ -6,23 +6,26 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.demos.kotlin.R
-import com.demos.kotlin.activity.charts.*
+import com.demos.kotlin.activity.kotlinchart.*
 import com.demos.kotlin.activity.lifecycle.FirstActivity
 import com.demos.kotlin.adaper.MySimpleAdapter
 import com.demos.kotlin.adaper.MySimpleAdapter.MyOnItemOnClickListener
 import com.demos.kotlin.algorithm.KotlinSyntaxActivity
+import com.demos.kotlin.databinding.ActivityMainBinding
+import com.demos.kotlin.databinding.ActivityOpenBinding
 import com.demos.kotlin.ijk.PlayerActivity
 import com.demos.kotlin.utils.ToastUtil
-import kotlinx.android.synthetic.main.activity_open.*
 import org.jetbrains.anko.startActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private var list = listOf<String>()
+    private lateinit var list: List<String>
+    private lateinit var binding: ActivityOpenBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_open)
+        binding = ActivityOpenBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         initData()
         initView()
     }
@@ -79,14 +82,14 @@ class MainActivity : AppCompatActivity() {
         layoutManager.orientation = RecyclerView.VERTICAL
 
         // layoutManager
-        list_functions.layoutManager = layoutManager
+        binding.listFunctions.layoutManager = layoutManager
 
         // itemDecoration
         val itemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         itemDecoration.setDrawable(getDrawable(R.drawable.list_divider_bg))
 
-        list_functions.addItemDecoration(itemDecoration)
-        list_functions.adapter = adapter
+        binding.listFunctions.addItemDecoration(itemDecoration)
+        binding.listFunctions.adapter = adapter
 
     }
 

@@ -30,7 +30,7 @@ public class PieChartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_piechart);
+        setContentView(R.layout.activity_pie_polyline);
         setTitle("PieChartActivity");
         chart = findViewById(R.id.pie_chart);
         initChart(300, 0, R.color.colorAccent);

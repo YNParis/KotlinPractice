@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.LoginActivity">
+    android:orientation="vertical"
+    tools:context=".activity.LoginActivity"
+    tools:viewBindingIgnore="true">
 
     <TextView
         android:id="@+id/btn_login_by_fingerprint"

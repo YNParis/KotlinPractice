@@ -6,7 +6,7 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.demos.kotlin.R
-import kotlinx.android.synthetic.main.activity_simple.*
+import com.demos.kotlin.databinding.ActivitySimpleBinding
 import org.jetbrains.anko.startActivity
 
 /**
@@ -15,16 +15,13 @@ import org.jetbrains.anko.startActivity
 open class BaseActivity : AppCompatActivity(), View.OnClickListener {
 
     lateinit var TAG: String
+    lateinit var binding: ActivitySimpleBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//    setContentView(R.layout.activity_simple)
+        binding = ActivitySimpleBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         TAG = javaClass.name
-        to_a.setOnClickListener(this)
-        to_b.setOnClickListener(this)
-        to_c.setOnClickListener(this)
-        to_d.setOnClickListener(this)
-
     }
 
     override fun onRestart() {
