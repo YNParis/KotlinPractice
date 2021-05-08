@@ -1,7 +1,9 @@
 package com.demos.kotlin.activity
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.View
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import com.demos.kotlin.Constants
 import com.demos.kotlin.R
@@ -17,22 +19,28 @@ import com.example.app_update.utils.AppUtils
  */
 class UpdateAppActivity : AppCompatActivity(), INetCallback {
 
+    private lateinit var progressBar: ProgressDialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update)
+        progressBar = ProgressDialog(this)
     }
 
     fun checkVersion(view: View) {
+        progressBar.show()
+        progressBar.setContentView(R.layout.layout_progress_bar)
         AppUpdater.getInstance().netManager.get(Constants.NEW_VERSION_URL, this, this)
     }
 
     override fun onSuccess(response: String?) {
+        progressBar.dismiss()
         val dataBean = VersionDataBean.parse(response)
         if (dataBean.versionCode.toLong() <= AppUtils.getVersionCode(this)) return
         UpdateVersionDialog.show(this, dataBean)
     }
 
     override fun onFailed(throwable: Throwable?) {
+        progressBar.dismiss()
         ToastUtil.show(this, "获取版本信息失败")
     }
 

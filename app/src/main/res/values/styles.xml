@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:listDivider">@drawable/list_divider_bg</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:progressBarStyle">@style/CustomProgressBar</item>
 
     </style>
 
@@ -50,7 +51,6 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-
     <!--tab字体样式-->
     <style name="TabLayoutTextNormalStyle" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">@dimen/tab_text_normal_size</item>
@@ -64,8 +64,15 @@
         <item name="android:textColor">@color/colorWhite</item>
     </style>
 
-
     <!--相册选择多张图片-->
     <style name="MIS_NO_ACTIONBAR" parent="Theme.AppCompat.Light.NoActionBar" />
+
+    <style name="CustomProgressBar">
+        <item name="android:progressDrawable">@drawable/animated_loading</item>
+        <item name="android:indeterminateDrawable">@drawable/animated_loading</item>
+        <item name="android:indeterminateDuration">1500</item>
+        <item name="android:indeterminate">true</item>
+        <!--        <item name="android:progressBarStyleSmallInverse">@drawable/ic_filter_tilt_shift_red_100dp</item>-->
+    </style>
 
 </resources>
