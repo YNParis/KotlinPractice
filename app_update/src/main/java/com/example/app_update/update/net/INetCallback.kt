@@ -1,7 +1,6 @@
-package com.example.app_update.update.net;
+package com.example.app_update.update.net
 
-public interface INetCallback {
-    void onSuccess(String response);
-
-    void onFailed(Throwable throwable);
+interface INetCallback {
+    fun onSuccess(response: String?)
+    fun onFailed(throwable: Throwable?)
 }

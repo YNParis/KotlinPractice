@@ -1,14 +1,12 @@
-package com.example.app_update.update.net;
+package com.example.app_update.update.net
 
-import java.io.File;
+import java.io.File
 
 /**
  * 下载管理接口类。
  */
-public interface IDownloadCallback {
-    void onSuccess(File apkFile);
-
-    void onFailed(Throwable throwable);
-
-    void onProcess(int process);
+interface IDownloadCallback {
+    fun onSuccess(apkFile: File?)
+    fun onFailed(throwable: Throwable?)
+    fun onProcess(process: Int)
 }

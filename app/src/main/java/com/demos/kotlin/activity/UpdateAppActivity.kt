@@ -29,13 +29,13 @@ class UpdateAppActivity : AppCompatActivity(), INetCallback {
     fun checkVersion(view: View) {
         progressBar.show()
         progressBar.setContentView(R.layout.layout_progress_bar)
-        AppUpdater.getInstance().netManager.get(Constants.NEW_VERSION_URL, this, this)
+        AppUpdater.instance.netManager[Constants.NEW_VERSION_URL, this, this]
     }
 
     override fun onSuccess(response: String?) {
         progressBar.dismiss()
         val dataBean = VersionDataBean.parse(response)
-        if (dataBean.versionCode.toLong() <= AppUtils.getVersionCode(this)) return
+        if (dataBean?.versionCode == null || dataBean.versionCode!!.toLong() <= AppUtils.getVersionCode(this)) return
         UpdateVersionDialog.show(this, dataBean)
     }
 
@@ -46,6 +46,6 @@ class UpdateAppActivity : AppCompatActivity(), INetCallback {
 
     override fun onDestroy() {
         super.onDestroy()
-        AppUpdater.getInstance().netManager.cancel(this)
+        AppUpdater.instance.netManager.cancel(this)
     }
 }

@@ -1,24 +1,15 @@
-package com.example.app_update.update;
+package com.example.app_update.update
 
-import com.example.app_update.update.net.OkHttpNetManager;
-import com.example.app_update.update.net.INetManager;
+import com.example.app_update.update.net.INetManager
+import com.example.app_update.update.net.OkHttpNetManager
 
 /**
  * APP更新管理类。
  */
-public class AppUpdater {
+class AppUpdater {
+    val netManager: INetManager = OkHttpNetManager()
 
-    private static AppUpdater sInstance = new AppUpdater();
-
-    public static AppUpdater getInstance() {
-        return sInstance;
+    companion object {
+        val instance = AppUpdater()
     }
-
-    private INetManager netManager = new OkHttpNetManager();
-
-    public INetManager getNetManager() {
-        return netManager;
-    }
-
-
 }

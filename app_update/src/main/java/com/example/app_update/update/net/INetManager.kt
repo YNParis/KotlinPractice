@@ -1,6 +1,6 @@
-package com.example.app_update.update.net;
+package com.example.app_update.update.net
 
-import java.io.File;
+import java.io.File
 
 /**
  * 网络管理类。
@@ -8,15 +8,14 @@ import java.io.File;
  * 1.请求
  * 2.下载
  */
-public interface INetManager {
-
+interface INetManager {
     /**
      * 请求最新版本信息
      *
      * @param url      url
      * @param callback 回调
      */
-    void get(String url, INetCallback callback, Object tag);
+    operator fun get(url: String?, callback: INetCallback, tag: Any?)
 
     /**
      * 下载文件
@@ -24,12 +23,11 @@ public interface INetManager {
      * @param url      文件地址
      * @param callback 回调
      */
-    void download(String url, File targetFile, IDownloadCallback callback, Object tag);
+    fun download(url: String?, targetFile: File?, callback: IDownloadCallback, tag: Any?)
 
     /**
      * 取消请求，中断请求
      * @param tag
      */
-    void cancel(Object tag);
-
+    fun cancel(tag: Any)
 }
