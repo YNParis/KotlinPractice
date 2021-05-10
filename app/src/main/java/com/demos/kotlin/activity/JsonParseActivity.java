@@ -16,6 +16,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Json解析示例类
+ */
 public class JsonParseActivity extends AppCompatActivity {
 
     private String string;

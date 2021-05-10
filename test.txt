@@ -1,2 +1,0 @@
-test the funtionality of merging branches.
-

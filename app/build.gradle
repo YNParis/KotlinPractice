@@ -38,7 +38,7 @@ android {
 
     externalNativeBuild {
         ndkBuild {
-            path "src/main/jni/Android.mk"
+
         }
     }
 
@@ -143,4 +143,8 @@ dependencies {
     implementation files('src\\main\\libs\\BaiduLBS_Android.jar')
 
     implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    implementation ('com.alibaba.android:vlayout:1.2.8@aar') {
+        transitive = true
+    }
 }
