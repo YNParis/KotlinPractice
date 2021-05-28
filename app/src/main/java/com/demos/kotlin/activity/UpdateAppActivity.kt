@@ -35,7 +35,7 @@ class UpdateAppActivity : AppCompatActivity(), INetCallback {
     override fun onSuccess(response: String?) {
         progressBar.dismiss()
         val dataBean = VersionDataBean.parse(response)
-        if (dataBean?.versionCode == null || dataBean.versionCode!!.toLong() <= AppUtils.getVersionCode(this)) return
+        if (dataBean?.versionCode == null || dataBean.versionCode.toLong() <= AppUtils.getVersionCode(this)) return
         UpdateVersionDialog.show(this, dataBean)
     }
 

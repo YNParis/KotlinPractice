@@ -31,6 +31,7 @@ class KotlinSyntaxActivity : AppCompatActivity() {
         println("香槟塔结果：${champagneTower(1000000000, 99, 99)}")
         println("香槟塔结果：${champagneTower(10000, 20, 15)}")
     }
+
+    data class TestBean(val name: String)
 }
 
-data class TestBean(val name: String)
