@@ -8,6 +8,7 @@ import android.view.View
 import com.demos.kotlin.Constants
 import com.demos.kotlin.R
 import com.demos.kotlin.databinding.ActivityKotlinBinding
+import com.demos.kotlin.lOG_TAG
 import com.demos.kotlin.utils.LOG_TAG_PACKAGE_B
 
 class KotlinActivity : AppCompatActivity() {
@@ -31,6 +32,7 @@ class KotlinActivity : AppCompatActivity() {
         Log.d(Constants.AConstants.lOG_TAG, name)
         Log.d(Constants.BConstants.lOG_TAG, name)
         Log.d(LOG_TAG_PACKAGE_B, name)
+        Log.d(lOG_TAG, name)
     }
 
     val name: String = "kotlin"
