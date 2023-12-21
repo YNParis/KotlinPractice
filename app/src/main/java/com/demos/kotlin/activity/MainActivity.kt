@@ -13,6 +13,8 @@ import com.demos.kotlin.adaper.MySimpleAdapter.MyOnItemOnClickListener
 import com.demos.kotlin.algorithm.KotlinSyntaxActivity
 import com.demos.kotlin.databinding.ActivityOpenBinding
 import com.demos.kotlin.ijk.PlayerActivity
+import com.demos.kotlin.kotlinsyntax.JavaActivity
+import com.demos.kotlin.kotlinsyntax.KotlinActivity
 import com.demos.kotlin.utils.ToastUtil
 import org.jetbrains.anko.startActivity
 
@@ -31,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initData() {
         list = listOf(
+            "算法题",
             "ImagePicker",
             "BaiduMap",
             "SeekBar",
@@ -95,6 +98,8 @@ class MainActivity : AppCompatActivity() {
 
     fun onClick(position: Int) {
         when (list[position]) {
+            "算法题" ->
+                startActivity<JavaActivity>()
             "ImagePicker" ->
                 startActivity<ImagePickerActivity>()
             "BaiduMap" ->
