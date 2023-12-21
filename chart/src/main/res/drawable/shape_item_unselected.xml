@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--选择窗口的背景-->
+    <corners android:radius="70in" />
+    <solid android:color="@color/item_unselected_bg_color" />
+</shape>

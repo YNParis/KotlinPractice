@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_view_marker_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_bg_pie_marker_view"
+    android:orientation="vertical">
+
+    <!-- <TextView
+         android:id="@+id/title_chart_info_window"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="20in" />-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_chart_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20in" />
+</LinearLayout>

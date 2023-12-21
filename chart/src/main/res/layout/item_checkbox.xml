@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10in">
+
+        <com.bonc.ioc.chart.view.ColorDotView
+            android:id="@+id/dot_view_checkbox"
+            android:layout_width="40in"
+            android:layout_height="40in" />
+
+        <TextView
+            android:id="@+id/text_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textSize="20in" />
+    </LinearLayout>
+</layout>

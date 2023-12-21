@@ -11,7 +11,6 @@ import com.demos.kotlin.activity.lifecycle.FirstActivity
 import com.demos.kotlin.adaper.MySimpleAdapter
 import com.demos.kotlin.adaper.MySimpleAdapter.MyOnItemOnClickListener
 import com.demos.kotlin.algorithm.KotlinSyntaxActivity
-import com.demos.kotlin.databinding.ActivityMainBinding
 import com.demos.kotlin.databinding.ActivityOpenBinding
 import com.demos.kotlin.ijk.PlayerActivity
 import com.demos.kotlin.utils.ToastUtil
@@ -32,41 +31,41 @@ class MainActivity : AppCompatActivity() {
 
     private fun initData() {
         list = listOf(
-                "ImagePicker",
-                "BaiduMap",
-                "SeekBar",
-                "BaseChart",
-                "Candle",
-                "Pie",
-                "Combined",
-                "Stacked",
-                "Horizontal",
-                "BarChart",
-                "PieCharts",
-                "MultiBarCharts",
-                "PopWindow",
-                "CustomMapView",
-                "TripleViewPager",
-                "CardViewPager",
-                "DrawerView",
-                "ChromeStyleTab",
-                "Banner",
-                "CustomView-TouchableBall",
-                "ijk",
-                "NDK",
-                "LifeCycle",
-                "Database",
-                "WebView",
-                "KotlinSyntax",
-                "waterMark",
-                "SystemCamera",
-                "CustomCamera",
-                "WeChatCamera",
-                "Widgets",
-                "TabScrollView",
-                "CommodityDetail",
-                "UpdateAppVersion",
-                "Json"
+            "ImagePicker",
+            "BaiduMap",
+            "SeekBar",
+            "BaseChart",
+            "Candle",
+            "Pie",
+            "Combined",
+            "Stacked",
+            "Horizontal",
+            "BarChart",
+            "PieCharts",
+            "MultiBarCharts",
+            "PopWindow",
+            "CustomMapView",
+            "TripleViewPager",
+            "CardViewPager",
+            "DrawerView",
+            "ChromeStyleTab",
+            "Banner",
+            "CustomView-TouchableBall",
+            "ijk",
+            "NDK",
+            "LifeCycle",
+            "Database",
+            "WebView",
+            "KotlinSyntax",
+            "waterMark",
+            "SystemCamera",
+            "CustomCamera",
+            "WeChatCamera",
+            "Widgets",
+            "TabScrollView",
+            "CommodityDetail",
+            "UpdateAppVersion",
+            "Json"
         )
 
     }

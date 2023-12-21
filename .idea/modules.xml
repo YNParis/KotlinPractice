@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/kotlin-practice.iml" filepath="$PROJECT_DIR$/kotlin-practice.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/kotlin-practice.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/kotlin-practice.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app_update/kotlin-practice.app_update.iml" filepath="$PROJECT_DIR$/.idea/modules/app_update/kotlin-practice.app_update.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/zz-kotlin-practice.iml" filepath="$PROJECT_DIR$/.idea/modules/zz-kotlin-practice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/zz-kotlin-practice.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/zz-kotlin-practice.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/zz-kotlin-practice.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/zz-kotlin-practice.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/zz-kotlin-practice.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/zz-kotlin-practice.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/zz-kotlin-practice.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/zz-kotlin-practice.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app_update/zz-kotlin-practice.app_update.iml" filepath="$PROJECT_DIR$/.idea/modules/app_update/zz-kotlin-practice.app_update.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app_update/zz-kotlin-practice.app_update.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app_update/zz-kotlin-practice.app_update.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app_update/zz-kotlin-practice.app_update.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app_update/zz-kotlin-practice.app_update.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app_update/zz-kotlin-practice.app_update.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app_update/zz-kotlin-practice.app_update.unitTest.iml" />
     </modules>
   </component>
 </project>

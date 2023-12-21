@@ -11,6 +11,7 @@ import com.demos.kotlin.databinding.ActivityKotlinBinding
 import com.demos.kotlin.utils.LOG_TAG_PACKAGE_B
 
 class KotlinActivity : AppCompatActivity() {
+
     lateinit var view: View
     lateinit var binding: ActivityKotlinBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +36,7 @@ class KotlinActivity : AppCompatActivity() {
 
     val name: String = "kotlin"
         get() {
-            return field+"甚至可以毫不相干？不可以"
+            return field + "甚至可以毫不相干？不可以"
         }
 
     val final = "2"

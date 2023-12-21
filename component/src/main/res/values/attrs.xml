@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FrameLayoutWithHole">
+        <attr name="hole_radius" format="integer" />
+        <attr name="background_color" format="color" />
+        <attr name="radius_x" format="integer" />
+        <attr name="radius_y" format="integer" />
+    </declare-styleable>
+</resources>
