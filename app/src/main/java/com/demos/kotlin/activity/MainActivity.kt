@@ -11,9 +11,10 @@ import com.demos.kotlin.activity.lifecycle.FirstActivity
 import com.demos.kotlin.adaper.MySimpleAdapter
 import com.demos.kotlin.adaper.MySimpleAdapter.MyOnItemOnClickListener
 import com.demos.kotlin.algorithm.KotlinSyntaxActivity
-import com.demos.kotlin.databinding.ActivityMainBinding
 import com.demos.kotlin.databinding.ActivityOpenBinding
 import com.demos.kotlin.ijk.PlayerActivity
+import com.demos.kotlin.kotlinsyntax.JavaActivity
+import com.demos.kotlin.kotlinsyntax.KotlinActivity
 import com.demos.kotlin.utils.ToastUtil
 import org.jetbrains.anko.startActivity
 
@@ -32,41 +33,42 @@ class MainActivity : AppCompatActivity() {
 
     private fun initData() {
         list = listOf(
-                "ImagePicker",
-                "BaiduMap",
-                "SeekBar",
-                "BaseChart",
-                "Candle",
-                "Pie",
-                "Combined",
-                "Stacked",
-                "Horizontal",
-                "BarChart",
-                "PieCharts",
-                "MultiBarCharts",
-                "PopWindow",
-                "CustomMapView",
-                "TripleViewPager",
-                "CardViewPager",
-                "DrawerView",
-                "ChromeStyleTab",
-                "Banner",
-                "CustomView-TouchableBall",
-                "ijk",
-                "NDK",
-                "LifeCycle",
-                "Database",
-                "WebView",
-                "KotlinSyntax",
-                "waterMark",
-                "SystemCamera",
-                "CustomCamera",
-                "WeChatCamera",
-                "Widgets",
-                "TabScrollView",
-                "CommodityDetail",
-                "UpdateAppVersion",
-                "Json"
+            "算法题",
+            "ImagePicker",
+            "BaiduMap",
+            "SeekBar",
+            "BaseChart",
+            "Candle",
+            "Pie",
+            "Combined",
+            "Stacked",
+            "Horizontal",
+            "BarChart",
+            "PieCharts",
+            "MultiBarCharts",
+            "PopWindow",
+            "CustomMapView",
+            "TripleViewPager",
+            "CardViewPager",
+            "DrawerView",
+            "ChromeStyleTab",
+            "Banner",
+            "CustomView-TouchableBall",
+            "ijk",
+            "NDK",
+            "LifeCycle",
+            "Database",
+            "WebView",
+            "KotlinSyntax",
+            "waterMark",
+            "SystemCamera",
+            "CustomCamera",
+            "WeChatCamera",
+            "Widgets",
+            "TabScrollView",
+            "CommodityDetail",
+            "UpdateAppVersion",
+            "Json"
         )
 
     }
@@ -96,6 +98,8 @@ class MainActivity : AppCompatActivity() {
 
     fun onClick(position: Int) {
         when (list[position]) {
+            "算法题" ->
+                startActivity<JavaActivity>()
             "ImagePicker" ->
                 startActivity<ImagePickerActivity>()
             "BaiduMap" ->

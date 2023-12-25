@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="black">#FF000000</color>
+    <color name="colorWhite">#FFFFFFFF</color>
+    <color name="colorSel">#5178FF</color>
+    <color name="colorNormal">#A4A4A5</color>
+
+    <!--    图表需要的颜色-->
+    <color name="item_selected_bg_color">#144F77FA</color>
+    <color name="item_unselected_bg_color">#E8EBF5</color>
+    <color name="chart_value_color">#999999</color>
+    <color name="chart_grid_color">#999999</color>
+    <color name="colorBlack">#000</color>
+
+    <color name="colorTheme">#4F77FA</color><!--主题色，需要强调和突出的文字-->
+    <color name="colorError">#e22427</color><!--提示性文字，状态信息，按钮-->
+    <color name="colorTextTitle">#2A3352</color>
+
+    <!--图表中用到的颜色-->
+    <array name="color_charts">
+        <item>#A64F77FA</item>
+        <item>#D95AD8A6</item>
+        <item>#D9F6BD16</item>
+        <item>#A65D7092</item>
+        <item>#D9E8684A</item>
+    </array>
+
+    <!--图表中用到的颜色-->
+    <array name="color_charts_detail">
+        <item>#D94F77FA</item>
+        <item>#D95AD8A6</item>
+        <item>#D9F6BD16</item>
+        <item>#D9E8684A</item>
+        <item>#D95D7092</item>
+        <item>#D9BDD2FD</item>
+        <item>#FF5B8FF9</item>
+        <item>#D96DC8EC</item>
+        <item>#D99270CA</item>
+        <item>#D9FF9D4D</item>
+        <item>#D9FF99C3</item>
+        <item>#D9269A99</item>
+
+    </array>
+
+    <!--图表中用到的颜色，alpha值73-->
+    <array name="color_charts_detail_alpha_73">
+        <item>#734F77FA</item>
+        <item>#735AD8A6</item>
+        <item>#73F6BD16</item>
+        <item>#73E8684A</item>
+        <item>#735D7092</item>
+        <item>#73BDD2FD</item>
+        <item>#735B8FF9</item>
+        <item>#736DC8EC</item>
+        <item>#739270CA</item>
+        <item>#73FF9D4D</item>
+        <item>#73FF99C3</item>
+        <item>#73269A99</item>
+
+    </array>
+</resources>

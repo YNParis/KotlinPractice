@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10in"
+    android:orientation="horizontal">
+
+    <com.bonc.ioc.chart.view.ColorDotView
+        android:id="@+id/dot_chart_info"
+        android:layout_width="20in"
+        android:layout_height="20in" />
+
+    <TextView
+        android:id="@+id/key_chart_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10in"
+        android:textSize="22in" />
+
+    <TextView
+        android:id="@+id/value_chart_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10in"
+        android:textSize="22in" />
+
+</LinearLayout>

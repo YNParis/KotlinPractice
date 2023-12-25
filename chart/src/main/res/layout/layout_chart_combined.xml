@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.github.mikephil.charting.charts.CombinedChart
+        android:id="@+id/combined_chart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <TextView
+        android:id="@+id/left_unit"
+        style="@style/ChartUnitStyle" />
+
+    <TextView
+        android:id="@+id/right_unit"
+        style="@style/ChartUnitStyle.Right" />
+
+    <TextView
+        android:id="@+id/bottom_right_unit"
+        style="@style/ChartUnitStyle.Bottom" />
+</RelativeLayout>

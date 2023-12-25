@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CommonChartView">
+        <attr name="chartType" format="string|reference" />
+
+        <attr name="valueTextColor" format="color|reference" />
+        <attr name="valueTextSize" format="dimension|reference" />
+
+        <attr name="labelTextColor" format="color|reference" />
+        <attr name="labelTextSize" format="dimension|reference" />
+
+        <attr name="gridColor" format="color|reference" />
+        <attr name="gridWidth" format="dimension|reference" />
+    </declare-styleable>
+</resources>

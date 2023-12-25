@@ -1,0 +1,31 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!--图表上方和下方的单位样式-->
+    <style name="ChartUnitStyle">
+        <item name="android:layout_width">100in</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">40in</item>
+        <item name="android:textColor">@color/chart_value_color</item>
+        <item name="android:textSize">@dimen/text_chart_unit</item>
+    </style>
+
+    <style name="ChartUnitStyle.Right">
+        <item name="android:gravity">end</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
+    <style name="ChartUnitStyle.Bottom">
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_alignParentBottom">true</item>
+    </style>
+
+</resources>

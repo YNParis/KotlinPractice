@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    图标用到的尺寸-->
+    <dimen name="text_chart_unit">22in</dimen>
+</resources>

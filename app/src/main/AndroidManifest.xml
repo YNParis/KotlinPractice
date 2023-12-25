@@ -32,13 +32,7 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:icon">
         <activity android:name=".kotlinsyntax.JavaActivity"></activity>
-        <activity android:name=".kotlinsyntax.KotlinActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".kotlinsyntax.KotlinActivity"></activity>
         <activity android:name=".activity.PopwindowActivity" />
         <activity android:name=".activity.CustomMapActivity" />
         <activity android:name=".activity.TripleViewPagerActivity" />
@@ -53,7 +47,13 @@
         <activity android:name=".activity.WaterMarkActivity" />
         <activity android:name=".activity.DrawerActivity" />
         <activity android:name=".activity.TouchableBallActivity" /> <!-- 开启页面 -->
-        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".activity.WebViewActivity" />
         <activity
             android:name=".activity.lifecycle.FirstActivity"
