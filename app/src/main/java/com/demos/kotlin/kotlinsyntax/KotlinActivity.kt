@@ -24,11 +24,19 @@ class KotlinActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        printId(view)
+        call()
+    }
+
+    private fun call() {
+//        printId(view)
+//        sequenceOperation()
+        val student = Student("Amy", "female", 20)
+        student.show()
+        filterOperation()
     }
 
     private fun printId(view: View?) {
-        Log.d(Constants.lOG_TAG, "view id:" + view?.id)
+        Log.d(Constants.lOG_TAG, "view id:${view?.id}")
         Log.d(Constants.lOG_TAG, name)
         Log.d(Constants.AConstants.lOG_TAG, name)
         Log.d(Constants.BConstants.lOG_TAG, name)
@@ -42,4 +50,10 @@ class KotlinActivity : AppCompatActivity() {
         }
 
     val final = "2"
+
+    fun add(a: Int, b: Int) = if (a > b) {
+        a
+    } else {
+        b
+    }
 }

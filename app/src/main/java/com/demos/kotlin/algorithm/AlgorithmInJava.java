@@ -2,6 +2,7 @@ package com.demos.kotlin.algorithm;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -282,5 +283,67 @@ public class AlgorithmInJava {
             }
         }
         return map;
+    }
+
+
+    /**
+     * 给你一个 32 位的有符号整数 x ，返回将 x 中的数字部分反转后的结果。
+     * <p>
+     * 如果反转后整数超过 32 位的有符号整数的范围 [−231,  231 − 1] ，就返回 0。
+     */
+    public static int reverse(int x) {
+        if (x == 0) return 0;
+        int y = Math.abs(x);
+        if (y < 10) return x;
+        int sign = y / x;
+        List<Integer> list = new ArrayList<>();
+        while (y / 10 > 1) {
+            list.add(y % 10);
+            y /= 10;
+        }
+        if (list.get(0) == 0) {
+            list.remove(0);
+        }
+        int res = 0, len = list.size() - 1;
+        for (int i = 0; i < len; i++) {
+            res += list.get(i) * Math.pow(10, len - i);
+        }
+        res = res * sign;
+        return res;
+    }
+
+    /**
+     * 给定一个n个元素有序的（升序）整型数组nums 和一个目标值target ，写一个函数搜索nums中的 target，如果目标值存在返回下标，否则返回 -1。
+     * <p>
+     * 作者：LeetCode
+     * 链接：https://leetcode.cn/leetbook/read/binary-search/xexoac/
+     * 来源：力扣（LeetCode）
+     * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public static int search(int[] nums, int target) {
+        if (nums.length == 1) {
+            if (nums[0] == target) return 0;
+            return -1;
+        }
+        if (target < nums[0] || nums[nums.length - 1] < target) {
+            return -1;
+        }
+        int leftBord = 0, rightBord = nums.length;
+        while (rightBord >= leftBord) {
+            int mid = (leftBord + rightBord) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            }
+            if (nums[mid] < target) {
+                leftBord = mid + 1;
+            } else {
+                rightBord = mid - 1;
+            }
+        }
+        return -1;
     }
 }

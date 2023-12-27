@@ -3,9 +3,7 @@ package com.demos.kotlin.kotlinsyntax
 /**
  * Created by YXN on 2018/10/30.
  */
-fun add(a: Int, b: Int): Int {
-    return a + b
-}
+fun add(a: Int, b: Int) = a + b
 
 //single
 fun add3(a: Int, b: Int, c: Int): Int = a + b + c

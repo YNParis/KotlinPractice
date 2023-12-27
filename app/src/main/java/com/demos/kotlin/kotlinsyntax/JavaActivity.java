@@ -8,9 +8,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.demos.kotlin.Const2;
-import com.demos.kotlin.Constants;
 import com.demos.kotlin.R;
-import com.demos.kotlin.algorithm.AlgorithmInJava;
+import com.demos.kotlin.algorithm.BinarySearch;
 
 public class JavaActivity extends AppCompatActivity {
 
@@ -20,8 +19,6 @@ public class JavaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_java);
-        Log.e(Constants.lOG_TAG, "JavaActivity 打印");
-        Log.e(Const2.lOG_TAG, "JavaActivity 打印");
         initView();
     }
 
@@ -36,7 +33,13 @@ public class JavaActivity extends AppCompatActivity {
     }
 
     private void execute() {
-        result.setText("[2,7,11,15]，9->结果：" + AlgorithmInJava.twoSum(new int[]{2, 7, 11, 15}, 9));
+        Log.e(Const2.lOG_TAG, "2147483647->结果：" + BinarySearch.mySqrt(2147483647));
+        Log.e(Const2.lOG_TAG, "123->结果：" + BinarySearch.mySqrt(123));
+        Log.e(Const2.lOG_TAG, "64->结果：" + BinarySearch.mySqrt(64));
+        Log.e(Const2.lOG_TAG, "1000000->结果：" + BinarySearch.mySqrt(1000000));
+        Log.e(Const2.lOG_TAG, "9->结果：" + BinarySearch.mySqrt(9));
+        Log.e(Const2.lOG_TAG, "0->结果：" + BinarySearch.mySqrt(0));
+        Log.e(Const2.lOG_TAG, "1->结果：" + BinarySearch.mySqrt(1));
     }
 
 }
