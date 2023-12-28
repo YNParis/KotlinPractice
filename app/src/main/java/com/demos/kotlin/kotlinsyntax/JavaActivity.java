@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.demos.kotlin.Const2;
 import com.demos.kotlin.R;
 import com.demos.kotlin.algorithm.BinarySearch;
+import com.demos.kotlin.algorithm.Strings;
 
 public class JavaActivity extends AppCompatActivity {
 
@@ -33,13 +34,9 @@ public class JavaActivity extends AppCompatActivity {
     }
 
     private void execute() {
-        Log.e(Const2.lOG_TAG, "2147483647->结果：" + BinarySearch.mySqrt(2147483647));
-        Log.e(Const2.lOG_TAG, "123->结果：" + BinarySearch.mySqrt(123));
-        Log.e(Const2.lOG_TAG, "64->结果：" + BinarySearch.mySqrt(64));
-        Log.e(Const2.lOG_TAG, "1000000->结果：" + BinarySearch.mySqrt(1000000));
-        Log.e(Const2.lOG_TAG, "9->结果：" + BinarySearch.mySqrt(9));
-        Log.e(Const2.lOG_TAG, "0->结果：" + BinarySearch.mySqrt(0));
-        Log.e(Const2.lOG_TAG, "1->结果：" + BinarySearch.mySqrt(1));
+        Log.e(Const2.lOG_TAG, "13123123123，123->结果：" + Strings.strStr("13123123123", "123"));
+        Log.e(Const2.lOG_TAG, "13123123123，1234->结果：" + Strings.strStr("13123123123", "1234"));
+        Log.e(Const2.lOG_TAG, "131231231234，1234->结果：" + Strings.strStr("131231231234", "1234"));
     }
 
 }
