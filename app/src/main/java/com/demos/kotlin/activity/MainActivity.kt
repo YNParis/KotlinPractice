@@ -13,8 +13,6 @@ import com.demos.kotlin.adaper.MySimpleAdapter.MyOnItemOnClickListener
 import com.demos.kotlin.algorithm.KotlinSyntaxActivity
 import com.demos.kotlin.databinding.ActivityOpenBinding
 import com.demos.kotlin.ijk.PlayerActivity
-import com.demos.kotlin.kotlinsyntax.JavaActivity
-import com.demos.kotlin.kotlinsyntax.KotlinActivity
 import com.demos.kotlin.utils.ToastUtil
 import org.jetbrains.anko.startActivity
 

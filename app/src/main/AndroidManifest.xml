@@ -31,7 +31,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:icon">
-        <activity android:name=".kotlinsyntax.JavaActivity"></activity>
+        <activity android:name=".activity.JavaActivity"></activity>
         <activity android:name=".kotlinsyntax.KotlinActivity"></activity>
         <activity android:name=".activity.PopwindowActivity" />
         <activity android:name=".activity.CustomMapActivity" />
