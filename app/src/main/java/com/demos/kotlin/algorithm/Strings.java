@@ -52,6 +52,12 @@ public class Strings {
         return last;
     }
 
+    /**
+     * TODO 没整完
+     *
+     * @param n
+     * @return
+     */
     public static String countAndSay(int n) {
         if (n == 1) return "1";
         String last = "1";
