@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.demos.kotlin.Const2;
 import com.demos.kotlin.R;
 import com.demos.kotlin.algorithm.BinarySearch;
-import com.demos.kotlin.algorithm.Strings;
 
 public class JavaActivity extends AppCompatActivity {
 
@@ -34,7 +33,12 @@ public class JavaActivity extends AppCompatActivity {
     }
 
     private void execute() {
-        Log.e(Const2.lOG_TAG, "4,4->结果：" + BinarySearch.firstBadVersion(4));
+        Log.e(Const2.lOG_TAG, "[1, 2, 3, 4, 5, 6, 7, 8]，期望1->结果：" + BinarySearch.findMin(new int[]{1, 2, 3, 4, 5, 6, 7, 8}));
+        Log.e(Const2.lOG_TAG, "[6, 7, 8, 1, 2, 3, 4, 5]，期望1->结果：" + BinarySearch.findMin(new int[]{6, 7, 8, 1, 2, 3, 4, 5}));
+        Log.e(Const2.lOG_TAG, "[3, 4, 5, 6, 7, 8, 1, 2]，期望1->结果：" + BinarySearch.findMin(new int[]{3, 4, 5, 6, 7, 8, 1, 2}));
+        Log.e(Const2.lOG_TAG, "[6, 5]，期望5->结果：" + BinarySearch.findMin(new int[]{6, 5}));
+        Log.e(Const2.lOG_TAG, "[1, 2]，期望1->结果：" + BinarySearch.findMin(new int[]{1, 2}));
+        Log.e(Const2.lOG_TAG, "[5]，期望5->结果：" + BinarySearch.findMin(new int[]{5}));
     }
 
 }
